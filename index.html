@@ -4,8 +4,7 @@
 <!--
 Credits:
 Deepseek:Surprise button idea and god sword,god armor and fortune pick commands
-Copilot: Nearly 90% of all items in the database (but not the pictures) and a part of the CSS and scripts
-Gemini: Guide on how to disable sections
+Glm-5.2: Nearly 90% of all items in the database (but not the pictures) and a part of the CSS and scripts
 Youtube vids and minecraftmaps.com: Guide on commands and stuff
 Me:Everything else T-T
 Y'all better playtest it bc there may be wrong commands lol
@@ -19,12 +18,12 @@ If this gets 70+ votes I make a /summon 1
 <head>
 	<meta charset="utf-8">
 	<meta name="google-adsense-account" content="ca-pub-6684906266062645">
-	<title>Minecraft /give Command Generator (Java Only)</title>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6684906266062645"
+     crossorigin="anonymous"></script>
+	<title>Minecraft /give Command Generator (Java &amp; Bedrock)</title>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6684906266062645"
-     crossorigin="anonymous"></script>
 	<style>
 		:root {
 			--bg-deep: rgba(26, 26, 30, 1);
@@ -62,9 +61,12 @@ If this gets 70+ votes I make a /summon 1
 			color: var(--txt);
 			min-height: 100vh;
 			overflow-x: hidden;
-			background-color: rgba(26, 26, 30, 1);
-			background-image: repeating-linear-gradient(0deg, transparent 0, transparent 31px, rgba(0, 0, 0, 0.38) 31px, rgba(0, 0, 0, 0.38) 32px), repeating-linear-gradient(90deg, transparent 0, transparent 31px, rgba(0, 0, 0, 0.38) 31px, rgba(0, 0, 0, 0.38) 32px), repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.02) 0, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 16px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 16px), linear-gradient(135deg, rgba(44, 44, 50, 1) 0%, rgba(26, 26, 30, 1) 45%, rgba(34, 34, 38, 1) 100%);
+			background-color: rgba(18, 18, 22, 1);
+			background-image: linear-gradient(rgba(18, 18, 22, 0.35), rgba(18, 18, 22, 0.35)), url("https://minecraft.wiki/images/BlockSprite_deepslate-tiles.png?7cf18");
+			background-repeat: repeat;
+			background-size: 32px 32px, 32px 32px;
 			background-attachment: fixed;
+			image-rendering: pixelated;
 		}
 
 		::-webkit-scrollbar {
@@ -86,7 +88,7 @@ If this gets 70+ votes I make a /summon 1
 		}
 
 		.header {
-			background: var(--bg-stone);
+			background: linear-gradient(180deg, rgba(44, 46, 50, 1), var(--bg-stone));
 			border-bottom: 3px solid var(--bd-dark);
 			padding: 14px 24px;
 			display: flex;
@@ -98,6 +100,17 @@ If this gets 70+ votes I make a /summon 1
 			top: 0;
 			z-index: 100;
 			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
+		}
+
+		.header::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: -3px;
+			height: 3px;
+			background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--cyan) 50%, var(--purp) 80%, transparent);
+			opacity: .55;
 		}
 
 		.header-left {
@@ -118,7 +131,17 @@ If this gets 70+ votes I make a /summon 1
 			font-size: 18px;
 			color: var(--bg-deep);
 			image-rendering: pixelated;
-			box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5);
+			box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5), 0 0 14px var(--amber-glow);
+			animation: logoPulse 2.4s ease-in-out infinite;
+		}
+
+		@keyframes logoPulse {
+			0%, 100% {
+				box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5), 0 0 10px var(--amber-glow);
+			}
+			50% {
+				box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5), 0 0 22px rgba(252, 211, 77, 0.65);
+			}
 		}
 
 		.title {
@@ -152,6 +175,45 @@ If this gets 70+ votes I make a /summon 1
 
 		.version-select:focus {
 			border-color: var(--amber);
+		}
+
+		.header-controls {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.edition-toggle {
+			display: inline-flex;
+			border: 2px solid var(--bd-dark);
+			box-shadow: inset 0 0 0 1px var(--bd-light);
+			background: var(--bg-inset);
+			overflow: hidden;
+		}
+
+		.edition-btn {
+			background: transparent;
+			border: none;
+			color: var(--txt-dim);
+			padding: 8px 14px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			font-weight: 600;
+			cursor: pointer;
+			outline: none;
+			transition: background .12s, color .12s;
+		}
+
+		.edition-btn:hover {
+			color: var(--amber);
+		}
+
+		.edition-btn.active {
+			background: linear-gradient(135deg, var(--amber), rgba(245, 158, 11, 1));
+			color: var(--bg-deep);
+			box-shadow: 0 0 12px var(--amber-glow);
+			text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 		}
 
 		.main {
@@ -201,7 +263,26 @@ If this gets 70+ votes I make a /summon 1
 		}
 
 		.section-header:hover {
-			background: rgba(30, 32, 36, 1);
+			background: linear-gradient(90deg, rgba(252, 211, 77, 0.08), rgba(30, 32, 36, 1) 60%);
+		}
+
+		.section-header::before {
+			content: "";
+			width: 3px;
+			height: 16px;
+			background: var(--amber);
+			box-shadow: 0 0 6px var(--amber-glow);
+			opacity: .5;
+			transition: opacity .15s, height .15s;
+		}
+
+		.section-header:hover::before {
+			opacity: 1;
+			height: 20px;
+		}
+
+		.section.collapsed .section-header::before {
+			opacity: .3;
 		}
 
 		.section-title {
@@ -321,11 +402,13 @@ If this gets 70+ votes I make a /summon 1
 		.mc-btn.primary {
 			background: var(--grn);
 			color: var(--bg-deep);
+			box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.4), inset 2px 2px 0 rgba(255, 255, 255, 0.18);
 		}
 
 		.mc-btn.primary:hover {
 			background: #16a34a;
 			color: var(--bg-deep);
+			box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.4), inset 2px 2px 0 rgba(255, 255, 255, 0.18), 0 0 14px rgba(34, 197, 94, 0.5);
 		}
 
 		.mc-btn.danger {
@@ -334,15 +417,18 @@ If this gets 70+ votes I make a /summon 1
 
 		.mc-btn.danger:hover {
 			background: rgba(239, 68, 68, 0.149);
+			box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.4), inset 2px 2px 0 rgba(255, 255, 255, 0.12), 0 0 10px rgba(239, 68, 68, 0.3);
 		}
 
 		.mc-btn.amber {
 			background: var(--amber);
 			color: var(--bg-deep);
+			box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.4), inset 2px 2px 0 rgba(255, 255, 255, 0.2);
 		}
 
 		.mc-btn.amber:hover {
 			background: rgba(245, 158, 11, 1);
+			box-shadow: inset -2px -2px 0 rgba(0, 0, 0, 0.4), inset 2px 2px 0 rgba(255, 255, 255, 0.2), 0 0 14px var(--amber-glow);
 		}
 
 		.mc-btn:disabled {
@@ -552,32 +638,62 @@ If this gets 70+ votes I make a /summon 1
 		}
 
 		.target-presets {
-			display: flex;
-			gap: 4px;
-			flex-wrap: wrap;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+			gap: 6px;
 			margin-top: 6px;
 		}
 
 		.preset-btn {
-			font-family: 'VT323', monospace;
-			font-size: 16px;
-			padding: 3px 10px;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			padding: 7px 10px;
 			background: var(--bg-inset);
 			border: 2px solid var(--bd-dark);
 			color: var(--txt-alt);
 			cursor: pointer;
-			transition: all .12s;
+			transition: all .14s;
+			text-align: left;
+		}
+
+		.preset-btn .sel-code {
+			font-family: 'VT323', monospace;
+			font-size: 17px;
+			color: var(--amber);
+			line-height: 1;
+		}
+
+		.preset-btn .sel-mean {
+			font-size: 11px;
+			color: var(--txt-dim);
 		}
 
 		.preset-btn:hover {
 			color: var(--amber);
 			border-color: var(--bd-light);
+			transform: translateY(-1px);
+		}
+
+		.preset-btn:hover .sel-mean {
+			color: var(--txt-alt);
 		}
 
 		.preset-btn.active {
-			background: var(--blue);
+			background: linear-gradient(135deg, var(--blue), rgba(37, 99, 235, 1));
 			color: rgba(255, 255, 255, 1);
 			border-color: var(--blue);
+			box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+		}
+
+		.preset-btn.active .sel-code {
+			color: rgba(255, 255, 255, 1);
+		}
+
+		.preset-btn.active .sel-mean {
+			color: rgba(255, 255, 255, 0.85);
 		}
 
 		.count-input {
@@ -1211,6 +1327,19 @@ If this gets 70+ votes I make a /summon 1
 			border-bottom: 1px solid var(--bd-dark);
 		}
 
+		.adv-label.bedrock-only {
+			color: var(--cyan);
+			border-bottom-color: rgba(34, 211, 238, 0.3);
+		}
+
+		#bedrock-options {
+			padding: 8px;
+			background: rgba(34, 211, 238, 0.05);
+			border: 1px solid rgba(34, 211, 238, 0.2);
+			border-radius: 2px;
+			margin-top: 6px;
+		}
+
 		.kv-add-row {
 			display: flex;
 			gap: 6px;
@@ -1391,11 +1520,17 @@ If this gets 70+ votes I make a /summon 1
 			<div class="logo">G</div>
 			<h1 class="title">/give <span>Generator</span></h1>
 		</div>
-		<select class="version-select" id="versionSelect">
-			<option value="1.21.5+">1.21.5+ (Latest)</option>
-			<option value="1.21">1.21 - 1.21.4</option>
-			<option value="1.20.5">1.20.5 - 1.20.6</option>
-		</select>
+		<div class="header-controls">
+			<div class="edition-toggle" id="editionToggle">
+				<button class="edition-btn active" data-edition="java">Java</button>
+				<button class="edition-btn" data-edition="bedrock">Bedrock</button>
+			</div>
+			<select class="version-select" id="versionSelect">
+				<option value="1.21.5+">1.21.5+ (Latest)</option>
+				<option value="1.21">1.21 - 1.21.4</option>
+				<option value="1.20.5">1.20.5 - 1.20.6</option>
+			</select>
+		</div>
 	</header>
 	<div class="main">
 		<div class="controls-panel">
@@ -1453,15 +1588,15 @@ If this gets 70+ votes I make a /summon 1
 				<div class="section-header"><span class="section-title">Target &amp; Count</span><span class="section-chevron">v</span></div>
 				<div class="section-body">
 					<div class="field"><label class="label">Target Selector</label>
-						<div class="target-presets" id="targetPresets">
-							<button class="preset-btn active" data-target="@p">@p</button>
-							<button class="preset-btn" data-target="@a">@a</button>
-							<button class="preset-btn" data-target="@s">@s</button>
-							<button class="preset-btn" data-target="@e">@e</button>
-							<button class="preset-btn" data-target="@r">@r</button>
-						</div>
+					<div class="target-presets" id="targetPresets">
+						<button class="preset-btn active" data-target="@p"><span class="sel-code">@p</span><span class="sel-mean">(Nearest Player)</span></button>
+						<button class="preset-btn" data-target="@a"><span class="sel-code">@a</span><span class="sel-mean">(All Players)</span></button>
+						<button class="preset-btn" data-target="@s"><span class="sel-code">@s</span><span class="sel-mean">(Self)</span></button>
+						<button class="preset-btn" data-target="@e"><span class="sel-code">@e</span><span class="sel-mean">(All Entities)</span></button>
+						<button class="preset-btn" data-target="@r"><span class="sel-code">@r</span><span class="sel-mean">(Random)</span></button>
 					</div>
-					<div class="field"><label class="label">Count (any number)</label><input type="text" class="input count-input" id="countInput" value="1" inputmode="numeric"></div>
+				</div>
+				<div class="field"><label class="label">Count (any number)</label><input type="text" class="input count-input" id="countInput" value="1" inputmode="numeric"></div>
 					<div class="toggle-row"><span class="toggle-label">Advanced Target Filters</span>
 						<div class="toggle" id="advFiltersToggle"></div>
 					</div>
@@ -1550,20 +1685,6 @@ If this gets 70+ votes I make a /summon 1
 						<div class="toggle" id="tooltipHiddenToggle"></div>
 					</div>
 
-					<div class="adv-label">Food Component</div>
-					<div class="toggle-row"><span class="toggle-label">Enable Food</span>
-						<div class="toggle" id="foodToggle"></div>
-					</div>
-					<div id="foodFields" class="sub-fields" style="display:none;">
-						<div class="options-grid">
-							<div class="field"><label class="label">Nutrition</label><input type="text" class="input" id="foodNutrition" value="0" inputmode="numeric"></div>
-							<div class="field"><label class="label">Saturation</label><input type="text" class="input" id="foodSaturation" value="0" inputmode="decimal"></div>
-						</div>
-						<div class="toggle-row"><span class="toggle-label">Can Always Eat</span>
-							<div class="toggle" id="foodAlwaysEatToggle"></div>
-						</div>
-					</div>
-
 					<div class="adv-label">Consumable Component</div>
 					<div class="toggle-row"><span class="toggle-label">Enable Consumable</span>
 						<div class="toggle" id="consumableToggle"></div>
@@ -1584,6 +1705,20 @@ If this gets 70+ votes I make a /summon 1
 							</select>
 						</div>
 						<div class="field"><label class="label">Sound</label><input type="text" class="input" id="consumeSound" placeholder="entity.generic.eat"></div>
+					</div>
+
+					<div class="adv-label">Food Component</div>
+					<div class="toggle-row"><span class="toggle-label">Enable Food</span>
+						<div class="toggle" id="foodToggle"></div>
+					</div>
+					<div id="foodFields" class="sub-fields" style="display:none;">
+						<div class="options-grid">
+							<div class="field"><label class="label">Nutrition</label><input type="text" class="input" id="foodNutrition" value="0" inputmode="numeric"></div>
+							<div class="field"><label class="label">Saturation</label><input type="text" class="input" id="foodSaturation" value="0" inputmode="decimal"></div>
+						</div>
+						<div class="toggle-row"><span class="toggle-label">Can Always Eat</span>
+							<div class="toggle" id="foodAlwaysEatToggle"></div>
+						</div>
 					</div>
 
 					<div class="adv-label">Other Components</div>
@@ -1732,9 +1867,21 @@ If this gets 70+ votes I make a /summon 1
 							<option value="#minecraft:is_player_attack">Player Attack</option>
 							<option value="#minecraft:is_mob_attack">Mob Attack</option>
 							<option value="#minecraft:is_thorns">Thorns</option>
-						</select></div>
+					</select></div>
 
-					<div id="cond-block-states">
+				<div id="bedrock-options" style="display:none;">
+					<div class="adv-label bedrock-only">Bedrock-Only Components</div>
+					<div class="field"><label class="label">Item Lock</label><select class="select" id="itemLockSelect">
+							<option value="">(none)</option>
+							<option value="lock_in_inventory">Lock in Inventory</option>
+							<option value="lock_in_slot">Lock in Slot</option>
+						</select></div>
+					<div class="toggle-row"><span class="toggle-label">Keep on Death</span>
+						<div class="toggle" id="keepOnDeathToggle"></div>
+					</div>
+				</div>
+
+				<div id="cond-block-states">
 						<div class="adv-label">Block States</div>
 						<div id="blockStateList" style="display:flex;flex-direction:column;gap:6px;"></div>
 						<div class="kv-add-row">
@@ -1791,7 +1938,7 @@ If this gets 70+ votes I make a /summon 1
 					<div class="import-status" id="importStatus" style="display:none;"></div>
 				</div>
 			</div>
-			<div class="info-note">Commands are generated client-side. Paste into Minecraft Java Edition chat or a command block. Requires OP level 2+.</div>
+			<div class="info-note" id="infoNote">Commands are generated client-side. Paste into Minecraft Java Edition chat or a command block. Requires OP level 2+.</div>
 		</div>
 		<div class="preview-panel">
 			<div class="preview-title">Live Preview</div>
@@ -6780,8 +6927,9 @@ If this gets 70+ votes I make a /summon 1
 			};
 		}
 		var S = {
-			version: "1.21.5+",
-			item: null,
+		edition: "java",
+		version: "1.21.5+",
+		item: null,
 			count: 1,
 			target: {
 				type: "@p",
@@ -6835,6 +6983,8 @@ If this gets 70+ votes I make a /summon 1
 			canPlaceOn: "",
 			deathProtection: false,
 			damageResistant: "",
+			itemLock: "",
+			keepOnDeath: false,
 			blockStates: [],
 			bannerPatterns: [],
 			bookContent: {
@@ -6958,19 +7108,29 @@ If this gets 70+ votes I make a /summon 1
 			"minecraft:jack_o_lantern": "https://minecraft.wiki/images/Jack_o'Lantern_(S)_JE4.png",
 			"minecraft:vine": "https://minecraft.wiki/images/Invicon_Vines.png?ac12d",
 			"minecraft:sea_grass": "https://minecraft.wiki/images/Invicon_Seagrass.png?d515a",
-			"minecraft:smooth_quartz": "https://minecraft.wiki/images/Smooth_Quartz_Block_JE3_BE2.png",
+			"minecraft:smooth_quartz": "https://minecraft.wiki/images/BlockSprite_smooth-quartz-block.png?4fed6",
 			"minecraft:repeater": "https://minecraft.wiki/images/Invicon_Redstone_Repeater.png?647be",
 			"minecraft:comparator": "https://minecraft.wiki/images/Invicon_Redstone_Comparator.png?71749",
 			"minecraft:redstone_wire": "https://minecraft.wiki/images/Redstone_Dust_JE2_BE2.png",
-			"minecraft:brick_block": "https://minecraft.wiki/images/Bricks_JE5_BE3.png?54bd8&format=original",
-			"minecraft:oak_chest_boat": "https://minecraft.wiki/images/Invicon_Oak_Boat_with_Chest.png?2eaad"
+			"minecraft:brick_block": "https://minecraft.wiki/images/BlockSprite_bricks.png?07dea",
+			"minecraft:oak_chest_boat": "https://minecraft.wiki/images/Invicon_Oak_Boat_with_Chest.png?2eaad",
+			"minecraft:diamond_block": "https://minecraft.wiki/images/BlockSprite_block-of-diamond.png?62583",
+			"minecraft:gold_block": "https://minecraft.wiki/images/BlockSprite_block-of-gold.png?3beb4",
+			"minecraft:iron_block": "https://minecraft.wiki/images/BlockSprite_block-of-iron.png?aa853",
+			"minecraft:emerald_block": "https://minecraft.wiki/images/BlockSprite_block-of-emerald.png?e892b",
+			"minecraft:netherite_block": "https://minecraft.wiki/images/BlockSprite_block-of-netherite.png?a436f",
+			"minecraft:redstone_block": "https://minecraft.wiki/images/BlockSprite_block-of-redstone.png?51801",
+			"minecraft:lapis_block": "https://minecraft.wiki/images/BlockSprite_block-of-lapis-lazuli.png?ba847",
+			"minecraft:coal_block": "https://minecraft.wiki/images/BlockSprite_block-of-coal.png?ce739",
+			"minecraft:jukebox": "https://minecraft.wiki/images/BlockSprite_jukebox-side.png?8477e",
+			"minecraft:deepslate_tiles": "https://minecraft.wiki/images/BlockSprite_deepslate-tiles.png?7cf18"
 		};
 		ITEMS.forEach(function(it) {
 			if (ITEM_IMAGES[it.d] && !it.img) it.img = ITEM_IMAGES[it.d];
 		});
 
 		// ===== Spawner animation =====
-		var _spawnerFrames = ["https://minecraft.wiki/images/Monster_Spawner_JE4.png?64df6&format=original", "https://minecraft.wiki/images/Spawner_with_fire.png?43e81"];
+		var _spawnerFrames = ["https://minecraft.wiki/images/BlockSprite_monster-spawner.png?81e6b", "https://minecraft.wiki/images/Spawner_with_fire.png?43e81"];
 		ITEMS.forEach(function(it) {
 			if (it.d === "minecraft:spawner") {
 				it.img = _spawnerFrames[0];
@@ -7183,10 +7343,38 @@ If this gets 70+ votes I make a /summon 1
 			wrap.innerHTML = "";
 			wrap.appendChild(makeFormatButtons(S.name));
 		}
-		/* ===================== VERSION ===================== */
+		/* ===================== EDITION & VERSION ===================== */
+		function updateEditionUI() {
+			var isBedrock = S.edition === "bedrock";
+			/* Edition button active states */
+			document.querySelectorAll(".edition-btn").forEach(function(b) {
+				b.classList.toggle("active", b.dataset.edition === S.edition);
+			});
+			/* Version select only applies to Java; hide for Bedrock */
+		$("versionSelect").style.display = isBedrock ? "none" : "";
+		/* Bedrock-only components panel: show only for Bedrock */
+		$("bedrock-options").style.display = isBedrock ? "" : "none";
+			/* Badge + info note */
+			if (isBedrock) {
+				$("versionBadge").textContent = "Bedrock Edition";
+				$("infoNote").textContent = "Commands are generated client-side. Paste into Minecraft Bedrock Edition chat or a command block. Requires OP level 1+. Some Java-only components (potions, banners, books, attributes, etc.) are not emitted in Bedrock output.";
+			} else {
+				$("versionBadge").textContent = "Format: " + VERSION_LABELS[S.version];
+				$("infoNote").textContent = "Commands are generated client-side. Paste into Minecraft Java Edition chat or a command block. Requires OP level 2+.";
+			}
+		}
+		document.querySelectorAll(".edition-btn").forEach(function(b) {
+			b.onclick = function() {
+				S.edition = b.dataset.edition;
+				updateEditionUI();
+				updateAll();
+			};
+		});
 		$("versionSelect").addEventListener("change", function() {
 			S.version = this.value;
-			$("versionBadge").textContent = "Format: " + VERSION_LABELS[S.version];
+			if (S.edition === "java") {
+				$("versionBadge").textContent = "Format: " + VERSION_LABELS[S.version];
+			}
 			updateAll();
 		});
 		/* ===================== SECTION COLLAPSE ===================== */
@@ -7661,6 +7849,13 @@ If this gets 70+ votes I make a /summon 1
 		$("dmgResistantSelect").addEventListener("change", function() {
 			S.damageResistant = this.value;
 			updateAll();
+		});
+		$("itemLockSelect").addEventListener("change", function() {
+			S.itemLock = this.value;
+			updateAll();
+		});
+		setupToggle("keepOnDeathToggle", function(v) {
+			S.keepOnDeath = v;
 		});
 
 		function renderBlockStates() {
@@ -8179,8 +8374,156 @@ If this gets 70+ votes I make a /summon 1
 			return "[" + JSON.stringify(obj) + "]";
 		}
 
+		/* ===================== BEDROCK EDITION ===================== */
+		var BEDROCK_COLOR_CODES = {
+			black: "0",
+			dark_blue: "1",
+			dark_green: "2",
+			dark_aqua: "3",
+			dark_red: "4",
+			dark_purple: "5",
+			gold: "6",
+			gray: "7",
+			dark_gray: "8",
+			blue: "9",
+			green: "a",
+			aqua: "b",
+			red: "c",
+			light_purple: "d",
+			yellow: "e",
+			white: "f"
+		};
+		/* Orange/pink/purple (Java-only names) map to nearest Bedrock codes */
+		var BEDROCK_COLOR_FALLBACK = {
+			orange: "6",
+			pink: "d",
+			purple: "5"
+		};
+
+		function bedrockCodeForColor(j) {
+			if (!j) return "";
+			if (BEDROCK_COLOR_CODES[j]) return BEDROCK_COLOR_CODES[j];
+			if (BEDROCK_COLOR_FALLBACK[j]) return BEDROCK_COLOR_FALLBACK[j];
+			return "";
+		}
+
+		/* Convert a Java text-style state to a Bedrock §-coded string */
+		function textToBedrock(t) {
+			var out = "\u00a7r";
+			if (t.obfuscated) out += "\u00a7k";
+			if (t.bold) out += "\u00a7l";
+			if (t.strikethrough) out += "\u00a7m";
+			if (t.underlined) out += "\u00a7n";
+			if (t.italic) out += "\u00a7o";
+			var code = bedrockCodeForColor(t.color);
+			if (code) out += "\u00a7" + code;
+			out += t.text || "";
+			return out;
+		}
+
+		function bedrockItemId(id) {
+			return String(id).replace(/^minecraft:/, "");
+		}
+
+		/* Ensure a block id carries the minecraft: prefix (Bedrock can_break/can_place_on blocks) */
+		function ensureMcPrefix(id) {
+			id = String(id).trim();
+			return id.indexOf("minecraft:") === 0 ? id : "minecraft:" + id;
+		}
+
+		function buildBedrockCommand() {
+			var cmd = "/give " + targetStr() + " " + bedrockItemId(S.item.d);
+			/* data value (4th arg) - 0 by default */
+			var dataVal = 0;
+			/* Build the components JSON object */
+			var comps = {};
+			var display = {};
+			if (S.name.text) {
+				display.Name = textToBedrock(S.name);
+			}
+			var loreLines = S.lore.filter(function(l) {
+				return l.text.trim();
+			});
+			if (loreLines.length) {
+				display.Lore = loreLines.map(function(l) {
+					return textToBedrock(l);
+				});
+			}
+			if (Object.keys(display).length) comps["minecraft:display"] = display;
+			var enchs = S.enchantments.filter(function(e) {
+				return e.id;
+			});
+			if (enchs.length) {
+				comps["minecraft:ench"] = enchs.map(function(e) {
+					return {
+						id: bedrockItemId(e.id),
+						lvl: e.level
+					};
+				});
+			}
+			var storedEnchs = S.storedEnchantments.filter(function(e) {
+				return e.id;
+			});
+			if (storedEnchs.length) {
+				comps["minecraft:stored_enchantments"] = storedEnchs.map(function(e) {
+					return {
+						id: bedrockItemId(e.id),
+						lvl: e.level
+					};
+				});
+			}
+			if (S.unbreakable) comps["minecraft:unbreakable"] = {};
+			if (S.damage) comps["minecraft:damage"] = intVal(S.damage, 0);
+			if (S.maxDamage) comps["minecraft:max_damage"] = intVal(S.maxDamage, 0);
+			if (S.canBreak) {
+				var bBlocks = S.canBreak.split(",").map(function(b) {
+					return b.trim();
+				}).filter(function(b) {
+					return b;
+				}).map(ensureMcPrefix);
+				if (bBlocks.length) comps["minecraft:can_destroy"] = {
+					blocks: bBlocks
+				};
+			}
+			if (S.canPlaceOn) {
+				var pBlocks = S.canPlaceOn.split(",").map(function(b) {
+					return b.trim();
+				}).filter(function(b) {
+					return b;
+				}).map(ensureMcPrefix);
+				if (pBlocks.length) comps["minecraft:can_place_on"] = {
+					blocks: pBlocks
+				};
+			}
+			if (S.itemLock) comps["minecraft:item_lock"] = {
+				mode: S.itemLock
+			};
+			if (S.keepOnDeath) comps["minecraft:keep_on_death"] = {};
+			if (S.fireworks) comps["minecraft:fireworks"] = {
+				flight: intVal(S.fireworks, 0)
+			};
+			if (S.customData) {
+				try {
+					var merged = JSON.parse(S.customData);
+					Object.keys(merged).forEach(function(k) {
+						comps[k] = merged[k];
+					});
+				} catch (e) {
+					/* keep raw custom data as minecraft:custom_data if not valid JSON */
+					comps["minecraft:custom_data"] = S.customData;
+				}
+			}
+			cmd += " " + S.count;
+			cmd += " " + dataVal;
+			if (Object.keys(comps).length) {
+				cmd += " " + JSON.stringify(comps);
+			}
+			return cmd;
+		}
+
 		function buildCommand() {
 			if (!S.item) return "";
+			if (S.edition === "bedrock") return buildBedrockCommand();
 			var cmd = "/give " + targetStr() + " " + S.item.d;
 			if (S.blockStates.length) {
 				cmd += "[" + S.blockStates.map(function(s) {
@@ -9031,6 +9374,8 @@ If this gets 70+ votes I make a /summon 1
 			$("canPlaceOnInput").value = S.canPlaceOn;
 			$("dmgResistantSelect").value = S.damageResistant;
 			$("deathProtToggle").classList.toggle("on", S.deathProtection);
+			$("itemLockSelect").value = S.itemLock;
+			$("keepOnDeathToggle").classList.toggle("on", S.keepOnDeath);
 			$("dyedColors").querySelectorAll(".color-swatch").forEach(function(s) {
 				s.classList.toggle("active", s.dataset.color === S.dyedColor);
 			});
@@ -9166,6 +9511,8 @@ If this gets 70+ votes I make a /summon 1
 			S.canPlaceOn = "";
 			S.deathProtection = false;
 			S.damageResistant = "";
+			S.itemLock = "";
+			S.keepOnDeath = false;
 			S.blockStates = [];
 			S.bannerPatterns = [];
 			S.bookContent = {
@@ -9788,6 +10135,7 @@ If this gets 70+ votes I make a /summon 1
 		initTargetPresets();
 		initFilters();
 		setupAdvFiltersToggle();
+		updateEditionUI();
 		renderLore();
 		renderEnchPool();
 		renderEnchList();
