@@ -103,46 +103,115 @@ If this gets 70+ votes I make a /summon 1
 		}
 
 		.header::after {
-			content: "";
-			position: absolute;
-			left: 0;
-			right: 0;
-			bottom: -3px;
-			height: 3px;
-			background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--cyan) 50%, var(--purp) 80%, transparent);
-			opacity: .55;
-		}
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -3px;
+		height: 3px;
+		background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--cyan) 50%, var(--purp) 80%, transparent);
+		background-size: 200% 100%;
+		opacity: .55;
+		animation: rainbowPulse 3s ease-in-out infinite, rainbowSlide 6s linear infinite;
+	}
 
-		.header-left {
+	@keyframes rainbowPulse {
+		0%, 100% { opacity: .35; }
+		50% { opacity: .9; }
+	}
+
+	@keyframes rainbowSlide {
+		0% { background-position: 0% 50%; }
+		100% { background-position: 200% 50%; }
+	}
+
+	.mc-banner {
+		position: relative;
+		width: 100%;
+		max-width: 1440px;
+		margin: 0 auto;
+		height: 210px;
+		overflow: hidden;
+		border-bottom: 3px solid var(--bd-dark);
+		box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+	}
+
+	.banner-slideshow {
+		position: absolute;
+		inset: 0;
+	}
+
+	.banner-slide {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		opacity: 0;
+		transform: scale(1.05);
+		transition: opacity 1.4s ease-in-out, transform 6s ease-out;
+	}
+
+	.banner-slide.active {
+		opacity: 1;
+		transform: scale(1.12);
+	}
+
+	.banner-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(180deg, rgba(10, 10, 14, 0.35) 0%, rgba(10, 10, 14, 0.65) 100%);
+		z-index: 1;
+	}
+
+	.banner-logo {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		height: 96px;
+		width: auto;
+		object-fit: contain;
+		filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.85));
+		z-index: 2;
+		animation: bannerLogoFloat 5s ease-in-out infinite;
+	}
+
+	@keyframes bannerLogoFloat {
+		0%, 100% { transform: translate(-50%, -50%); }
+		50% { transform: translate(-50%, -54%); }
+	}
+
+	.header-left {
 			display: flex;
 			align-items: center;
 			gap: 14px;
 		}
 
 		.logo {
-			width: 42px;
-			height: 42px;
-			background: var(--amber);
-			border: 3px solid var(--bd-dark);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-family: 'Press Start 2P', monospace;
-			font-size: 18px;
-			color: var(--bg-deep);
-			image-rendering: pixelated;
-			box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5), 0 0 14px var(--amber-glow);
-			animation: logoPulse 2.4s ease-in-out infinite;
-		}
+		width: 42px;
+		height: 42px;
+		background: var(--amber);
+		border: 3px solid var(--bd-dark);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-family: 'Press Start 2P', monospace;
+		font-size: 18px;
+		color: var(--bg-deep);
+		image-rendering: pixelated;
+		box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5), 0 0 14px var(--amber-glow);
+		animation: logoPulse 2.4s ease-in-out infinite;
+	}
 
-		@keyframes logoPulse {
-			0%, 100% {
-				box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5), 0 0 10px var(--amber-glow);
-			}
-			50% {
-				box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5), 0 0 22px rgba(252, 211, 77, 0.65);
-			}
+	@keyframes logoPulse {
+		0%, 100% {
+			box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5), 0 0 8px var(--amber-glow);
 		}
+		50% {
+			box-shadow: inset -3px -3px 0 rgba(186, 152, 0), inset 3px 3px 0 rgba(252, 178, 5), 0 0 20px rgba(252, 211, 77, 0.7);
+		}
+	}
 
 		.title {
 			font-family: 'Press Start 2P', monospace;
@@ -193,28 +262,28 @@ If this gets 70+ votes I make a /summon 1
 		}
 
 		.edition-btn {
-			background: transparent;
-			border: none;
-			color: var(--txt-dim);
-			padding: 8px 14px;
-			font-family: 'Rubik', sans-serif;
-			font-size: 13px;
-			font-weight: 600;
-			cursor: pointer;
-			outline: none;
-			transition: background .12s, color .12s;
-		}
+		background: transparent;
+		border: none;
+		color: var(--txt-dim);
+		padding: 8px 14px;
+		font-family: 'Rubik', sans-serif;
+		font-size: 13px;
+		font-weight: 600;
+		cursor: pointer;
+		outline: none;
+		transition: background .35s ease, color .35s ease, box-shadow .35s ease;
+	}
 
-		.edition-btn:hover {
-			color: var(--amber);
-		}
+	.edition-btn:hover {
+		color: var(--amber);
+	}
 
-		.edition-btn.active {
-			background: linear-gradient(135deg, var(--amber), rgba(245, 158, 11, 1));
-			color: var(--bg-deep);
-			box-shadow: 0 0 12px var(--amber-glow);
-			text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
-		}
+	.edition-btn.active {
+		background: linear-gradient(135deg, var(--amber), rgba(245, 158, 11, 1));
+		color: var(--bg-deep);
+		box-shadow: 0 0 14px var(--amber-glow);
+		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+	}
 
 		.main {
 			display: grid;
@@ -1340,6 +1409,15 @@ If this gets 70+ votes I make a /summon 1
 			margin-top: 6px;
 		}
 
+		/* Edition-based component visibility */
+		body.edition-bedrock .java-only {
+			display: none !important;
+		}
+
+		body.edition-java .bedrock-only {
+			display: none !important;
+		}
+
 		.kv-add-row {
 			display: flex;
 			gap: 6px;
@@ -1629,7 +1707,7 @@ If this gets 70+ votes I make a /summon 1
 			<div class="section" id="sec-options">
 				<div class="section-header"><span class="section-title">Options</span><span class="section-chevron">v</span></div>
 				<div class="section-body">
-					<div class="field"><label class="label">Rarity</label>
+					<div class="field java-only"><label class="label">Rarity</label>
 						<select class="select" id="raritySelect">
 							<option value="">(none)</option>
 							<option value="common">Common</option>
@@ -1641,25 +1719,28 @@ If this gets 70+ votes I make a /summon 1
 					<div class="toggle-row"><span class="toggle-label">Unbreakable</span>
 						<div class="toggle" id="unbreakableToggle"></div>
 					</div>
-					<div class="toggle-row"><span class="toggle-label">Hide Enchantments in Tooltip</span>
+					<div class="toggle-row java-only"><span class="toggle-label">Hide Enchantments in Tooltip</span>
 						<div class="toggle" id="hideTooltipToggle"></div>
 					</div>
-					<div class="toggle-row"><span class="toggle-label">Hide Attributes in Tooltip</span>
+					<div class="toggle-row java-only"><span class="toggle-label">Hide Attributes in Tooltip</span>
 						<div class="toggle" id="hideAttributesToggle"></div>
 					</div>
 					<div class="options-grid">
 						<div class="field"><label class="label">Damage (any value)</label><input type="text" class="input" id="damageInput" value="0" inputmode="numeric"></div>
-						<div class="field"><label class="label">Custom Model Data</label><input type="text" class="input" id="cmdInput" value="0" inputmode="numeric"></div>
+						<div class="field java-only"><label class="label">Custom Model Data</label><input type="text" class="input" id="cmdInput" value="0" inputmode="numeric"></div>
 					</div>
 				</div>
 			</div>
 			<div class="section" id="sec-advanced">
 				<div class="section-header"><span class="section-title">Advanced Components</span><span class="section-chevron">v</span></div>
 				<div class="section-body">
+					<div class="java-only">
 					<div class="adv-label">Attribute Modifiers</div>
 					<div id="attrModList" style="display:flex;flex-direction:column;gap:6px;"></div>
 					<button class="mc-btn btn-sm" id="addAttrMod" style="align-self:flex-start;">+ Add Modifier</button>
+				</div>
 
+					<div class="java-only">
 					<div class="adv-label">Equippable</div>
 					<div class="field"><label class="label">Slot</label>
 						<select class="select" id="equipSlot">
@@ -1676,7 +1757,9 @@ If this gets 70+ votes I make a /summon 1
 					<div class="field"><label class="label">Equip Sound</label><select class="select" id="equipSound">
 							<option value="">(default)</option>
 						</select></div>
+				</div>
 
+					<div class="java-only">
 					<div class="adv-label">Display &amp; Glint</div>
 					<div class="toggle-row"><span class="toggle-label">Enchantment Glint Override</span>
 						<div class="toggle" id="glintToggle"></div>
@@ -1684,7 +1767,9 @@ If this gets 70+ votes I make a /summon 1
 					<div class="toggle-row"><span class="toggle-label">Hide Entire Tooltip</span>
 						<div class="toggle" id="tooltipHiddenToggle"></div>
 					</div>
+				</div>
 
+				<div class="java-only">
 					<div class="adv-label">Consumable Component</div>
 					<div class="toggle-row"><span class="toggle-label">Enable Consumable</span>
 						<div class="toggle" id="consumableToggle"></div>
@@ -1706,7 +1791,9 @@ If this gets 70+ votes I make a /summon 1
 						</div>
 						<div class="field"><label class="label">Sound</label><input type="text" class="input" id="consumeSound" placeholder="entity.generic.eat"></div>
 					</div>
+				</div>
 
+				<div class="java-only">
 					<div class="adv-label">Food Component</div>
 					<div class="toggle-row"><span class="toggle-label">Enable Food</span>
 						<div class="toggle" id="foodToggle"></div>
@@ -1720,20 +1807,21 @@ If this gets 70+ votes I make a /summon 1
 							<div class="toggle" id="foodAlwaysEatToggle"></div>
 						</div>
 					</div>
+				</div>
 
 					<div class="adv-label">Other Components</div>
-					<div class="toggle-row"><span class="toggle-label">Glider</span>
+					<div class="toggle-row java-only"><span class="toggle-label">Glider</span>
 						<div class="toggle" id="gliderToggle"></div>
 					</div>
-					<div class="field"><label class="label">Max Stack Size (empty = vanilla)</label><input type="text" class="input" id="maxStackInput" value="" inputmode="numeric"></div>
+					<div class="field java-only"><label class="label">Max Stack Size (empty = vanilla)</label><input type="text" class="input" id="maxStackInput" value="" inputmode="numeric"></div>
 					<div class="field"><label class="label">Max Damage (empty = vanilla)</label><input type="text" class="input" id="maxDamageInput" value="" inputmode="numeric"></div>
-					<div class="field"><label class="label">Repairable (item ID)</label><input type="text" class="input" id="repairableInput" placeholder="minecraft:diamond"></div>
-					<div class="field"><label class="label">Use Cooldown (seconds)</label><input type="text" class="input" id="useCooldownInput" value="" inputmode="decimal"></div>
-					<div class="field"><label class="label">Item Model Override</label><input type="text" class="input" id="itemModelInput" placeholder="minecraft:diamond_sword"></div>
-					<div class="field"><label class="label">Dyed Color (leather armor)</label>
+					<div class="field java-only"><label class="label">Repairable (item ID)</label><input type="text" class="input" id="repairableInput" placeholder="minecraft:diamond"></div>
+					<div class="field java-only"><label class="label">Use Cooldown (seconds)</label><input type="text" class="input" id="useCooldownInput" value="" inputmode="decimal"></div>
+					<div class="field java-only"><label class="label">Item Model Override</label><input type="text" class="input" id="itemModelInput" placeholder="minecraft:diamond_sword"></div>
+					<div class="field java-only"><label class="label">Dyed Color (leather armor)</label>
 						<div class="color-picker" id="dyedColors"></div>
 					</div>
-					<div id="cond-potion">
+					<div id="cond-potion" class="java-only">
 						<div class="field"><label class="label">Potion Contents</label>
 							<select class="select" id="potionSelect">
 								<option value="">(none)</option>
@@ -1785,7 +1873,7 @@ If this gets 70+ votes I make a /summon 1
 							</div>
 						</div>
 					</div>
-					<div id="cond-effects">
+					<div id="cond-effects" class="java-only">
 						<div class="adv-label">Custom Effects</div>
 						<div class="field"><label class="label">Effect to Add</label>
 							<select class="select" id="potionAddEffectSelect">
@@ -1849,10 +1937,10 @@ If this gets 70+ votes I make a /summon 1
 					<div class="field"><label class="label">Custom Data (raw NBT)</label><textarea class="textarea" id="customDataInput" placeholder="{public_bukkit_values:{&quot;key&quot;:&quot;value&quot;}}"></textarea></div>
 					<div class="field"><label class="label">Can Break (comma-separated block IDs)</label><input type="text" class="input" id="canBreakInput" placeholder="minecraft:stone,minecraft:dirt"></div>
 					<div class="field"><label class="label">Can Place On (comma-separated block IDs)</label><input type="text" class="input" id="canPlaceOnInput" placeholder="minecraft:stone,minecraft:dirt"></div>
-					<div class="toggle-row"><span class="toggle-label">Death Protection</span>
+					<div class="toggle-row java-only"><span class="toggle-label">Death Protection</span>
 						<div class="toggle" id="deathProtToggle"></div>
 					</div>
-					<div class="field"><label class="label">Damage Resistant (tag)</label><select class="select" id="dmgResistantSelect">
+					<div class="field java-only"><label class="label">Damage Resistant (tag)</label><select class="select" id="dmgResistantSelect">
 							<option value="">(none)</option>
 							<option value="#minecraft:is_fire">Fire</option>
 							<option value="#minecraft:is_lava">Lava</option>
@@ -1869,8 +1957,8 @@ If this gets 70+ votes I make a /summon 1
 							<option value="#minecraft:is_thorns">Thorns</option>
 					</select></div>
 
-				<div id="bedrock-options" style="display:none;">
-					<div class="adv-label bedrock-only">Bedrock-Only Components</div>
+				<div id="bedrock-options" class="bedrock-only">
+					<div class="adv-label">Bedrock-Only Components</div>
 					<div class="field"><label class="label">Item Lock</label><select class="select" id="itemLockSelect">
 							<option value="">(none)</option>
 							<option value="lock_in_inventory">Lock in Inventory</option>
@@ -1881,7 +1969,7 @@ If this gets 70+ votes I make a /summon 1
 					</div>
 				</div>
 
-				<div id="cond-block-states">
+				<div id="cond-block-states" class="java-only">
 						<div class="adv-label">Block States</div>
 						<div id="blockStateList" style="display:flex;flex-direction:column;gap:6px;"></div>
 						<div class="kv-add-row">
@@ -1892,7 +1980,7 @@ If this gets 70+ votes I make a /summon 1
 						</div>
 					</div>
 
-					<div id="cond-banner">
+					<div id="cond-banner" class="java-only">
 						<div class="adv-label">Banner Patterns</div>
 						<div id="bannerPatternList" style="display:flex;flex-direction:column;gap:6px;"></div>
 						<div class="kv-add-row">
@@ -1905,7 +1993,7 @@ If this gets 70+ votes I make a /summon 1
 						</div>
 					</div>
 
-					<div id="cond-book">
+					<div id="cond-book" class="java-only">
 						<div class="adv-label">Book Contents</div>
 						<div class="toggle-row"><span class="toggle-label">Enable Book Content</span>
 							<div class="toggle" id="bookToggle"></div>
@@ -7129,12 +7217,10 @@ If this gets 70+ votes I make a /summon 1
 			if (ITEM_IMAGES[it.d] && !it.img) it.img = ITEM_IMAGES[it.d];
 		});
 
-		// ===== Spawner animation =====
-		var _spawnerFrames = ["https://minecraft.wiki/images/BlockSprite_monster-spawner.png?81e6b", "https://minecraft.wiki/images/Spawner_with_fire.png?43e81"];
+		// ===== Spawner (static image) =====
 		ITEMS.forEach(function(it) {
 			if (it.d === "minecraft:spawner") {
-				it.img = _spawnerFrames[0];
-				it.imgFrames = _spawnerFrames;
+				it.img = "https://minecraft.wiki/images/BlockSprite_monster-spawner.png?81e6b";
 			}
 		});
 
@@ -7347,13 +7433,14 @@ If this gets 70+ votes I make a /summon 1
 		function updateEditionUI() {
 			var isBedrock = S.edition === "bedrock";
 			/* Edition button active states */
-			document.querySelectorAll(".edition-btn").forEach(function(b) {
-				b.classList.toggle("active", b.dataset.edition === S.edition);
-			});
-			/* Version select only applies to Java; hide for Bedrock */
+		document.querySelectorAll(".edition-btn").forEach(function(b) {
+			b.classList.toggle("active", b.dataset.edition === S.edition);
+		});
+		/* Body class drives java-only / bedrock-only visibility via CSS */
+		document.body.classList.toggle("edition-bedrock", isBedrock);
+		document.body.classList.toggle("edition-java", !isBedrock);
+		/* Version select only applies to Java; hide for Bedrock */
 		$("versionSelect").style.display = isBedrock ? "none" : "";
-		/* Bedrock-only components panel: show only for Bedrock */
-		$("bedrock-options").style.display = isBedrock ? "" : "none";
 			/* Badge + info note */
 			if (isBedrock) {
 				$("versionBadge").textContent = "Bedrock Edition";
@@ -8432,11 +8519,9 @@ If this gets 70+ votes I make a /summon 1
 		}
 
 		function buildBedrockCommand() {
-			var cmd = "/give " + targetStr() + " " + bedrockItemId(S.item.d);
-			/* data value (4th arg) - 0 by default */
-			var dataVal = 0;
-			/* Build the components JSON object */
-			var comps = {};
+		var cmd = "/give " + targetStr() + " " + bedrockItemId(S.item.d);
+		/* Build the components JSON object */
+		var comps = {};
 			var display = {};
 			if (S.name.text) {
 				display.Name = textToBedrock(S.name);
@@ -8514,7 +8599,6 @@ If this gets 70+ votes I make a /summon 1
 				}
 			}
 			cmd += " " + S.count;
-			cmd += " " + dataVal;
 			if (Object.keys(comps).length) {
 				cmd += " " + JSON.stringify(comps);
 			}
