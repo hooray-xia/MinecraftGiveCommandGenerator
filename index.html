@@ -2017,6 +2017,14 @@ If this gets 70+ votes I make a /summon 1
 							<button class="mc-btn btn-sm" id="addBookPage" style="align-self:flex-start;">+ Add Page</button>
 						</div>
 					</div>
+
+					<div id="cond-map" class="java-only">
+						<div class="adv-label">Map Components</div>
+						<div class="field"><label class="label">Map ID</label><input type="text" class="input" id="mapIdInput" value="0" inputmode="numeric"></div>
+						<div class="label" style="margin-top:4px;">Map Decorations</div>
+						<div id="mapDecorationsList" style="display:flex;flex-direction:column;gap:6px;"></div>
+						<button class="mc-btn btn-sm" id="addMapDecoration" style="align-self:flex-start;">+ Add Decoration</button>
+					</div>
 				</div>
 			</div>
 			<div class="section" id="sec-import">
@@ -3157,6 +3165,12 @@ If this gets 70+ votes I make a /summon 1
 		}, {
 			d: "minecraft:map",
 			n: "Empty Map",
+			c: "misc",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:filled_map",
+			n: "Filled Map",
 			c: "misc",
 			s: 64,
 			dur: 0
@@ -6997,7 +7011,7 @@ If this gets 70+ votes I make a /summon 1
 			"item.shield.block",
 			"item.trident.throw"
 		];
-		var COMPONENT_KEYS = ["custom_name", "lore", "enchantments", "stored_enchantments", "rarity", "unbreakable", "damage", "max_damage", "custom_model_data", "max_stack_size", "hide_additional_tooltip", "tooltip_display", "enchantment_glint_override", "attribute_modifiers", "equippable", "food", "consumable", "glider", "repairable", "use_cooldown", "item_model", "dyed_color", "potion_contents", "fireworks", "custom_data", "can_break", "can_place_on", "death_protection", "damage_resistant", "banner_patterns", "writable_book_content", "written_book_content"];
+		var COMPONENT_KEYS = ["custom_name", "lore", "enchantments", "stored_enchantments", "rarity", "unbreakable", "damage", "max_damage", "custom_model_data", "max_stack_size", "hide_additional_tooltip", "tooltip_display", "enchantment_glint_override", "attribute_modifiers", "equippable", "food", "consumable", "glider", "repairable", "use_cooldown", "item_model", "dyed_color", "potion_contents", "fireworks", "custom_data", "can_break", "can_place_on", "death_protection", "damage_resistant", "banner_patterns", "writable_book_content", "written_book_content", "map_id", "map_decorations"];
 		var VERSION_LABELS = {
 			"1.21.5+": "1.21.5+ (Latest)",
 			"1.21": "1.21 - 1.21.4",
@@ -7082,7 +7096,9 @@ If this gets 70+ votes I make a /summon 1
 				author: "",
 				generation: 0,
 				pages: []
-			}
+			},
+			mapId: 0,
+			mapDecorations: []
 		};
 
 		function $(id) {
@@ -7804,6 +7820,7 @@ If this gets 70+ votes I make a /summon 1
 			var isEnchBook = item && item.d === "minecraft:enchanted_book";
 			var isPotion = item && item.c === "potions";
 			var isFood = item && item.c === "food";
+			var isMap = item && item.d === "minecraft:filled_map";
 			var canHaveEffects = isPotion || isFood || S.consumable.enabled || S.food.enabled;
 
 			function toggle(id, show) {
@@ -7822,6 +7839,7 @@ If this gets 70+ votes I make a /summon 1
 			toggle("cond-stored-ench", isEnchBook);
 			toggle("cond-potion", isPotion);
 			toggle("cond-effects", canHaveEffects);
+			toggle("cond-map", isMap);
 		}
 		setupToggle("foodToggle", function(v) {
 			S.food.enabled = v;
@@ -8272,6 +8290,105 @@ If this gets 70+ votes I make a /summon 1
 				c.appendChild(card);
 			});
 		}
+		var MAP_DECORATION_TYPES = ["player", "frame", "red_marker", "blue_marker", "target_x", "target_point", "player_off_map", "player_off_limits", "mansion", "monument", "village_desert", "village_plains", "village_savanna", "village_snowy", "village_taiga", "jungle_temple", "swamp_hut", "banner_white", "banner_orange", "banner_magenta", "banner_light_blue", "banner_yellow", "banner_lime", "banner_pink", "banner_gray", "banner_light_gray", "banner_cyan", "banner_purple", "banner_blue", "banner_brown", "banner_green", "banner_red", "banner_black", "red_x"];
+
+		function renderMapDecorations() {
+			var c = $("mapDecorationsList");
+			c.innerHTML = "";
+			if (S.mapDecorations.length === 0) {
+				c.innerHTML = '<div style="padding:6px;color:var(--txt-dim);font-size:12px;">No map decorations added</div>';
+				return;
+			}
+			S.mapDecorations.forEach(function(dec, i) {
+				var row = ce("div", "map-dec-row");
+				row.style.cssText = "display:grid;grid-template-columns:1fr 1.4fr 1fr 1fr 1fr auto;gap:6px;align-items:center;";
+
+				var nameIn = ce("input", "input");
+				nameIn.value = dec.name;
+				nameIn.placeholder = "name";
+				nameIn.addEventListener("input", function() {
+					dec.name = nameIn.value;
+					updateAll();
+				});
+				row.appendChild(nameIn);
+
+				var typeSel = ce("select", "select");
+				MAP_DECORATION_TYPES.forEach(function(t) {
+					var o = ce("option", "", t);
+					o.value = t;
+					if (t === dec.type) o.selected = true;
+					typeSel.appendChild(o);
+				});
+				typeSel.addEventListener("change", function() {
+					dec.type = typeSel.value;
+					updateAll();
+				});
+				row.appendChild(typeSel);
+
+				var xIn = ce("input", "input");
+				xIn.value = dec.x;
+				xIn.placeholder = "x";
+				xIn.inputMode = "decimal";
+				xIn.addEventListener("input", function() {
+					dec.x = floatVal(xIn.value, 0);
+					updateAll();
+				});
+				row.appendChild(xIn);
+
+				var zIn = ce("input", "input");
+				zIn.value = dec.z;
+				zIn.placeholder = "z";
+				zIn.inputMode = "decimal";
+				zIn.addEventListener("input", function() {
+					dec.z = floatVal(zIn.value, 0);
+					updateAll();
+				});
+				row.appendChild(zIn);
+
+				var rotIn = ce("input", "input");
+				rotIn.value = dec.rotation;
+				rotIn.placeholder = "rot";
+				rotIn.inputMode = "decimal";
+				rotIn.addEventListener("input", function() {
+					dec.rotation = floatVal(rotIn.value, 0);
+					updateAll();
+				});
+				row.appendChild(rotIn);
+
+				var rm = ce("button", "mc-btn danger btn-sm", "x");
+				rm.onclick = function() {
+					S.mapDecorations.splice(i, 1);
+					renderMapDecorations();
+					updateAll();
+				};
+				row.appendChild(rm);
+
+				c.appendChild(row);
+			});
+			/* header labels */
+			var hdr = ce("div", "");
+			hdr.style.cssText = "display:grid;grid-template-columns:1fr 1.4fr 1fr 1fr 1fr auto;gap:6px;font-size:10px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.5px;";
+			["Name", "Type", "X", "Z", "Rotation", ""].forEach(function(l) {
+				hdr.appendChild(ce("span", "", l));
+			});
+			c.insertBefore(hdr, c.firstChild);
+		}
+		$("addMapDecoration").onclick = function() {
+			var n = S.mapDecorations.length + 1;
+			S.mapDecorations.push({
+				name: "decoration_" + n,
+				type: "blue_marker",
+				x: 0,
+				z: 0,
+				rotation: 0
+			});
+			renderMapDecorations();
+			updateAll();
+		};
+		$("mapIdInput").addEventListener("input", function() {
+			S.mapId = intVal(this.value, 0);
+			updateAll();
+		});
 		setupToggle("bookToggle", function(v) {
 			S.bookContent.enabled = v;
 			$("bookFields").style.display = v ? "flex" : "none";
@@ -8734,6 +8851,23 @@ If this gets 70+ votes I make a /summon 1
 						});
 						comps.push("writable_book_content={pages:[" + rPages.join(",") + "]}");
 					}
+				}
+			}
+			/* Map components (filled_map) */
+			if (S.item && S.item.d === "minecraft:filled_map") {
+				comps.push("map_id=" + intVal(S.mapId, 0));
+				if (S.mapDecorations.length) {
+					function decNum(v, sfx) {
+						var n = floatVal(v, 0);
+						var str = String(n);
+						if (str.indexOf(".") < 0) str += ".0";
+						return str + sfx;
+					}
+					var decParts = S.mapDecorations.map(function(d) {
+						var key = (d.name && d.name.trim()) ? d.name.trim() : "decoration";
+						return key + ':{type:"' + d.type + '",x:' + decNum(d.x, "d") + ',z:' + decNum(d.z, "d") + ',rotation:' + decNum(d.rotation, "f") + '}';
+					});
+					comps.push("map_decorations={" + decParts.join(",") + "}");
 				}
 			}
 			if (comps.length) cmd += "[" + comps.join(",") + "]";
@@ -9475,6 +9609,8 @@ If this gets 70+ votes I make a /summon 1
 			$("bookAuthor").value = S.bookContent.author;
 			$("bookGeneration").value = S.bookContent.generation;
 			renderBookPages();
+			$("mapIdInput").value = S.mapId;
+			renderMapDecorations();
 			renderItems();
 			updateAll();
 		}
@@ -9607,6 +9743,8 @@ If this gets 70+ votes I make a /summon 1
 				generation: 0,
 				pages: []
 			};
+			S.mapId = 0;
+			S.mapDecorations = [];
 		}
 
 		function applyPreset(name) {
@@ -10233,6 +10371,7 @@ If this gets 70+ votes I make a /summon 1
 		renderBlockStates();
 		renderBannerPatterns();
 		renderBookPages();
+		renderMapDecorations();
 		renderItems();
 		updateAll();
 	</script>
