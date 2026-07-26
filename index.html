@@ -25,6 +25,211 @@ If this gets 70+ votes I make a /summon 1
 	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 	<style>
+		/* Add touch-friendly sizing */
+		@media (pointer: coarse) {
+			.mc-btn {
+				min-height: 44px;
+				padding: 12px 16px;
+			}
+
+			.chip {
+				min-height: 36px;
+				padding: 8px 12px;
+			}
+
+			.preset-btn {
+				min-height: 40px;
+				padding: 10px 12px;
+			}
+
+			.item-cell {
+				min-height: 44px;
+				min-width: 44px;
+			}
+
+			.input,
+			.select {
+				min-height: 40px;
+				font-size: 16px;
+				/* Prevents iOS zoom */
+			}
+
+			@media (max-width: 480px) {
+				.mc-banner {
+					height: 160px;
+					/* Smaller on phones */
+				}
+			}
+
+			/* Hide scrollbar on mobile for cleaner look */
+			@media (max-width: 768px) {
+				::-webkit-scrollbar {
+					width: 4px;
+					height: 4px;
+				}
+
+				.item-grid,
+				.ench-pool,
+				.preview-panel {
+					scrollbar-width: thin;
+				}
+			}
+
+			/* Remove hover effects on touch devices */
+			@media (hover: none) {
+
+				.mc-btn:hover,
+				.chip:hover,
+				.preset-btn:hover,
+				.item-cell:hover {
+					transform: none;
+				}
+
+				.mc-btn:active {
+					transform: scale(0.95);
+				}
+			}
+
+			@media (max-width: 768px) and (min-width: 481px) {
+				.mc-banner {
+					height: 200px;
+				}
+			}
+		}
+
+		@media (max-width: 920px) {
+			.preview-panel {
+				position: relative;
+				/* Remove sticky on mobile */
+				top: 0;
+				height: auto;
+				border-left: none;
+				border-top: 3px solid var(--bd-dark);
+				order: -1;
+				max-height: 50vh;
+				/* Limit height on mobile */
+				overflow-y: auto;
+			}
+		}
+
+		/* Phones */
+		@media (max-width: 480px) {
+			.item-grid {
+				grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
+				gap: 4px;
+				max-height: 200px;
+			}
+		}
+
+		/* Small phones (320px - 480px) */
+		@media (max-width: 480px) {
+			.header {
+				padding: 10px 12px;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 8px;
+			}
+
+			.header-left {
+				justify-content: center;
+			}
+
+			.title {
+				font-size: 9px;
+			}
+
+			.header-controls {
+				justify-content: center;
+			}
+
+			.controls-panel {
+				padding: 10px;
+			}
+
+			.preview-panel {
+				padding: 10px;
+			}
+
+			.item-grid {
+				grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+				gap: 4px;
+				max-height: 200px;
+			}
+
+			.section-body {
+				padding: 10px;
+				gap: 10px;
+			}
+
+			.options-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.preset-grid {
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.edition-btn {
+				padding: 6px 10px;
+				font-size: 11px;
+			}
+
+			.version-select {
+				font-size: 11px;
+				padding: 6px 24px 6px 8px;
+			}
+
+			.command-box {
+				font-size: 13px;
+				padding: 10px;
+				min-height: 60px;
+			}
+
+			.tooltip-preview {
+				padding: 8px;
+				min-height: 50px;
+			}
+		}
+
+		/* Mobile landscape (480px - 768px) */
+		@media (min-width: 481px) and (max-width: 768px) {
+			.title {
+				font-size: 11px;
+			}
+
+			.item-grid {
+				grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+			}
+		}
+
+		/* Tablet (768px - 920px) */
+		@media (min-width: 769px) and (max-width: 920px) {
+			.controls-panel {
+				padding: 16px;
+			}
+
+			.preview-panel {
+				padding: 16px;
+			}
+		}
+
+		/* Larger screens (1200px+) */
+		@media (min-width: 1200px) {
+			.controls-panel {
+				padding: 28px;
+			}
+
+			.preview-panel {
+				padding: 28px;
+			}
+
+			.item-grid {
+				grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
+				gap: 8px;
+				max-height: 400px;
+			}
+		}
+
 		:root {
 			--bg-deep: rgba(26, 26, 30, 1);
 			--bg-stone: rgba(38, 40, 44, 1);
@@ -103,83 +308,98 @@ If this gets 70+ votes I make a /summon 1
 		}
 
 		.header::after {
-		content: "";
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: -3px;
-		height: 3px;
-		background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--cyan) 50%, var(--purp) 80%, transparent);
-		background-size: 200% 100%;
-		opacity: .55;
-		animation: rainbowPulse 3s ease-in-out infinite, rainbowSlide 6s linear infinite;
-	}
+			content: "";
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: -3px;
+			height: 3px;
+			background: linear-gradient(90deg, transparent, var(--amber) 20%, var(--cyan) 50%, var(--purp) 80%, transparent);
+			background-size: 200% 100%;
+			opacity: .55;
+			animation: rainbowPulse 3s ease-in-out infinite, rainbowSlide 6s linear infinite;
+		}
 
-	@keyframes rainbowPulse {
-		0%, 100% { opacity: .35; }
-		50% { opacity: .9; }
-	}
+		@keyframes rainbowPulse {
 
-	@keyframes rainbowSlide {
-		0% { background-position: 0% 50%; }
-		100% { background-position: 200% 50%; }
-	}
+			0%,
+			100% {
+				opacity: .35;
+			}
 
-	.mc-banner {
-		position: relative;
-		width: 100%;
-		max-width: 1440px;
-		margin: 0 auto;
-		height: 280px;
-		overflow: hidden;
-		border-bottom: 3px solid var(--bd-dark);
-		box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
-		background: linear-gradient(180deg, #6fa8dc 0%, #8ec5e8 45%, #b6e0f0 100%);
-	}
+			50% {
+				opacity: .9;
+			}
+		}
 
-	#terrainCanvas {
-		display: block;
-		width: 100%;
-		height: 100%;
-	}
+		@keyframes rainbowSlide {
+			0% {
+				background-position: 0% 50%;
+			}
 
-	.banner-fade {
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		height: 70px;
-		background: linear-gradient(180deg, transparent, var(--bg-deep));
-		pointer-events: none;
-		z-index: 2;
-	}
+			100% {
+				background-position: 200% 50%;
+			}
+		}
 
-	.header-left {
+		.mc-banner {
+			position: relative;
+			width: 100%;
+			max-width: 1440px;
+			margin: 0 auto;
+			height: 280px;
+			overflow: hidden;
+			border-bottom: 3px solid var(--bd-dark);
+			box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6);
+			background: linear-gradient(180deg, #6fa8dc 0%, #8ec5e8 45%, #b6e0f0 100%);
+		}
+
+		#terrainCanvas {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
+
+		.banner-fade {
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			height: 70px;
+			background: linear-gradient(180deg, transparent, var(--bg-deep));
+			pointer-events: none;
+			z-index: 2;
+		}
+
+		.header-left {
 			display: flex;
 			align-items: center;
 			gap: 14px;
 		}
 
 		.logo {
-		width: 46px;
-		height: 46px;
-		border: 3px solid var(--bd-dark);
-		border-radius: 6px;
-		background: var(--bg-inset);
-		image-rendering: pixelated;
-		box-shadow: 0 0 14px var(--amber-glow);
-		animation: logoPulse 2.4s ease-in-out infinite;
-		flex-shrink: 0;
-	}
+			width: 46px;
+			height: 46px;
+			border: 3px solid var(--bd-dark);
+			border-radius: 6px;
+			background: var(--bg-inset);
+			image-rendering: pixelated;
+			box-shadow: 0 0 14px var(--amber-glow);
+			animation: logoPulse 2.4s ease-in-out infinite;
+			flex-shrink: 0;
+		}
 
-	@keyframes logoPulse {
-		0%, 100% {
-			box-shadow: 0 0 8px var(--amber-glow), 0 0 0 rgba(252, 211, 77, 0);
+		@keyframes logoPulse {
+
+			0%,
+			100% {
+				box-shadow: 0 0 8px var(--amber-glow), 0 0 0 rgba(252, 211, 77, 0);
+			}
+
+			50% {
+				box-shadow: 0 0 18px rgba(252, 211, 77, 0.75), 0 0 28px rgba(252, 211, 77, 0.35);
+			}
 		}
-		50% {
-			box-shadow: 0 0 18px rgba(252, 211, 77, 0.75), 0 0 28px rgba(252, 211, 77, 0.35);
-		}
-	}
 
 		.title {
 			font-family: 'Press Start 2P', monospace;
@@ -248,28 +468,28 @@ If this gets 70+ votes I make a /summon 1
 		}
 
 		.edition-btn {
-		position: relative;
-		z-index: 1;
-		background: transparent;
-		border: none;
-		color: var(--txt-dim);
-		padding: 8px 14px;
-		font-family: 'Rubik', sans-serif;
-		font-size: 13px;
-		font-weight: 600;
-		cursor: pointer;
-		outline: none;
-		transition: color .35s ease;
-	}
+			position: relative;
+			z-index: 1;
+			background: transparent;
+			border: none;
+			color: var(--txt-dim);
+			padding: 8px 14px;
+			font-family: 'Rubik', sans-serif;
+			font-size: 13px;
+			font-weight: 600;
+			cursor: pointer;
+			outline: none;
+			transition: color .35s ease;
+		}
 
-	.edition-btn:hover {
-		color: var(--amber);
-	}
+		.edition-btn:hover {
+			color: var(--amber);
+		}
 
-	.edition-btn.active {
-		color: var(--bg-deep);
-		text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
-	}
+		.edition-btn.active {
+			color: var(--bg-deep);
+			text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+		}
 
 		.main {
 			display: grid;
@@ -1591,26 +1811,26 @@ If this gets 70+ votes I make a /summon 1
 			<svg class="logo" viewBox="0 0 48 48" shape-rendering="crispEdges" aria-label="Give Generator">
 				<defs>
 					<linearGradient id="logoTop" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0" stop-color="#ffe08a"/>
-						<stop offset="1" stop-color="#fcd34d"/>
+						<stop offset="0" stop-color="#ffe08a" />
+						<stop offset="1" stop-color="#fcd34d" />
 					</linearGradient>
 					<linearGradient id="logoLeft" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0" stop-color="#d97706"/>
-						<stop offset="1" stop-color="#b45309"/>
+						<stop offset="0" stop-color="#d97706" />
+						<stop offset="1" stop-color="#b45309" />
 					</linearGradient>
 					<linearGradient id="logoRight" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0" stop-color="#92400e"/>
-						<stop offset="1" stop-color="#7c2d12"/>
+						<stop offset="0" stop-color="#92400e" />
+						<stop offset="1" stop-color="#7c2d12" />
 					</linearGradient>
 				</defs>
-				<rect x="2" y="2" width="44" height="44" rx="5" fill="#1a1a1e" stroke="#3a3a40" stroke-width="2"/>
-				<polygon points="24,9 39,18 24,27 9,18" fill="url(#logoTop)"/>
-				<polygon points="9,18 24,27 24,41 9,32" fill="url(#logoLeft)"/>
-				<polygon points="24,27 39,18 39,32 24,41" fill="url(#logoRight)"/>
-				<polyline points="24,9 39,18 24,27 9,18 24,9" fill="none" stroke="#0a0a0c" stroke-width="1.6"/>
-				<line x1="24" y1="27" x2="24" y2="41" stroke="#0a0a0c" stroke-width="1.6"/>
-				<path d="M33 8 L34.4 12 L38.5 13.4 L34.4 14.8 L33 18.8 L31.6 14.8 L27.5 13.4 L31.6 12 Z" fill="#ffffff"/>
-				<circle cx="14" cy="11" r="1.1" fill="#ffffff" opacity="0.85"/>
+				<rect x="2" y="2" width="44" height="44" rx="5" fill="#1a1a1e" stroke="#3a3a40" stroke-width="2" />
+				<polygon points="24,9 39,18 24,27 9,18" fill="url(#logoTop)" />
+				<polygon points="9,18 24,27 24,41 9,32" fill="url(#logoLeft)" />
+				<polygon points="24,27 39,18 39,32 24,41" fill="url(#logoRight)" />
+				<polyline points="24,9 39,18 24,27 9,18 24,9" fill="none" stroke="#0a0a0c" stroke-width="1.6" />
+				<line x1="24" y1="27" x2="24" y2="41" stroke="#0a0a0c" stroke-width="1.6" />
+				<path d="M33 8 L34.4 12 L38.5 13.4 L34.4 14.8 L33 18.8 L31.6 14.8 L27.5 13.4 L31.6 12 Z" fill="#ffffff" />
+				<circle cx="14" cy="11" r="1.1" fill="#ffffff" opacity="0.85" />
 			</svg>
 			<h1 class="title">/give <span>Generator</span></h1>
 		</div>
@@ -1687,15 +1907,15 @@ If this gets 70+ votes I make a /summon 1
 				<div class="section-header"><span class="section-title">Target &amp; Count</span><span class="section-chevron">v</span></div>
 				<div class="section-body">
 					<div class="field"><label class="label">Target Selector</label>
-					<div class="target-presets" id="targetPresets">
-						<button class="preset-btn active" data-target="@p"><span class="sel-code">@p</span><span class="sel-mean">(Nearest Player)</span></button>
-						<button class="preset-btn" data-target="@a"><span class="sel-code">@a</span><span class="sel-mean">(All Players)</span></button>
-						<button class="preset-btn" data-target="@s"><span class="sel-code">@s</span><span class="sel-mean">(Self)</span></button>
-						<button class="preset-btn" data-target="@e"><span class="sel-code">@e</span><span class="sel-mean">(All Entities)</span></button>
-						<button class="preset-btn" data-target="@r"><span class="sel-code">@r</span><span class="sel-mean">(Random)</span></button>
+						<div class="target-presets" id="targetPresets">
+							<button class="preset-btn active" data-target="@p"><span class="sel-code">@p</span><span class="sel-mean">(Nearest Player)</span></button>
+							<button class="preset-btn" data-target="@a"><span class="sel-code">@a</span><span class="sel-mean">(All Players)</span></button>
+							<button class="preset-btn" data-target="@s"><span class="sel-code">@s</span><span class="sel-mean">(Self)</span></button>
+							<button class="preset-btn" data-target="@e"><span class="sel-code">@e</span><span class="sel-mean">(All Entities)</span></button>
+							<button class="preset-btn" data-target="@r"><span class="sel-code">@r</span><span class="sel-mean">(Random)</span></button>
+						</div>
 					</div>
-				</div>
-				<div class="field"><label class="label">Count (any number)</label><input type="text" class="input count-input" id="countInput" value="1" inputmode="numeric"></div>
+					<div class="field"><label class="label">Count (any number)</label><input type="text" class="input count-input" id="countInput" value="1" inputmode="numeric"></div>
 					<div class="toggle-row"><span class="toggle-label">Advanced Target Filters</span>
 						<div class="toggle" id="advFiltersToggle"></div>
 					</div>
@@ -1756,88 +1976,88 @@ If this gets 70+ votes I make a /summon 1
 				<div class="section-header"><span class="section-title">Advanced Components</span><span class="section-chevron">v</span></div>
 				<div class="section-body">
 					<div class="java-only">
-					<div class="adv-label">Attribute Modifiers</div>
-					<div id="attrModList" style="display:flex;flex-direction:column;gap:6px;"></div>
-					<button class="mc-btn btn-sm" id="addAttrMod" style="align-self:flex-start;">+ Add Modifier</button>
-				</div>
+						<div class="adv-label">Attribute Modifiers</div>
+						<div id="attrModList" style="display:flex;flex-direction:column;gap:6px;"></div>
+						<button class="mc-btn btn-sm" id="addAttrMod" style="align-self:flex-start;">+ Add Modifier</button>
+					</div>
 
 					<div class="java-only">
-					<div class="adv-label">Equippable</div>
-					<div class="field"><label class="label">Slot</label>
-						<select class="select" id="equipSlot">
-							<option value="">(disabled)</option>
-							<option value="head">Head</option>
-							<option value="chest">Chest</option>
-							<option value="legs">Legs</option>
-							<option value="feet">Feet</option>
-							<option value="body">Body</option>
-							<option value="mainhand">Mainhand</option>
-							<option value="offhand">Offhand</option>
-						</select>
-					</div>
-					<div class="field"><label class="label">Equip Sound</label><select class="select" id="equipSound">
-							<option value="">(default)</option>
-						</select></div>
-					<div class="toggle-row"><span class="toggle-label">Damage on Hurt</span>
-						<div class="toggle on" id="damageOnHurtToggle"></div>
-					</div>
-					<div class="field"><label class="label">Camera Overlay (head slot)</label><select class="select" id="cameraOverlaySelect">
-							<option value="">(none)</option>
-							<option value="minecraft:powder_snow_outline">Powder Snow Outline</option>
-							<option value="minecraft:pumpkin_blur">Pumpkin Blur</option>
-							<option value="minecraft:spyglass_scope">Spyglass Scope</option>
-						</select></div>
-				</div>
-
-					<div class="java-only">
-					<div class="adv-label">Display &amp; Glint</div>
-					<div class="toggle-row"><span class="toggle-label">Enchantment Glint Override</span>
-						<div class="toggle" id="glintToggle"></div>
-					</div>
-					<div class="toggle-row"><span class="toggle-label">Hide Entire Tooltip</span>
-						<div class="toggle" id="tooltipHiddenToggle"></div>
-					</div>
-				</div>
-
-				<div class="java-only">
-					<div class="adv-label">Consumable Component</div>
-					<div class="toggle-row"><span class="toggle-label">Enable Consumable</span>
-						<div class="toggle" id="consumableToggle"></div>
-					</div>
-					<div id="consumableFields" class="sub-fields" style="display:none;">
-						<div class="field"><label class="label">Consume Seconds</label><input type="text" class="input" id="consumeSeconds" value="1.6" inputmode="decimal"></div>
-						<div class="field"><label class="label">Animation</label>
-							<select class="select" id="consumeAnim">
-								<option value="eat">Eat</option>
-								<option value="drink">Drink</option>
-								<option value="block">Block</option>
-								<option value="bow">Bow</option>
-								<option value="crossbow">Crossbow</option>
-								<option value="none">None</option>
-								<option value="spear">Spear</option>
-								<option value="brush">Brush</option>
-								<option value="honey_bucket">Honey Bucket</option>
+						<div class="adv-label">Equippable</div>
+						<div class="field"><label class="label">Slot</label>
+							<select class="select" id="equipSlot">
+								<option value="">(disabled)</option>
+								<option value="head">Head</option>
+								<option value="chest">Chest</option>
+								<option value="legs">Legs</option>
+								<option value="feet">Feet</option>
+								<option value="body">Body</option>
+								<option value="mainhand">Mainhand</option>
+								<option value="offhand">Offhand</option>
 							</select>
 						</div>
-						<div class="field"><label class="label">Sound</label><input type="text" class="input" id="consumeSound" placeholder="entity.generic.eat"></div>
+						<div class="field"><label class="label">Equip Sound</label><select class="select" id="equipSound">
+								<option value="">(default)</option>
+							</select></div>
+						<div class="toggle-row"><span class="toggle-label">Damage on Hurt</span>
+							<div class="toggle on" id="damageOnHurtToggle"></div>
+						</div>
+						<div class="field"><label class="label">Camera Overlay (head slot)</label><select class="select" id="cameraOverlaySelect">
+								<option value="">(none)</option>
+								<option value="minecraft:powder_snow_outline">Powder Snow Outline</option>
+								<option value="minecraft:pumpkin_blur">Pumpkin Blur</option>
+								<option value="minecraft:spyglass_scope">Spyglass Scope</option>
+							</select></div>
 					</div>
-				</div>
 
-				<div class="java-only">
-					<div class="adv-label">Food Component</div>
-					<div class="toggle-row"><span class="toggle-label">Enable Food</span>
-						<div class="toggle" id="foodToggle"></div>
-					</div>
-					<div id="foodFields" class="sub-fields" style="display:none;">
-						<div class="options-grid">
-							<div class="field"><label class="label">Nutrition</label><input type="text" class="input" id="foodNutrition" value="0" inputmode="numeric"></div>
-							<div class="field"><label class="label">Saturation</label><input type="text" class="input" id="foodSaturation" value="0" inputmode="decimal"></div>
+					<div class="java-only">
+						<div class="adv-label">Display &amp; Glint</div>
+						<div class="toggle-row"><span class="toggle-label">Enchantment Glint Override</span>
+							<div class="toggle" id="glintToggle"></div>
 						</div>
-						<div class="toggle-row"><span class="toggle-label">Can Always Eat</span>
-							<div class="toggle" id="foodAlwaysEatToggle"></div>
+						<div class="toggle-row"><span class="toggle-label">Hide Entire Tooltip</span>
+							<div class="toggle" id="tooltipHiddenToggle"></div>
 						</div>
 					</div>
-				</div>
+
+					<div class="java-only">
+						<div class="adv-label">Consumable Component</div>
+						<div class="toggle-row"><span class="toggle-label">Enable Consumable</span>
+							<div class="toggle" id="consumableToggle"></div>
+						</div>
+						<div id="consumableFields" class="sub-fields" style="display:none;">
+							<div class="field"><label class="label">Consume Seconds</label><input type="text" class="input" id="consumeSeconds" value="1.6" inputmode="decimal"></div>
+							<div class="field"><label class="label">Animation</label>
+								<select class="select" id="consumeAnim">
+									<option value="eat">Eat</option>
+									<option value="drink">Drink</option>
+									<option value="block">Block</option>
+									<option value="bow">Bow</option>
+									<option value="crossbow">Crossbow</option>
+									<option value="none">None</option>
+									<option value="spear">Spear</option>
+									<option value="brush">Brush</option>
+									<option value="honey_bucket">Honey Bucket</option>
+								</select>
+							</div>
+							<div class="field"><label class="label">Sound</label><input type="text" class="input" id="consumeSound" placeholder="entity.generic.eat"></div>
+						</div>
+					</div>
+
+					<div class="java-only">
+						<div class="adv-label">Food Component</div>
+						<div class="toggle-row"><span class="toggle-label">Enable Food</span>
+							<div class="toggle" id="foodToggle"></div>
+						</div>
+						<div id="foodFields" class="sub-fields" style="display:none;">
+							<div class="options-grid">
+								<div class="field"><label class="label">Nutrition</label><input type="text" class="input" id="foodNutrition" value="0" inputmode="numeric"></div>
+								<div class="field"><label class="label">Saturation</label><input type="text" class="input" id="foodSaturation" value="0" inputmode="decimal"></div>
+							</div>
+							<div class="toggle-row"><span class="toggle-label">Can Always Eat</span>
+								<div class="toggle" id="foodAlwaysEatToggle"></div>
+							</div>
+						</div>
+					</div>
 
 					<div class="adv-label bedrock-hide">Other Components</div>
 					<div class="toggle-row java-only"><span class="toggle-label">Glider</span>
@@ -1985,21 +2205,21 @@ If this gets 70+ votes I make a /summon 1
 							<option value="#minecraft:is_player_attack">Player Attack</option>
 							<option value="#minecraft:is_mob_attack">Mob Attack</option>
 							<option value="#minecraft:is_thorns">Thorns</option>
-					</select></div>
-
-				<div id="bedrock-options" class="bedrock-only">
-					<div class="adv-label">Bedrock-Only Components</div>
-					<div class="field"><label class="label">Item Lock</label><select class="select" id="itemLockSelect">
-							<option value="">(none)</option>
-							<option value="lock_in_inventory">Lock in Inventory</option>
-							<option value="lock_in_slot">Lock in Slot</option>
 						</select></div>
-					<div class="toggle-row"><span class="toggle-label">Keep on Death</span>
-						<div class="toggle" id="keepOnDeathToggle"></div>
-					</div>
-				</div>
 
-				<div id="cond-block-states" class="java-only">
+					<div id="bedrock-options" class="bedrock-only">
+						<div class="adv-label">Bedrock-Only Components</div>
+						<div class="field"><label class="label">Item Lock</label><select class="select" id="itemLockSelect">
+								<option value="">(none)</option>
+								<option value="lock_in_inventory">Lock in Inventory</option>
+								<option value="lock_in_slot">Lock in Slot</option>
+							</select></div>
+						<div class="toggle-row"><span class="toggle-label">Keep on Death</span>
+							<div class="toggle" id="keepOnDeathToggle"></div>
+						</div>
+					</div>
+
+					<div id="cond-block-states" class="java-only">
 						<div class="adv-label">Block States</div>
 						<div id="blockStateList" style="display:flex;flex-direction:column;gap:6px;"></div>
 						<div class="kv-add-row">
@@ -2079,146 +2299,152 @@ If this gets 70+ votes I make a /summon 1
 	<div class="toast" id="toast">Copied to clipboard!</div>
 	<script type>
 		// --- Procedural Cybernetic Hybrid Base Texture ---
-function createCyberHybridTexture() {
-  const canvas = document.createElement('canvas');
-  canvas.width = 32;
-  canvas.height = 32;
-  const ctx = canvas.getContext('2d');
+		function createCyberHybridTexture() {
+			const canvas = document.createElement('canvas');
+			canvas.width = 32;
+			canvas.height = 32;
+			const ctx = canvas.getContext('2d');
 
-  const basePalette = [
-    '#0B080D', '#120E17', '#1A1521',
-    '#0F1115', '#1B1E24', '#282D37',
-    '#1E1B18', '#2B2622', '#38322D',
-    '#050505', '#161616', '#333333'
-  ];
+			const basePalette = [
+				'#0B080D', '#120E17', '#1A1521',
+				'#0F1115', '#1B1E24', '#282D37',
+				'#1E1B18', '#2B2622', '#38322D',
+				'#050505', '#161616', '#333333'
+			];
 
-  for (let x = 0; x < 32; x++) {
-    for (let y = 0; y < 32; y++) {
-      ctx.fillStyle = basePalette[Math.floor(Math.random() * basePalette.length)];
-      ctx.fillRect(x, y, 1, 1);
-    }
-  }
+			for (let x = 0; x < 32; x++) {
+				for (let y = 0; y < 32; y++) {
+					ctx.fillStyle = basePalette[Math.floor(Math.random() * basePalette.length)];
+					ctx.fillRect(x, y, 1, 1);
+				}
+			}
 
-  ctx.fillStyle = '#060709';
-  ctx.fillRect(0, 6, 32, 2);
-  ctx.fillRect(0, 18, 32, 2);
-  ctx.fillRect(0, 26, 32, 1);
+			ctx.fillStyle = '#060709';
+			ctx.fillRect(0, 6, 32, 2);
+			ctx.fillRect(0, 18, 32, 2);
+			ctx.fillRect(0, 26, 32, 1);
 
-  ctx.fillStyle = '#1D122B';
-  ctx.fillRect(4, 2, 8, 1);
-  ctx.fillRect(18, 14, 10, 1);
-  ctx.fillRect(2, 22, 12, 1);
+			ctx.fillStyle = '#1D122B';
+			ctx.fillRect(4, 2, 8, 1);
+			ctx.fillRect(18, 14, 10, 1);
+			ctx.fillRect(2, 22, 12, 1);
 
-  ctx.fillStyle = '#4A423B';
-  ctx.fillRect(8, 7, 3, 1);
-  ctx.fillRect(20, 19, 4, 1);
-  ctx.fillRect(12, 27, 3, 1);
+			ctx.fillStyle = '#4A423B';
+			ctx.fillRect(8, 7, 3, 1);
+			ctx.fillRect(20, 19, 4, 1);
+			ctx.fillRect(12, 27, 3, 1);
 
-  ctx.fillStyle = '#00aaaa';
-  ctx.fillRect(6, 0, 2, 12);
-  ctx.fillRect(6, 10, 10, 2);
-  ctx.fillRect(14, 10, 2, 14);
-  ctx.fillRect(22, 18, 2, 14);
-  ctx.fillRect(18, 24, 8, 2);
+			ctx.fillStyle = '#00aaaa';
+			ctx.fillRect(6, 0, 2, 12);
+			ctx.fillRect(6, 10, 10, 2);
+			ctx.fillRect(14, 10, 2, 14);
+			ctx.fillRect(22, 18, 2, 14);
+			ctx.fillRect(18, 24, 8, 2);
 
-  ctx.fillStyle = '#00ffff';
-  ctx.fillRect(6, 4, 2, 2);
-  ctx.fillRect(14, 18, 2, 2);
-  ctx.fillRect(22, 28, 2, 2);
+			ctx.fillStyle = '#00ffff';
+			ctx.fillRect(6, 4, 2, 2);
+			ctx.fillRect(14, 18, 2, 2);
+			ctx.fillRect(22, 28, 2, 2);
 
-  ctx.fillStyle = '#00ffff';
-  ctx.fillRect(12, 12, 8, 8);
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(14, 14, 4, 4);
+			ctx.fillStyle = '#00ffff';
+			ctx.fillRect(12, 12, 8, 8);
+			ctx.fillStyle = '#ffffff';
+			ctx.fillRect(14, 14, 4, 4);
 
-  ctx.fillStyle = '#040507';
-  ctx.strokeRect(0, 0, 32, 32);
+			ctx.fillStyle = '#040507';
+			ctx.strokeRect(0, 0, 32, 32);
 
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.magFilter = THREE.NearestFilter;
-  texture.minFilter = THREE.NearestFilter;
-  return texture;
-}
+			const texture = new THREE.CanvasTexture(canvas);
+			texture.magFilter = THREE.NearestFilter;
+			texture.minFilter = THREE.NearestFilter;
+			return texture;
+		}
 
-// --- Scene Setup ---
-const container = document.getElementById('canvas-container');
-const scene = new THREE.Scene();
+		// --- Scene Setup ---
+		const container = document.getElementById('canvas-container');
+		const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
-camera.position.set(3.5, 3, 4.5);
-camera.lookAt(0, 0, 0);
+		const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
+		camera.position.set(3.5, 3, 4.5);
+		camera.lookAt(0, 0, 0);
 
-// preserveDrawingBuffer is enabled so toDataURL can capture the rendered canvas for the favicon
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
-renderer.setSize(500, 500);
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-container.appendChild(renderer.domElement);
+		// preserveDrawingBuffer is enabled so toDataURL can capture the rendered canvas for the favicon
+		const renderer = new THREE.WebGLRenderer({
+			antialias: true,
+			alpha: true,
+			preserveDrawingBuffer: true
+		});
+		renderer.setSize(500, 500);
+		renderer.setPixelRatio(window.devicePixelRatio);
+		renderer.shadowMap.enabled = true;
+		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+		container.appendChild(renderer.domElement);
 
-// --- Lighting ---
-const ambientLight = new THREE.AmbientLight(0x222834, 1.2);
-scene.add(ambientLight);
+		// --- Lighting ---
+		const ambientLight = new THREE.AmbientLight(0x222834, 1.2);
+		scene.add(ambientLight);
 
-const dirLight = new THREE.DirectionalLight(0x88ccff, 1.5);
-dirLight.position.set(6, 8, 5);
-dirLight.castShadow = true;
-scene.add(dirLight);
+		const dirLight = new THREE.DirectionalLight(0x88ccff, 1.5);
+		dirLight.position.set(6, 8, 5);
+		dirLight.castShadow = true;
+		scene.add(dirLight);
 
-const cyanGlow = new THREE.PointLight(0x00ffff, 3, 8);
-cyanGlow.position.set(-2, -1, 2);
-scene.add(cyanGlow);
+		const cyanGlow = new THREE.PointLight(0x00ffff, 3, 8);
+		cyanGlow.position.set(-2, -1, 2);
+		scene.add(cyanGlow);
 
-// --- Materials & Geometries ---
-const baseTexture = createCyberHybridTexture();
+		// --- Materials & Geometries ---
+		const baseTexture = createCyberHybridTexture();
 
-const cyberMaterial = new THREE.MeshStandardMaterial({
-  map: baseTexture,
-  roughness: 0.5,
-  metalness: 0.5
-});
+		const cyberMaterial = new THREE.MeshStandardMaterial({
+			map: baseTexture,
+			roughness: 0.5,
+			metalness: 0.5
+		});
 
-const mainGroup = new THREE.Group();
+		const mainGroup = new THREE.Group();
 
-const blockGeo = new THREE.BoxGeometry(2, 2, 2);
-const cyberBlock = new THREE.Mesh(blockGeo, cyberMaterial);
-cyberBlock.castShadow = true;
-cyberBlock.receiveShadow = true;
-mainGroup.add(cyberBlock);
+		const blockGeo = new THREE.BoxGeometry(2, 2, 2);
+		const cyberBlock = new THREE.Mesh(blockGeo, cyberMaterial);
+		cyberBlock.castShadow = true;
+		cyberBlock.receiveShadow = true;
+		mainGroup.add(cyberBlock);
 
-const gemGeo = new THREE.OctahedronGeometry(0.5);
-const gemMat = new THREE.MeshStandardMaterial({
-  color: 0x00ffff,
-  emissive: 0x008888,
-  roughness: 0.1,
-  metalness: 0.9
-});
-const gem = new THREE.Mesh(gemGeo, gemMat);
-gem.position.set(0, 1.7, 0);
-gem.rotation.y = Math.PI / 4;
-gem.castShadow = true;
-mainGroup.add(gem);
+		const gemGeo = new THREE.OctahedronGeometry(0.5);
+		const gemMat = new THREE.MeshStandardMaterial({
+			color: 0x00ffff,
+			emissive: 0x008888,
+			roughness: 0.1,
+			metalness: 0.9
+		});
+		const gem = new THREE.Mesh(gemGeo, gemMat);
+		gem.position.set(0, 1.7, 0);
+		gem.rotation.y = Math.PI / 4;
+		gem.castShadow = true;
+		mainGroup.add(gem);
 
-const ringGeo = new THREE.BoxGeometry(2.1, 0.08, 2.1);
-const ringMat = new THREE.MeshBasicMaterial({ color: 0x00ffff });
-const ring = new THREE.Mesh(ringGeo, ringMat);
-ring.position.y = -0.5;
-mainGroup.add(ring);
+		const ringGeo = new THREE.BoxGeometry(2.1, 0.08, 2.1);
+		const ringMat = new THREE.MeshBasicMaterial({
+			color: 0x00ffff
+		});
+		const ring = new THREE.Mesh(ringGeo, ringMat);
+		ring.position.y = -0.5;
+		mainGroup.add(ring);
 
-scene.add(mainGroup);
+		scene.add(mainGroup);
 
-mainGroup.rotation.y = Math.PI / 4;
-mainGroup.rotation.x = Math.PI / 8;
+		mainGroup.rotation.y = Math.PI / 4;
+		mainGroup.rotation.x = Math.PI / 8;
 
-// Render 3D Scene
-renderer.render(scene, camera);
+		// Render 3D Scene
+		renderer.render(scene, camera);
 
-// Set 3D render snapshot as Favicon// Generate favicon from Three.js scene
+		// Set 3D render snapshot as Favicon// Generate favicon from Three.js scene
 
-const favicon = document.getElementById('dynamicFavicon');
-if (favicon) {
-  favicon.href = renderer.domElement.toDataURL('image/png');
-}
+		const favicon = document.getElementById('dynamicFavicon');
+		if (favicon) {
+			favicon.href = renderer.domElement.toDataURL('image/png');
+		}
 	</script>
 	<script type>
 		"use strict";
@@ -7223,9 +7449,9 @@ if (favicon) {
 			};
 		}
 		var S = {
-		edition: "java",
-		version: "1.21.5+",
-		item: null,
+			edition: "java",
+			version: "1.21.5+",
+			item: null,
 			count: 1,
 			target: {
 				type: "@p",
@@ -7642,20 +7868,20 @@ if (favicon) {
 			wrap.innerHTML = "";
 			wrap.appendChild(makeFormatButtons(S.name));
 		}
-		
+
 		function updateEditionUI() {
 			var isBedrock = S.edition === "bedrock";
-			
-		document.querySelectorAll(".edition-btn").forEach(function(b) {
-			b.classList.toggle("active", b.dataset.edition === S.edition);
-		});
-		
-		document.body.classList.toggle("edition-bedrock", isBedrock);
-		document.body.classList.toggle("edition-java", !isBedrock);
-		$("editionToggle").classList.toggle("bedrock-active", isBedrock);
-		
-		$("versionSelect").style.display = isBedrock ? "none" : "";
-			
+
+			document.querySelectorAll(".edition-btn").forEach(function(b) {
+				b.classList.toggle("active", b.dataset.edition === S.edition);
+			});
+
+			document.body.classList.toggle("edition-bedrock", isBedrock);
+			document.body.classList.toggle("edition-java", !isBedrock);
+			$("editionToggle").classList.toggle("bedrock-active", isBedrock);
+
+			$("versionSelect").style.display = isBedrock ? "none" : "";
+
 			if (isBedrock) {
 				$("versionBadge").textContent = "Bedrock Edition";
 				$("infoNote").textContent = "Commands are generated client-side. Paste into Minecraft Bedrock Edition chat or a command block. Requires OP level 1+. Some Java-only components (potions, banners, books, attributes, etc.) are not emitted in Bedrock output.";
@@ -7679,7 +7905,7 @@ if (favicon) {
 			}
 			updateAll();
 		});
-		
+
 		document.querySelectorAll(".section-header").forEach(function(h) {
 			h.onclick = function() {
 				h.parentElement.classList.toggle("collapsed");
@@ -7748,7 +7974,7 @@ if (favicon) {
 			S.name.text = this.value;
 			updateAll();
 		});
-		
+
 		function renderLore() {
 			var c = $("loreContainer");
 			c.innerHTML = "";
@@ -7879,6 +8105,7 @@ if (favicon) {
 			this.textContent = S.enchRelevantOnly ? "Show All" : "Relevant Only";
 			renderEnchPool();
 		};
+
 		function setupToggle(id, cb) {
 			var el = $(id);
 			el.onclick = function() {
@@ -7908,7 +8135,7 @@ if (favicon) {
 			S.customModelData = intVal(this.value, 0);
 			updateAll();
 		});
-		
+
 		var ATTR_TYPES = ["armor", "armor_toughness", "attack_damage", "attack_speed", "attack_knockback", "max_health", "knockback_resistance", "explosion_knockback_resistance", "movement_speed", "flying_speed", "luck", "burning_time_modifier", "water_movement_efficiency", "movement_efficiency", "jump_strength", "block_break_speed", "block_interaction_range", "entity_interaction_range", "spawn_reinforcements", "gravity", "safe_fall_distance", "fall_damage_multiplier", "lava_movement_efficiency"];
 		var ATTR_SLOTS = ["any", "mainhand", "offhand", "head", "chest", "legs", "feet", "body"];
 		var ATTR_OPS = ["add_value", "multiply_base", "multiply_total"];
@@ -8841,9 +9068,9 @@ if (favicon) {
 		}
 
 		function buildBedrockCommand() {
-		var cmd = "/give " + targetStr() + " " + bedrockItemId(S.item.d);
-		/* Build the components JSON object */
-		var comps = {};
+			var cmd = "/give " + targetStr() + " " + bedrockItemId(S.item.d);
+			/* Build the components JSON object */
+			var comps = {};
 			var display = {};
 			if (S.name.text) {
 				display.Name = textToBedrock(S.name);
@@ -9072,7 +9299,7 @@ if (favicon) {
 					}
 				}
 			}
-			
+
 			if (S.item && S.item.d === "minecraft:filled_map") {
 				comps.push("map_id=" + intVal(S.mapId, 0));
 				if (S.mapDecorations.length) {
@@ -9167,7 +9394,7 @@ if (favicon) {
 			}
 			return out;
 		}
-		
+
 		function romanOrNum(n) {
 			var rom = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII"];
 			if (n >= 1 && n <= 16) return rom[n];
@@ -10464,8 +10691,8 @@ if (favicon) {
 			name: true,
 			anyEnch: false
 		};
-		var NAME_ADJ = ["Ancient","OP","Cyber","Bionic", "Cursed", "Divine", "Eternal", "Forbidden", "Glorious", "Holy", "Mystic", "Sacred", "Shattered", "Sovereign", "Vengeful", "Wicked", "Frozen", "Burning", "Shadowed", "Radiant", "Crimson", "Emerald", "Golden", "Forgotten", "Whispering", "Thunderous", "Venomous", "Celestial"];
-		var NAME_NOUN = ["Destiny", "Fortune", "Glory","Suit","Wand","Mega-Blade", "Chaos", "Terror", "Splendor", "Oblivion", "Victory", "Eternity", "Sorrow", "Wrath", "Wonders", "Dreams", "Shadows", "Flames", "Frost", "Storms", "Souls", "Legends", "Madness"];
+		var NAME_ADJ = ["Ancient", "OP", "Cyber", "Bionic", "Cursed", "Divine", "Eternal", "Forbidden", "Glorious", "Holy", "Mystic", "Sacred", "Shattered", "Sovereign", "Vengeful", "Wicked", "Frozen", "Burning", "Shadowed", "Radiant", "Crimson", "Emerald", "Golden", "Forgotten", "Whispering", "Thunderous", "Venomous", "Celestial"];
+		var NAME_NOUN = ["Destiny", "Fortune", "Glory", "Suit", "Wand", "Mega-Blade", "Chaos", "Terror", "Splendor", "Oblivion", "Victory", "Eternity", "Sorrow", "Wrath", "Wonders", "Dreams", "Shadows", "Flames", "Frost", "Storms", "Souls", "Legends", "Madness"];
 		var NAME_COLORS = COLORS.filter(function(c) {
 			return c.j !== "black" && c.j !== "dark_gray";
 		});
@@ -10608,292 +10835,472 @@ if (favicon) {
 		renderItems();
 		updateAll();
 
-(() => {
-  const canvas = document.getElementById("terrainCanvas");
-  if (!canvas || typeof THREE === "undefined") return;
+		(() => {
+			const canvas = document.getElementById("terrainCanvas");
+			if (!canvas || typeof THREE === "undefined") return;
 
-  const scene = new THREE.Scene();
+			const scene = new THREE.Scene();
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+			const renderer = new THREE.WebGLRenderer({
+				canvas,
+				antialias: false,
+				alpha: true
+			});
+			renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-  const CAMERA_DISTANCE = 80;
-  const CAMERA_HEIGHT = 48;
-  
-  // Extended far clipping plane to 1500 to accommodate the infinite ocean
-  const camera = new THREE.PerspectiveCamera(23, 1, 0.1, 1500);
-  camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
+			const CAMERA_DISTANCE = 80;
+			const CAMERA_HEIGHT = 48;
 
-  function createPixelTexture(drawFn) {
-    const size = 16;
-    const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = size;
-    const ctx = canvas.getContext("2d");
-    drawFn(ctx, size);
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.magFilter = THREE.NearestFilter;
-    texture.minFilter = THREE.NearestFilter;
-    return texture;
-  }
+			// Extended far clipping plane to 1500 to accommodate the infinite ocean
+			const camera = new THREE.PerspectiveCamera(23, 1, 0.1, 1500);
+			camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
 
-  const dirtTex = createPixelTexture((ctx, s) => {
-    ctx.fillStyle = "#866043"; ctx.fillRect(0, 0, s, s);
-    for (let i = 0; i < s * s * 0.4; i++) { ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253"; ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1); }
-  });
-  const grassTopTex = createPixelTexture((ctx, s) => {
-    ctx.fillStyle = "#5cbf3f"; ctx.fillRect(0, 0, s, s);
-    for (let i = 0; i < s * s * 0.4; i++) { ctx.fillStyle = Math.random() > 0.5 ? "#489e2e" : "#72d651"; ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1); }
-  });
-  const grassSideTex = createPixelTexture((ctx, s) => {
-    ctx.fillStyle = "#866043"; ctx.fillRect(0, 0, s, s);
-    for (let i = 0; i < s * s * 0.3; i++) { ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253"; ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1); }
-    ctx.fillStyle = "#5cbf3f"; ctx.fillRect(0, 0, s, 3);
-    for (let x = 0; x < s; x++) { ctx.fillRect(x, 0, 1, 3 + Math.floor(Math.random() * 3)); }
-  });
-  const stoneTex = createPixelTexture((ctx, s) => {
-    ctx.fillStyle = "#737373"; ctx.fillRect(0, 0, s, s);
-    for (let i = 0; i < s * s * 0.45; i++) { ctx.fillStyle = Math.random() > 0.5 ? "#525252" : "#8f8f8f"; ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1); }
-  });
-  const sandTex = createPixelTexture((ctx, s) => {
-    ctx.fillStyle = "#dcd299"; ctx.fillRect(0, 0, s, s);
-    for (let i = 0; i < s * s * 0.35; i++) { ctx.fillStyle = Math.random() > 0.5 ? "#c2b67a" : "#ebd8aa"; ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1); }
-  });
-  const snowTex = createPixelTexture((ctx, s) => {
-    ctx.fillStyle = "#f0f5fb"; ctx.fillRect(0, 0, s, s);
-    for (let i = 0; i < s * s * 0.25; i++) { ctx.fillStyle = Math.random() > 0.5 ? "#d3e0f0" : "#ffffff"; ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1); }
-  });
+			function createPixelTexture(drawFn) {
+				const size = 16;
+				const canvas = document.createElement("canvas");
+				canvas.width = canvas.height = size;
+				const ctx = canvas.getContext("2d");
+				drawFn(ctx, size);
+				const texture = new THREE.CanvasTexture(canvas);
+				texture.magFilter = THREE.NearestFilter;
+				texture.minFilter = THREE.NearestFilter;
+				return texture;
+			}
 
-  // --- MATERIAL SETUP ---
-  const cubeGeo = new THREE.BoxGeometry(1, 1, 1);
-  const grassMatList = [
-    new THREE.MeshStandardMaterial({ map: grassSideTex, roughness: 0.8 }), new THREE.MeshStandardMaterial({ map: grassSideTex, roughness: 0.8 }),
-    new THREE.MeshStandardMaterial({ map: grassTopTex, roughness: 0.8 }), new THREE.MeshStandardMaterial({ map: dirtTex, roughness: 0.8 }),
-    new THREE.MeshStandardMaterial({ map: grassSideTex, roughness: 0.8 }), new THREE.MeshStandardMaterial({ map: grassSideTex, roughness: 0.8 })
-  ];
-  const dirtMat = new THREE.MeshStandardMaterial({ map: dirtTex, roughness: 0.85 });
-  const stoneMat = new THREE.MeshStandardMaterial({ map: stoneTex, roughness: 0.85 });
-  const sandMat = new THREE.MeshStandardMaterial({ map: sandTex, roughness: 0.85 });
-  const snowMat = new THREE.MeshStandardMaterial({ map: snowTex, roughness: 0.85 });
+			const dirtTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#866043";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.4; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
+			const grassTopTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#5cbf3f";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.4; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#489e2e" : "#72d651";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
+			const grassSideTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#866043";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.3; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+				ctx.fillStyle = "#5cbf3f";
+				ctx.fillRect(0, 0, s, 3);
+				for (let x = 0; x < s; x++) {
+					ctx.fillRect(x, 0, 1, 3 + Math.floor(Math.random() * 3));
+				}
+			});
+			const stoneTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#737373";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.45; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#525252" : "#8f8f8f";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
+			const sandTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#dcd299";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.35; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#c2b67a" : "#ebd8aa";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
+			const snowTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#f0f5fb";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.25; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#d3e0f0" : "#ffffff";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
 
-  // --- LIGHTS & ENVIRONMENT ---
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.4); scene.add(ambientLight);
-  const sunLight = new THREE.DirectionalLight(0xfffaed, 1.3); sunLight.castShadow = true;
-  sunLight.shadow.mapSize.width = 4096; sunLight.shadow.mapSize.height = 4096;
-  sunLight.shadow.camera.far = 300; const sSize = 90;
-  sunLight.shadow.camera.left = -sSize; sunLight.shadow.camera.right = sSize; sunLight.shadow.camera.top = sSize; sunLight.shadow.camera.bottom = -sSize;
-  scene.add(sunLight);
+			// --- MATERIAL SETUP ---
+			const cubeGeo = new THREE.BoxGeometry(1, 1, 1);
+			const grassMatList = [
+				new THREE.MeshStandardMaterial({
+					map: grassSideTex,
+					roughness: 0.8
+				}), new THREE.MeshStandardMaterial({
+					map: grassSideTex,
+					roughness: 0.8
+				}),
+				new THREE.MeshStandardMaterial({
+					map: grassTopTex,
+					roughness: 0.8
+				}), new THREE.MeshStandardMaterial({
+					map: dirtTex,
+					roughness: 0.8
+				}),
+				new THREE.MeshStandardMaterial({
+					map: grassSideTex,
+					roughness: 0.8
+				}), new THREE.MeshStandardMaterial({
+					map: grassSideTex,
+					roughness: 0.8
+				})
+			];
+			const dirtMat = new THREE.MeshStandardMaterial({
+				map: dirtTex,
+				roughness: 0.85
+			});
+			const stoneMat = new THREE.MeshStandardMaterial({
+				map: stoneTex,
+				roughness: 0.85
+			});
+			const sandMat = new THREE.MeshStandardMaterial({
+				map: sandTex,
+				roughness: 0.85
+			});
+			const snowMat = new THREE.MeshStandardMaterial({
+				map: snowTex,
+				roughness: 0.85
+			});
 
-  const skyMat = new THREE.ShaderMaterial({
-    side: THREE.BackSide,
-    uniforms: { top: { value: new THREE.Color(0x3878cf) }, bot: { value: new THREE.Color(0x92c4f2) } },
-    vertexShader: "varying vec3 vP; void main() { vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
-    fragmentShader: "varying vec3 vP; uniform vec3 top; uniform vec3 bot; void main() { float h = normalize(vP).y * 0.5 + 0.5; gl_FragColor = vec4(mix(bot, top, h), 1.0); }"
-  });
-  scene.add(new THREE.Mesh(new THREE.SphereGeometry(1200, 16, 16), skyMat));
+			// --- LIGHTS & ENVIRONMENT ---
+			const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+			scene.add(ambientLight);
+			const sunLight = new THREE.DirectionalLight(0xfffaed, 1.3);
+			sunLight.castShadow = true;
+			sunLight.shadow.mapSize.width = 4096;
+			sunLight.shadow.mapSize.height = 4096;
+			sunLight.shadow.camera.far = 300;
+			const sSize = 90;
+			sunLight.shadow.camera.left = -sSize;
+			sunLight.shadow.camera.right = sSize;
+			sunLight.shadow.camera.top = sSize;
+			sunLight.shadow.camera.bottom = -sSize;
+			scene.add(sunLight);
 
-  // --- CELESTIAL MECHANICS ---
-  const celestialGroup = new THREE.Group(); scene.add(celestialGroup);
-  const sunMesh = new THREE.Mesh(new THREE.BoxGeometry(14, 14, 0.2), new THREE.MeshBasicMaterial({ color: 0xffffeb })); sunMesh.position.set(0, 160, 0); sunMesh.rotation.x = Math.PI / 2; celestialGroup.add(sunMesh);
-  const moonMesh = new THREE.Mesh(new THREE.BoxGeometry(12, 12, 0.2), new THREE.MeshBasicMaterial({ color: 0xe0e8f5 })); moonMesh.position.set(0, -160, 0); moonMesh.rotation.x = Math.PI / 2; celestialGroup.add(moonMesh);
+			const skyMat = new THREE.ShaderMaterial({
+				side: THREE.BackSide,
+				uniforms: {
+					top: {
+						value: new THREE.Color(0x3878cf)
+					},
+					bot: {
+						value: new THREE.Color(0x92c4f2)
+					}
+				},
+				vertexShader: "varying vec3 vP; void main() { vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
+				fragmentShader: "varying vec3 vP; uniform vec3 top; uniform vec3 bot; void main() { float h = normalize(vP).y * 0.5 + 0.5; gl_FragColor = vec4(mix(bot, top, h), 1.0); }"
+			});
+			scene.add(new THREE.Mesh(new THREE.SphereGeometry(1200, 16, 16), skyMat));
 
-  // --- INSTANCED MESH HELPER ---
-  function makeInstanced(positions, material) {
-    if (!positions.length) return null;
-    const inst = new THREE.InstancedMesh(cubeGeo, material, positions.length); inst.castShadow = true; inst.receiveShadow = true;
-    const m = new THREE.Matrix4();
-    positions.forEach((pos, i) => { m.makeTranslation(pos.x, pos.y, pos.z); inst.setMatrixAt(i, m); });
-    inst.instanceMatrix.needsUpdate = true; scene.add(inst);
-    return inst;
-  }
+			// --- CELESTIAL MECHANICS ---
+			const celestialGroup = new THREE.Group();
+			scene.add(celestialGroup);
+			const sunMesh = new THREE.Mesh(new THREE.BoxGeometry(14, 14, 0.2), new THREE.MeshBasicMaterial({
+				color: 0xffffeb
+			}));
+			sunMesh.position.set(0, 160, 0);
+			sunMesh.rotation.x = Math.PI / 2;
+			celestialGroup.add(sunMesh);
+			const moonMesh = new THREE.Mesh(new THREE.BoxGeometry(12, 12, 0.2), new THREE.MeshBasicMaterial({
+				color: 0xe0e8f5
+			}));
+			moonMesh.position.set(0, -160, 0);
+			moonMesh.rotation.x = Math.PI / 2;
+			celestialGroup.add(moonMesh);
 
-  // --- TERRAIN GENERATION (100x100) ---
-  const SIZE = 100;
-  const HALF = SIZE / 2;
-  const waterLevel = 6;
-  const snowLevel = 20;
+			// --- INSTANCED MESH HELPER ---
+			function makeInstanced(positions, material) {
+				if (!positions.length) return null;
+				const inst = new THREE.InstancedMesh(cubeGeo, material, positions.length);
+				inst.castShadow = true;
+				inst.receiveShadow = true;
+				const m = new THREE.Matrix4();
+				positions.forEach((pos, i) => {
+					m.makeTranslation(pos.x, pos.y, pos.z);
+					inst.setMatrixAt(i, m);
+				});
+				inst.instanceMatrix.needsUpdate = true;
+				scene.add(inst);
+				return inst;
+			}
 
-  const n1 = new Date().getTime() * 0.001, n2 = n1 + 100, n3 = n2 + 100;
-  function heightAt(x, z) {
-    const dX = x + HALF, dZ = z + HALF;
-    const islandFactor = Math.cos((dX / SIZE) * Math.PI - Math.PI / 2) * Math.cos((dZ / SIZE) * Math.PI - Math.PI / 2);
-    const river = 11.0 * Math.exp(-Math.pow((z - 15 * Math.sin(x * 0.08)) * 0.16, 2));
-    
-    const h = Math.round((
-      10.0 * Math.sin(dX * 0.12 + n1) * Math.cos(dZ * 0.10 + n2) +
-      6.0 * Math.sin(dX * 0.06 + n3) +
-      5.0 * Math.cos(dZ * 0.08 - n1) +
-      3.0 * Math.sin(dX * 0.03) * Math.cos(dZ * 0.04) +
-      12 - river
-    ) * Math.pow(islandFactor, 1.5));
-    
-    return Math.max(0, h);
-  }
+			// --- TERRAIN GENERATION (100x100) ---
+			const SIZE = 150;
+			const HALF = SIZE / 2;
+			const waterLevel = 6;
+			const snowLevel = 18;
 
-  const grassPos = [], dirtPos = [], stonePos = [], sandPos = [], snowPos = [];
-  const treeSpots = [];
+			const n1 = new Date().getTime() * 0.001,
+				n2 = n1 + 100,
+				n3 = n2 + 100;
 
-  for (let x = -HALF; x < HALF; x++) {
-    for (let z = -HALF; z < HALF; z++) {
-      const topH = heightAt(x, z);
+			function heightAt(x, z) {
+				const dX = x + HALF,
+					dZ = z + HALF;
+				const islandFactor = Math.cos((dX / SIZE) * Math.PI - Math.PI / 2) * Math.cos((dZ / SIZE) * Math.PI - Math.PI / 2);
+				const river = 11.0 * Math.exp(-Math.pow((z - 15 * Math.sin(x * 0.08)) * 0.16, 2));
 
-      for (let y = topH; y >= 0; y--) {
-        const pos = { x, y, z };
-        if (y === topH) {
-          if (topH <= waterLevel) { sandPos.push(pos); }
-          else if (topH >= snowLevel) { snowPos.push(pos); }
-          else if (topH > 18) { stonePos.push(pos); }
-          else { grassPos.push(pos); if (topH > waterLevel + 1 && Math.random() < 0.02) treeSpots.push({ x, z, h: topH }); }
-        } else if (y > topH - 4 && y > waterLevel) { dirtPos.push(pos); } else { stonePos.push(pos); }
-      }
-    }
-  }
+				const h = Math.round((
+					10.0 * Math.sin(dX * 0.12 + n1) * Math.cos(dZ * 0.10 + n2) +
+					6.0 * Math.sin(dX * 0.06 + n3) +
+					5.0 * Math.cos(dZ * 0.08 - n1) +
+					3.0 * Math.sin(dX * 0.03) * Math.cos(dZ * 0.04) +
+					12 - river
+				) * Math.pow(islandFactor, 1.5));
 
-  makeInstanced(grassPos, grassMatList); makeInstanced(dirtPos, dirtMat); makeInstanced(stonePos, stoneMat); makeInstanced(sandPos, sandMat); makeInstanced(snowPos, snowMat);
+				return Math.max(0, h);
+			}
 
-  // --- INFINITE OCEAN (Massive 1200x1200 Plane) ---
-  const waterGeo = new THREE.PlaneGeometry(1200, 1200, 120, 120);
-  waterGeo.rotateX(-Math.PI / 2);
-  const waterMat = new THREE.MeshStandardMaterial({ color: 0x1d66c4, roughness: 0.1, metalness: 0.8, transparent: true, opacity: 0.8, flatShading: true });
-  const waterMesh = new THREE.Mesh(waterGeo, waterMat); waterMesh.position.set(0, waterLevel + 0.1, 0); waterMesh.receiveShadow = true; scene.add(waterMesh);
-  const waterPositions = waterGeo.attributes.position; const initialWaterY = new Float32Array(waterPositions.count);
-  for (let i = 0; i < waterPositions.count; i++) { initialWaterY[i] = waterPositions.getY(i); }
+			const grassPos = [],
+				dirtPos = [],
+				stonePos = [],
+				sandPos = [],
+				snowPos = [];
+			const treeSpots = [];
 
-  // --- TREES ---
-  const leafMat = new THREE.MeshStandardMaterial({ map: grassTopTex, roughness: 0.6 });
-  const trunkPos = [], leafPos = [];
-  treeSpots.forEach(s => {
-    for (let t = 1; t <= 5; t++) trunkPos.push({ x: s.x, y: s.h + t, z: s.z });
-    for (let lx = -2; lx <= 2; lx++) for (let lz = -2; lz <= 2; lz++) for (let ly = 0; ly <= 2; ly++) {
-      if (Math.abs(lx) === 2 && Math.abs(lz) === 2) continue;
-      if (lx === 0 && lz === 0 && ly < 2) continue;
-      leafPos.push({ x: s.x + lx, y: s.h + 5 + ly, z: s.z + lz });
-    }
-  });
-  makeInstanced(trunkPos, dirtMat); makeInstanced(leafPos, leafMat);
+			for (let x = -HALF; x < HALF; x++) {
+				for (let z = -HALF; z < HALF; z++) {
+					const topH = heightAt(x, z);
 
-  // --- MINECRAFT FLOATING TEXT GENERATOR ---
-  const textGroup = new THREE.Group();
-  scene.add(textGroup);
-  function addPixelTextBlock(char, tx, ty, tz) {
-    const font = {
-      'g': [0x7c, 0x02, 0x7e, 0x02, 0x7e, 0x02, 0x7c, 0x00],
-      'i': [0x10, 0x18, 0x1c, 0x10, 0x10, 0x10, 0x7c, 0x00],
-      'v': [0x22, 0x22, 0x22, 0x22, 0x22, 0x14, 0x08, 0x00],
-      'e': [0x3e, 0x20, 0x3e, 0x22, 0x22, 0x20, 0x3e, 0x00],
-      'n': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x00],
-      'r': [0x3e, 0x22, 0x3c, 0x24, 0x22, 0x22, 0x22, 0x00],
-      'a': [0x1c, 0x22, 0x22, 0x3e, 0x22, 0x22, 0x22, 0x00],
-      't': [0x3c, 0x10, 0x10, 0x3c, 0x10, 0x10, 0x10, 0x00],
-      'o': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3c, 0x00],
-      'l': [0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x7c, 0x00],
-      'd': [0x3e, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3e, 0x00],
-      's': [0x3e, 0x20, 0x3c, 0x02, 0x02, 0x22, 0x3c, 0x00],
-      'y': [0x22, 0x22, 0x14, 0x08, 0x08, 0x08, 0x08, 0x00]
-    };
-    const blockMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const geo = new THREE.BoxGeometry(0.3, 0.3, 0.05);
-    if (!font[char]) return;
-    for (let iy = 0; iy < 8; iy++) {
-      const line = font[char][iy];
-      for (let ix = 0; ix < 8; ix++) {
-        if ((line >> (7 - ix)) & 1) {
-          const m = new THREE.Mesh(geo, blockMat);
-          m.position.set(tx + ix * 0.3, ty - iy * 0.3, tz);
-          textGroup.add(m);
-        }
-      }
-    }
-  }
+					for (let y = topH; y >= 0; y--) {
+						const pos = {
+							x,
+							y,
+							z
+						};
+						if (y === topH) {
+							if (topH <= waterLevel) {
+								sandPos.push(pos);
+							} else if (topH >= snowLevel) {
+								snowPos.push(pos);
+							} else if (topH > 18) {
+								stonePos.push(pos);
+							} else {
+								grassPos.push(pos);
+								if (topH > waterLevel + 1 && Math.random() < 0.02) treeSpots.push({
+									x,
+									z,
+									h: topH
+								});
+							}
+						} else if (y > topH - 4 && y > waterLevel) {
+							dirtPos.push(pos);
+						} else {
+							stonePos.push(pos);
+						}
+					}
+				}
+			}
 
-  const textString = "give generator diversified and massive size island";
-  let curX = -textString.length * 1.5 + 20;
-  for (let i = 0; i < textString.length; i++) {
-    addPixelTextBlock(textString[i], curX, 36, 12);
-    curX += 3.2;
-    if (textString[i] === " ") curX += 1.5;
-  }
+			makeInstanced(grassPos, grassMatList);
+			makeInstanced(dirtPos, dirtMat);
+			makeInstanced(stonePos, stoneMat);
+			makeInstanced(sandPos, sandMat);
+			makeInstanced(snowPos, snowMat);
 
-  // --- CLOUDS ---
-  const cloudGroup = new THREE.Group();
-  const cloudMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.85 });
-  function addCloud(cx, cy, cz) {
-    const parts = 8 + Math.floor(Math.random() * 6);
-    for (let i = 0; i < parts; i++) {
-      const c = new THREE.Mesh(cubeGeo, cloudMat);
-      c.position.set(cx + i * 2.5, cy + (Math.random() - 0.5) * 1.8, cz + (Math.random() - 0.5) * 4.0);
-      c.scale.set(4.0, 1.4, 2.8); cloudGroup.add(c);
-    }
-  }
-  addCloud(-40, 42, -28); addCloud(20, 48, 18); addCloud(12, 38, -36); addCloud(-25, 52, 14); addCloud(45, 46, -20);
-  scene.add(cloudGroup);
+			// --- INFINITE OCEAN (Massive 1200x1200 Plane) ---
+			const waterGeo = new THREE.PlaneGeometry(1200, 1200, 120, 120);
+			waterGeo.rotateX(-Math.PI / 2);
+			const waterMat = new THREE.MeshStandardMaterial({
+				color: 0x1d66c4,
+				roughness: 0.1,
+				metalness: 0.8,
+				transparent: true,
+				opacity: 0.8,
+				flatShading: true
+			});
+			const waterMesh = new THREE.Mesh(waterGeo, waterMat);
+			waterMesh.position.set(0, waterLevel + 0.1, 0);
+			waterMesh.receiveShadow = true;
+			scene.add(waterMesh);
+			const waterPositions = waterGeo.attributes.position;
+			const initialWaterY = new Float32Array(waterPositions.count);
+			for (let i = 0; i < waterPositions.count; i++) {
+				initialWaterY[i] = waterPositions.getY(i);
+			}
 
-  // --- RESIZE EVENT ---
-  function resize() {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-  }
-  window.addEventListener("resize", resize); resize();
+			// --- TREES ---
+			const leafMat = new THREE.MeshStandardMaterial({
+				map: grassTopTex,
+				roughness: 0.6
+			});
+			const trunkPos = [],
+				leafPos = [];
+			treeSpots.forEach(s => {
+				for (let t = 1; t <= 5; t++) trunkPos.push({
+					x: s.x,
+					y: s.h + t,
+					z: s.z
+				});
+				for (let lx = -2; lx <= 2; lx++)
+					for (let lz = -2; lz <= 2; lz++)
+						for (let ly = 0; ly <= 2; ly++) {
+							if (Math.abs(lx) === 2 && Math.abs(lz) === 2) continue;
+							if (lx === 0 && lz === 0 && ly < 2) continue;
+							leafPos.push({
+								x: s.x + lx,
+								y: s.h + 5 + ly,
+								z: s.z + lz
+							});
+						}
+			});
+			makeInstanced(trunkPos, dirtMat);
+			makeInstanced(leafPos, leafMat);
 
-  // --- DAY/NIGHT COLORS ---
-  const daySkyTop = new THREE.Color(0x3878cf), daySkyBot = new THREE.Color(0x92c4f2);
-  const sunsetSkyTop = new THREE.Color(0x283b6b), sunsetSkyBot = new THREE.Color(0xf08053);
-  const nightSkyTop = new THREE.Color(0x050a14), nightSkyBot = new THREE.Color(0x0d1b36);
-  const fogColor = new THREE.Color();
+			// --- MINECRAFT FLOATING TEXT GENERATOR ---
+			const textGroup = new THREE.Group();
+			scene.add(textGroup);
 
-  // --- ANIMATION LOOP ---
-  let angle = 0; const clock = new THREE.Clock();
-  function animate() {
-    requestAnimationFrame(animate); const t = clock.getElapsedTime();
+			function addPixelTextBlock(char, tx, ty, tz) {
+				const font = {
+					'g': [0x7c, 0x02, 0x7e, 0x02, 0x7e, 0x02, 0x7c, 0x00],
+					'i': [0x10, 0x18, 0x1c, 0x10, 0x10, 0x10, 0x7c, 0x00],
+					'v': [0x22, 0x22, 0x22, 0x22, 0x22, 0x14, 0x08, 0x00],
+					'e': [0x3e, 0x20, 0x3e, 0x22, 0x22, 0x20, 0x3e, 0x00],
+					'n': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x00],
+					'r': [0x3e, 0x22, 0x3c, 0x24, 0x22, 0x22, 0x22, 0x00],
+					'a': [0x1c, 0x22, 0x22, 0x3e, 0x22, 0x22, 0x22, 0x00],
+					't': [0x3c, 0x10, 0x10, 0x3c, 0x10, 0x10, 0x10, 0x00],
+					'o': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3c, 0x00],
+					'l': [0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x7c, 0x00],
+					'd': [0x3e, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3e, 0x00],
+					's': [0x3e, 0x20, 0x3c, 0x02, 0x02, 0x22, 0x3c, 0x00],
+					'y': [0x22, 0x22, 0x14, 0x08, 0x08, 0x08, 0x08, 0x00]
+				};
+				const blockMat = new THREE.MeshBasicMaterial({
+					color: 0xffffff
+				});
+				const geo = new THREE.BoxGeometry(0.3, 0.3, 0.05);
+				if (!font[char]) return;
+				for (let iy = 0; iy < 8; iy++) {
+					const line = font[char][iy];
+					for (let ix = 0; ix < 8; ix++) {
+						if ((line >> (7 - ix)) & 1) {
+							const m = new THREE.Mesh(geo, blockMat);
+							m.position.set(tx + ix * 0.3, ty - iy * 0.3, tz);
+							textGroup.add(m);
+						}
+					}
+				}
+			}
 
-    // FIXED Orbit Camera Distance
-    angle += 0.0004;
-    camera.position.x = Math.sin(angle) * CAMERA_DISTANCE;
-    camera.position.z = Math.cos(angle) * CAMERA_DISTANCE;
-    camera.position.y = CAMERA_HEIGHT; 
-    camera.lookAt(0, 10, 0);
+			const textString = "GIVE GENERATOR";
+			let curX = -textString.length * 1.5 + 20;
+			for (let i = 0; i < textString.length; i++) {
+				addPixelTextBlock(textString[i], curX, 36, 12);
+				curX += 3.2;
+				if (textString[i] === " ") curX += 1.5;
+			}
 
-    // Celestial Rotation
-    const daySpeed = 0.035; celestialGroup.rotation.z = t * daySpeed;
-    const sunWorldPos = new THREE.Vector3(); sunMesh.getWorldPosition(sunWorldPos); sunLight.position.copy(sunWorldPos);
+			// --- CLOUDS ---
+			const cloudGroup = new THREE.Group();
+			const cloudMat = new THREE.MeshBasicMaterial({
+				color: 0xffffff,
+				transparent: true,
+				opacity: 0.85
+			});
 
-    // Sky & Lighting Transitions
-    const sunHeightRatio = Math.sin(t * daySpeed);
-    if (sunHeightRatio > 0.2) {
-      skyMat.uniforms.top.value.lerpColors(sunsetSkyTop, daySkyTop, (sunHeightRatio - 0.2) / 0.8);
-      skyMat.uniforms.bot.value.lerpColors(sunsetSkyBot, daySkyBot, (sunHeightRatio - 0.2) / 0.8);
-      ambientLight.intensity = THREE.MathUtils.lerp(0.4, 0.65, sunHeightRatio);
-      sunLight.intensity = THREE.MathUtils.lerp(0.2, 1.4, sunHeightRatio);
-    } else if (sunHeightRatio > -0.2) {
-      const factor = (sunHeightRatio + 0.2) / 0.4;
-      skyMat.uniforms.top.value.lerpColors(nightSkyTop, sunsetSkyTop, factor);
-      skyMat.uniforms.bot.value.lerpColors(nightSkyBot, sunsetSkyBot, factor);
-      ambientLight.intensity = THREE.MathUtils.lerp(0.15, 0.4, factor);
-      sunLight.intensity = THREE.MathUtils.lerp(0.0, 0.3, factor);
-    } else {
-      skyMat.uniforms.top.value.copy(nightSkyTop); skyMat.uniforms.bot.value.copy(nightSkyBot);
-      ambientLight.intensity = 0.12; sunLight.intensity = 0.0;
-    }
-    fogColor.copy(skyMat.uniforms.bot.value); scene.fog = new THREE.FogExp2(fogColor, 0.002);
+			function addCloud(cx, cy, cz) {
+				const parts = 8 + Math.floor(Math.random() * 6);
+				for (let i = 0; i < parts; i++) {
+					const c = new THREE.Mesh(cubeGeo, cloudMat);
+					c.position.set(cx + i * 2.5, cy + (Math.random() - 0.5) * 1.8, cz + (Math.random() - 0.5) * 4.0);
+					c.scale.set(4.0, 1.4, 2.8);
+					cloudGroup.add(c);
+				}
+			}
+			addCloud(-40, 42, -28);
+			addCloud(20, 48, 18);
+			addCloud(12, 38, -36);
+			addCloud(-25, 52, 14);
+			addCloud(45, 46, -20);
+			scene.add(cloudGroup);
 
-    // Infinite Ocean Waves
-    for (let i = 0; i < waterPositions.count; i++) {
-      const u = waterPositions.getX(i), v = waterPositions.getZ(i);
-      const wave = Math.sin(t * 2.0 + u * 0.15 + v * 0.12) * 0.16 + Math.cos(t * 1.4 + v * 0.2) * 0.1;
-      waterPositions.setY(i, initialWaterY[i] + wave);
-    }
-    waterPositions.needsUpdate = true; waterGeo.computeVertexNormals();
+			// --- RESIZE EVENT ---
+			function resize() {
+				const w = canvas.clientWidth,
+					h = canvas.clientHeight;
+				renderer.setSize(w, h, false);
+				camera.aspect = w / h;
+				camera.updateProjectionMatrix();
+			}
+			window.addEventListener("resize", resize);
+			resize();
 
-    // Cloud Drift
-    cloudGroup.position.x += 0.015; if (cloudGroup.position.x > HALF + 10) cloudGroup.position.x = -(HALF + 10);
+			// --- DAY/NIGHT COLORS ---
+			const daySkyTop = new THREE.Color(0x3878cf),
+				daySkyBot = new THREE.Color(0x92c4f2);
+			const sunsetSkyTop = new THREE.Color(0x283b6b),
+				sunsetSkyBot = new THREE.Color(0xf08053);
+			const nightSkyTop = new THREE.Color(0x050a14),
+				nightSkyBot = new THREE.Color(0x0d1b36);
+			const fogColor = new THREE.Color();
 
-    renderer.render(scene, camera);
-  }
-  animate();
-})();
+			// --- ANIMATION LOOP ---
+			let angle = 0;
+			const clock = new THREE.Clock();
+
+			function animate() {
+				requestAnimationFrame(animate);
+				const t = clock.getElapsedTime();
+
+				// FIXED Orbit Camera Distance
+				angle += 0.0004;
+				camera.position.x = Math.sin(angle) * CAMERA_DISTANCE;
+				camera.position.z = Math.cos(angle) * CAMERA_DISTANCE;
+				camera.position.y = CAMERA_HEIGHT;
+				camera.lookAt(0, 10, 0);
+
+				// Celestial Rotation
+				const daySpeed = 0.035;
+				celestialGroup.rotation.z = t * daySpeed;
+				const sunWorldPos = new THREE.Vector3();
+				sunMesh.getWorldPosition(sunWorldPos);
+				sunLight.position.copy(sunWorldPos);
+
+				// Sky & Lighting Transitions
+				const sunHeightRatio = Math.sin(t * daySpeed);
+				if (sunHeightRatio > 0.2) {
+					skyMat.uniforms.top.value.lerpColors(sunsetSkyTop, daySkyTop, (sunHeightRatio - 0.2) / 0.8);
+					skyMat.uniforms.bot.value.lerpColors(sunsetSkyBot, daySkyBot, (sunHeightRatio - 0.2) / 0.8);
+					ambientLight.intensity = THREE.MathUtils.lerp(0.4, 0.65, sunHeightRatio);
+					sunLight.intensity = THREE.MathUtils.lerp(0.2, 1.4, sunHeightRatio);
+				} else if (sunHeightRatio > -0.2) {
+					const factor = (sunHeightRatio + 0.2) / 0.4;
+					skyMat.uniforms.top.value.lerpColors(nightSkyTop, sunsetSkyTop, factor);
+					skyMat.uniforms.bot.value.lerpColors(nightSkyBot, sunsetSkyBot, factor);
+					ambientLight.intensity = THREE.MathUtils.lerp(0.15, 0.4, factor);
+					sunLight.intensity = THREE.MathUtils.lerp(0.0, 0.3, factor);
+				} else {
+					skyMat.uniforms.top.value.copy(nightSkyTop);
+					skyMat.uniforms.bot.value.copy(nightSkyBot);
+					ambientLight.intensity = 0.12;
+					sunLight.intensity = 0.0;
+				}
+				fogColor.copy(skyMat.uniforms.bot.value);
+				scene.fog = new THREE.FogExp2(fogColor, 0.002);
+
+				// Infinite Ocean Waves
+				for (let i = 0; i < waterPositions.count; i++) {
+					const u = waterPositions.getX(i),
+						v = waterPositions.getZ(i);
+					const wave = Math.sin(t * 2.0 + u * 0.15 + v * 0.12) * 0.16 + Math.cos(t * 1.4 + v * 0.2) * 0.1;
+					waterPositions.setY(i, initialWaterY[i] + wave);
+				}
+				waterPositions.needsUpdate = true;
+				waterGeo.computeVertexNormals();
+
+				// Cloud Drift
+				cloudGroup.position.x += 0.015;
+				if (cloudGroup.position.x > HALF + 10) cloudGroup.position.x = -(HALF + 10);
+
+				renderer.render(scene, camera);
+			}
+			animate();
+		})();
 	</script>
 </body>
 
