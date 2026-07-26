@@ -26,6 +26,47 @@ If this gets 70+ votes I make a /summon 1
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 	<style>
 		/* Add touch-friendly sizing */
+		/* Hide scrollbar on mobile for cleaner look */
+		.mc-btn:active,
+.chip:active,
+.preset-btn:active,
+.item-cell:active {
+    transform: scale(0.95);
+    transition: transform 0.05s;
+}
+
+/* Remove hover effects on touch devices */
+@media (hover: none) {
+    .mc-btn:hover,
+    .chip:hover,
+    .preset-btn:hover,
+    .item-cell:hover {
+        transform: none;
+    }
+    
+    .mc-btn:active {
+        transform: scale(0.95);
+    }
+}
+@media (max-width: 768px) {
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+    
+    .item-grid,
+    .ench-pool,
+    .preview-panel {
+        scrollbar-width: thin;
+    }
+}
+		@media (max-width: 768px) {
+    .input,
+    .select,
+    .textarea {
+        font-size: 16px; /* Prevents iOS auto-zoom */
+    }
+}
 		@media (pointer: coarse) {
 			.mc-btn {
 				min-height: 44px;
