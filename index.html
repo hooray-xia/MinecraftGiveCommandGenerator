@@ -2738,6 +2738,32 @@ If this gets 70+ votes I make a /summon 1
     .preview-panel { max-height: 200px !important; padding: 6px !important; }
     .command-box { font-size: 10px !important; max-height: 80px !important; min-height: 40px !important; padding: 6px !important; }
     .input, .select, .textarea { font-size: 14px !important; min-height: 32px !important; padding: 4px 6px !important; }
+}/* PIN INFO NOTE TO BOTTOM */
+.info-note {
+    position: sticky !important;
+    bottom: 0 !important;
+    background: var(--bg-deep) !important;
+    border-left: 3px solid var(--blue) !important;
+    border-top: 2px solid var(--bd-dark) !important;
+    margin-top: auto !important;
+    z-index: 50 !important;
+    padding: 10px 12px !important;
+    font-size: 11px !important;
+}
+
+/* Mobile adjustment */
+@media (max-width: 768px) {
+    .controls-panel {
+        padding-bottom: 0 !important;
+    }
+    .info-note {
+        position: sticky !important;
+        bottom: 0 !important;
+        font-size: 10px !important;
+        padding: 8px 10px !important;
+        margin-top: 8px !important;
+        border-radius: 0 !important;
+    }
 }
 	</style>
 </head>
@@ -8822,13 +8848,12 @@ If this gets 70+ votes I make a /summon 1
 
 			if (isBedrock) {
 				$("versionBadge").textContent = "Bedrock Edition";
-				$("infoNote").textContent = "Commands are generated client-side. Paste into Minecraft Bedrock Edition chat or a command block. Requires OP level 1+. Some Java-only components (potions, banners, books, attributes, etc.) are not emitted in Bedrock output.";
+				$("infoNote").textContent = "Commands are generated client-side. Paste into Minecraft Bedrock Edition chat or a command block. Requires OP level 1+. Some Java-only components (potions, banners, books, attributes, etc.) are not emitted in Bedrock output.\n This tool is a fan-made project and is NOT affiliated with, endorsed by, or sponsored by Mojang Studios or Microsoft Corporation. \"Minecraft\" is a registered trademark of Mojang Studios. All item textures, names, and related assets displayed on this site are the property of their respective owners and are used solely for identification and reference purposes.Item pictures found from the minecraft.wiki.This generator is provided free of charge and does not redistribute or claim ownership of any copyrighted material. If you do not own Minecraft, please purchase the game officially at minecraft.net.";
 			} else {
 				$("versionBadge").textContent = "Format: " + VERSION_LABELS[S.version];
-				$("infoNote").textContent = "Commands are generated client-side. Paste into Minecraft Java Edition chat or a command block. Requires OP level 2+.";
+				$("infoNote").textContent = "Commands are generated client-side. Paste into Minecraft Java Edition chat or a command block. Requires OP level 2+.\n This tool is a fan-made project and is NOT affiliated with, endorsed by, or sponsored by Mojang Studios or Microsoft Corporation. \"Minecraft\" is a registered trademark of Mojang Studios. All item textures, names, and related assets displayed on this site are the property of their respective owners and are used solely for identification and reference purposes.Item pictures found from the minecraft.wiki.This generator is provided free of charge and does not redistribute or claim ownership of any copyrighted material. If you do not own Minecraft, please purchase the game officially at minecraft.net.";
 			}
 		}
-		$("infoNote").textContent += "\n This tool is a fan-made project and is NOT affiliated with, endorsed by, or sponsored by Mojang Studios or Microsoft Corporation. \"Minecraft\" is a registered trademark of Mojang Studios. All item textures, names, and related assets displayed on this site are the property of their respective owners and are used solely for identification and reference purposes.Item pictures found from the minecraft.wiki.This generator is provided free of charge and does not redistribute or claim ownership of any copyrighted material. If you do not own Minecraft, please purchase the game officially at minecraft.net."
 		document.querySelectorAll(".edition-btn").forEach(function(b) {
 			b.onclick = function() {
 				S.edition = b.dataset.edition;
@@ -8857,7 +8882,7 @@ If this gets 70+ votes I make a /summon 1
 						x.classList.remove("active");
 					});
 					b.classList.add("active");
-					S.target.type = b.dataset.target;
+					S.target.type = b.dataset.starget;
 					updateAll();
 				};
 			});
@@ -11773,511 +11798,559 @@ If this gets 70+ votes I make a /summon 1
 		renderItems();
 		updateAll();
 
-		(() => {
-			const canvas = document.getElementById("terrainCanvas");
-			if (!canvas || typeof THREE === "undefined") return;
+// ===== MOBILE OPTIMIZED THREE.JS WITH FIXED LEAVES =====
+(function() {
+    const canvas = document.getElementById("terrainCanvas");
+    if (!canvas || typeof THREE === "undefined") return;
 
-			const scene = new THREE.Scene();
+    // DETECT MOBILE
+    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isSmallPhone = window.innerWidth < 480;
+    const isLowEnd = isMobile || window.innerWidth < 768;
 
-			const renderer = new THREE.WebGLRenderer({
-				canvas,
-				antialias: false,
-				alpha: true
-			});
-			renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-			renderer.shadowMap.enabled = true;
-			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    // SCENE
+    const scene = new THREE.Scene();
 
-			const CAMERA_DISTANCE = 80;
-			const CAMERA_HEIGHT = 48;
+    // RENDERER - LOWER QUALITY ON MOBILE
+    const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: !isLowEnd,
+        alpha: false
+    });
+    if (isLowEnd) {
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        renderer.shadowMap.enabled = false;
+    } else {
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    }
 
-			// Extended far clipping plane to 1500 to accommodate the infinite ocean
-			const camera = new THREE.PerspectiveCamera(23, 1, 0.1, 1500);
-			camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
+    // CAMERA
+    const CAMERA_DISTANCE = isLowEnd ? 90 : 80;
+    const CAMERA_HEIGHT = isLowEnd ? 52 : 48;
+    const camera = new THREE.PerspectiveCamera(23, 1, 0.1, isLowEnd ? 800 : 1500);
+    camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
 
-			function createPixelTexture(drawFn) {
-				const size = 2;
-				const canvas = document.createElement("canvas");
-				canvas.width = canvas.height = size;
-				const ctx = canvas.getContext("2d");
-				drawFn(ctx, size);
-				const texture = new THREE.CanvasTexture(canvas);
-				texture.magFilter = THREE.NearestFilter;
-				texture.minFilter = THREE.NearestFilter;
-				return texture;
-			}
+    // TEXTURE GENERATOR - WITH SIZE OPTION
+function createPixelTexture(drawFn, size) {
+    size = size || 16;
+    const c = document.createElement("canvas");
+    c.width = c.height = size;
+    const ctx = c.getContext("2d");
+    drawFn(ctx, size);
+    const texture = new THREE.CanvasTexture(c);
+    texture.magFilter = THREE.NearestFilter;
+    texture.minFilter = THREE.NearestFilter;
+    return texture;
+}
 
-			const dirtTex = createPixelTexture((ctx, s) => {
-				ctx.fillStyle = "#866043";
-				ctx.fillRect(0, 0, s, s);
-				for (let i = 0; i < s * s * 0.4; i++) {
-					ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
-					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-				}
-			});
-			const grassTopTex = createPixelTexture((ctx, s) => {
-				ctx.fillStyle = "#5cbf3f";
-				ctx.fillRect(0, 0, s, s);
-				for (let i = 0; i < s * s * 0.4; i++) {
-					ctx.fillStyle = Math.random() > 0.5 ? "#489e2e" : "#72d651";
-					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-				}
-			});
-			const grassSideTex = createPixelTexture((ctx, s) => {
-				ctx.fillStyle = "#866043";
-				ctx.fillRect(0, 0, s, s);
-				for (let i = 0; i < s * s * 0.3; i++) {
-					ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
-					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-				}
-				ctx.fillStyle = "#5cbf3f";
-				ctx.fillRect(0, 0, s, 3);
-				for (let x = 0; x < s; x++) {
-					ctx.fillRect(x, 0, 1, 3 + Math.floor(Math.random() * 3));
-				}
-			});
-			const stoneTex = createPixelTexture((ctx, s) => {
-				ctx.fillStyle = "#737373";
-				ctx.fillRect(0, 0, s, s);
-				for (let i = 0; i < s * s * 0.45; i++) {
-					ctx.fillStyle = Math.random() > 0.5 ? "#525252" : "#8f8f8f";
-					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-				}
-			});
-			const sandTex = createPixelTexture((ctx, s) => {
-				ctx.fillStyle = "#dcd299";
-				ctx.fillRect(0, 0, s, s);
-				for (let i = 0; i < s * s * 0.35; i++) {
-					ctx.fillStyle = Math.random() > 0.5 ? "#c2b67a" : "#ebd8aa";
-					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-				}
-			});
-			const snowTex = createPixelTexture((ctx, s) => {
-				ctx.fillStyle = "#f0f5fb";
-				ctx.fillRect(0, 0, s, s);
-				for (let i = 0; i < s * s * 0.25; i++) {
-					ctx.fillStyle = Math.random() > 0.5 ? "#d3e0f0" : "#ffffff";
-					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-				}
-			});
+// For low-end devices, use smaller textures (size 8)
+const texSize = isLowEnd ? 2 : 16;
 
-			// --- MATERIAL SETUP ---
-			const cubeGeo = new THREE.BoxGeometry(1, 1, 1);
-			const grassMatList = [
-				new THREE.MeshStandardMaterial({
-					map: grassSideTex,
-					roughness: 0.8
-				}), new THREE.MeshStandardMaterial({
-					map: grassSideTex,
-					roughness: 0.8
-				}),
-				new THREE.MeshStandardMaterial({
-					map: grassTopTex,
-					roughness: 0.8
-				}), new THREE.MeshStandardMaterial({
-					map: dirtTex,
-					roughness: 0.8
-				}),
-				new THREE.MeshStandardMaterial({
-					map: grassSideTex,
-					roughness: 0.8
-				}), new THREE.MeshStandardMaterial({
-					map: grassSideTex,
-					roughness: 0.8
-				})
-			];
-			const dirtMat = new THREE.MeshStandardMaterial({
-				map: dirtTex,
-				roughness: 0.85
-			});
-			const stoneMat = new THREE.MeshStandardMaterial({
-				map: stoneTex,
-				roughness: 0.85
-			});
-			const sandMat = new THREE.MeshStandardMaterial({
-				map: sandTex,
-				roughness: 0.85
-			});
-			const snowMat = new THREE.MeshStandardMaterial({
-				map: snowTex,
-				roughness: 0.85
-			});
-
-			// --- LIGHTS & ENVIRONMENT ---
-			const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-			scene.add(ambientLight);
-			const sunLight = new THREE.DirectionalLight(0xfffaed, 1.3);
-			sunLight.castShadow = true;
-			sunLight.shadow.mapSize.width = 4096;
-			sunLight.shadow.mapSize.height = 4096;
-			sunLight.shadow.camera.far = 300;
-			const sSize = 90;
-			sunLight.shadow.camera.left = -sSize;
-			sunLight.shadow.camera.right = sSize;
-			sunLight.shadow.camera.top = sSize;
-			sunLight.shadow.camera.bottom = -sSize;
-			scene.add(sunLight);
-
-			const skyMat = new THREE.ShaderMaterial({
-				side: THREE.BackSide,
-				uniforms: {
-					top: {
-						value: new THREE.Color(0x3878cf)
-					},
-					bot: {
-						value: new THREE.Color(0x92c4f2)
-					}
-				},
-				vertexShader: "varying vec3 vP; void main() { vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
-				fragmentShader: "varying vec3 vP; uniform vec3 top; uniform vec3 bot; void main() { float h = normalize(vP).y * 0.5 + 0.5; gl_FragColor = vec4(mix(bot, top, h), 1.0); }"
-			});
-			scene.add(new THREE.Mesh(new THREE.SphereGeometry(1200, 16, 16), skyMat));
-
-			// --- CELESTIAL MECHANICS ---
-			const celestialGroup = new THREE.Group();
-			scene.add(celestialGroup);
-			const sunMesh = new THREE.Mesh(new THREE.BoxGeometry(14, 14, 0.2), new THREE.MeshBasicMaterial({
-				color: 0xffffeb
-			}));
-			sunMesh.position.set(0, 160, 0);
-			sunMesh.rotation.x = Math.PI / 2;
-			celestialGroup.add(sunMesh);
-			const moonMesh = new THREE.Mesh(new THREE.BoxGeometry(12, 12, 0.2), new THREE.MeshBasicMaterial({
-				color: 0xe0e8f5
-			}));
-			moonMesh.position.set(0, -160, 0);
-			moonMesh.rotation.x = Math.PI / 2;
-			celestialGroup.add(moonMesh);
-
-			// --- INSTANCED MESH HELPER ---
-			function makeInstanced(positions, material) {
-				if (!positions.length) return null;
-				const inst = new THREE.InstancedMesh(cubeGeo, material, positions.length);
-				inst.castShadow = true;
-				inst.receiveShadow = true;
-				const m = new THREE.Matrix4();
-				positions.forEach((pos, i) => {
-					m.makeTranslation(pos.x, pos.y, pos.z);
-					inst.setMatrixAt(i, m);
-				});
-				inst.instanceMatrix.needsUpdate = true;
-				scene.add(inst);
-				return inst;
-			}
-
-			// --- TERRAIN GENERATION (100x100) ---
-			const SIZE = 100;
-			const HALF = SIZE / 2;
-			const waterLevel = 6;
-			const snowLevel = 16;
-
-			const n1 = new Date().getTime() * 0.001,
-				n2 = n1 + 100,
-				n3 = n2 + 100;
-
-			function heightAt(x, z) {
-				const dX = x + HALF,
-					dZ = z + HALF;
-				const islandFactor = Math.cos((dX / SIZE) * Math.PI - Math.PI / 2) * Math.cos((dZ / SIZE) * Math.PI - Math.PI / 2);
-				const river = 11.0 * Math.exp(-Math.pow((z - 15 * Math.sin(x * 0.08)) * 0.16, 2));
-
-				const h = Math.round((
-					10.0 * Math.sin(dX * 0.12 + n1) * Math.cos(dZ * 0.10 + n2) +
-					6.0 * Math.sin(dX * 0.06 + n3) +
-					5.0 * Math.cos(dZ * 0.08 - n1) +
-					3.0 * Math.sin(dX * 0.03) * Math.cos(dZ * 0.04) +
-					12 - river
-				) * Math.pow(islandFactor, 1.5));
-
-				return Math.max(0, h);
-			}
-
-			const grassPos = [],
-				dirtPos = [],
-				stonePos = [],
-				sandPos = [],
-				snowPos = [];
-			const treeSpots = [];
-
-			for (let x = -HALF; x < HALF; x++) {
-				for (let z = -HALF; z < HALF; z++) {
-					const topH = heightAt(x, z);
-
-					for (let y = topH; y >= 0; y--) {
-						const pos = {
-							x,
-							y,
-							z
-						};
-						if (y === topH) {
-							if (topH <= waterLevel) {
-								sandPos.push(pos);
-							} else if (topH >= snowLevel) {
-								snowPos.push(pos);
-							} else if (topH > 18) {
-								stonePos.push(pos);
-							} else {
-								grassPos.push(pos);
-								if (topH > waterLevel + 1 && Math.random() < 0.02) treeSpots.push({
-									x,
-									z,
-									h: topH
-								});
-							}
-						} else if (y > topH - 4 && y > waterLevel) {
-							dirtPos.push(pos);
-						} else {
-							stonePos.push(pos);
-						}
-					}
-				}
-			}
-
-			makeInstanced(grassPos, grassMatList);
-			makeInstanced(dirtPos, dirtMat);
-			makeInstanced(stonePos, stoneMat);
-			makeInstanced(sandPos, sandMat);
-			makeInstanced(snowPos, snowMat);
-
-			// --- INFINITE OCEAN (Massive 1200x1200 Plane) ---
-			const waterGeo = new THREE.PlaneGeometry(1200, 1200, 120, 120);
-			waterGeo.rotateX(-Math.PI / 2);
-			const waterMat = new THREE.MeshStandardMaterial({
-				color: 0x1d66c4,
-				roughness: 0.1,
-				metalness: 0.8,
-				transparent: true,
-				opacity: 0.8,
-				flatShading: true
-			});
-			const waterMesh = new THREE.Mesh(waterGeo, waterMat);
-			waterMesh.position.set(0, waterLevel + 0.1, 0);
-			waterMesh.receiveShadow = true;
-			scene.add(waterMesh);
-			const waterPositions = waterGeo.attributes.position;
-			const initialWaterY = new Float32Array(waterPositions.count);
-			for (let i = 0; i < waterPositions.count; i++) {
-				initialWaterY[i] = waterPositions.getY(i);
-			}
-
-			// --- TREES ---
-			const leafMat = new THREE.MeshStandardMaterial({
-				map: grassTopTex,
-				roughness: 0.6
-			});
-			const trunkPos = [],
-				leafPos = [];
-			treeSpots.forEach(s => {
-				for (let t = 1; t <= 5; t++) trunkPos.push({
-					x: s.x,
-					y: s.h + t,
-					z: s.z
-				});
-				for (let lx = -2; lx <= 2; lx++)
-					for (let lz = -2; lz <= 2; lz++)
-						for (let ly = 0; ly <= 2; ly++) {
-							if (Math.abs(lx) === 2 && Math.abs(lz) === 2) continue;
-							if (lx === 0 && lz === 0 && ly < 2) continue;
-							leafPos.push({
-								x: s.x + lx,
-								y: s.h + 5 + ly,
-								z: s.z + lz
-							});
-						}
-			});
-			makeInstanced(trunkPos, dirtMat);
-			makeInstanced(leafPos, leafMat);
-
-			// --- MINECRAFT FLOATING TEXT GENERATOR ---
-			const textGroup = new THREE.Group();
-			scene.add(textGroup);
-
-			function addPixelTextBlock(char, tx, ty, tz) {
-				const font = {
-					'g': [0x7c, 0x02, 0x7e, 0x02, 0x7e, 0x02, 0x7c, 0x00],
-					'i': [0x10, 0x18, 0x1c, 0x10, 0x10, 0x10, 0x7c, 0x00],
-					'v': [0x22, 0x22, 0x22, 0x22, 0x22, 0x14, 0x08, 0x00],
-					'e': [0x3e, 0x20, 0x3e, 0x22, 0x22, 0x20, 0x3e, 0x00],
-					'n': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x00],
-					'r': [0x3e, 0x22, 0x3c, 0x24, 0x22, 0x22, 0x22, 0x00],
-					'a': [0x1c, 0x22, 0x22, 0x3e, 0x22, 0x22, 0x22, 0x00],
-					't': [0x3c, 0x10, 0x10, 0x3c, 0x10, 0x10, 0x10, 0x00],
-					'o': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3c, 0x00],
-					'l': [0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x7c, 0x00],
-					'd': [0x3e, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3e, 0x00],
-					's': [0x3e, 0x20, 0x3c, 0x02, 0x02, 0x22, 0x3c, 0x00],
-					'y': [0x22, 0x22, 0x14, 0x08, 0x08, 0x08, 0x08, 0x00]
-				};
-				const blockMat = new THREE.MeshBasicMaterial({
-					color: 0xffffff
-				});
-				const geo = new THREE.BoxGeometry(0.3, 0.3, 0.05);
-				if (!font[char]) return;
-				for (let iy = 0; iy < 8; iy++) {
-					const line = font[char][iy];
-					for (let ix = 0; ix < 8; ix++) {
-						if ((line >> (7 - ix)) & 1) {
-							const m = new THREE.Mesh(geo, blockMat);
-							m.position.set(tx + ix * 0.3, ty - iy * 0.3, tz);
-							textGroup.add(m);
-						}
-					}
-				}
-			}
-
-			const textString = "GIVE GENERATOR";
-			let curX = -textString.length * 1.5 + 20;
-			for (let i = 0; i < textString.length; i++) {
-				addPixelTextBlock(textString[i], curX, 36, 12);
-				curX += 3.2;
-				if (textString[i] === " ") curX += 1.5;
-			}
-
-			// --- CLOUDS ---
-			const cloudGroup = new THREE.Group();
-			const cloudMat = new THREE.MeshBasicMaterial({
-				color: 0xffffff,
-				transparent: true,
-				opacity: 0.85
-			});
-
-			function addCloud(cx, cy, cz) {
-				const parts = 8 + Math.floor(Math.random() * 6);
-				for (let i = 0; i < parts; i++) {
-					const c = new THREE.Mesh(cubeGeo, cloudMat);
-					c.position.set(cx + i * 2.5, cy + (Math.random() - 0.5) * 1.8, cz + (Math.random() - 0.5) * 4.0);
-					c.scale.set(4.0, 1.4, 2.8);
-					cloudGroup.add(c);
-				}
-			}
-			addCloud(-40, 42, -28);
-			addCloud(20, 48, 18);
-			addCloud(12, 38, -36);
-			addCloud(-25, 52, 14);
-			addCloud(45, 46, -20);
-			scene.add(cloudGroup);
-
-			// --- RESIZE EVENT ---
-			function resize() {
-				const w = canvas.clientWidth,
-					h = canvas.clientHeight;
-				renderer.setSize(w, h, false);
-				camera.aspect = w / h;
-				camera.updateProjectionMatrix();
-			}
-			window.addEventListener("resize", resize);
-			resize();
-
-			// --- DAY/NIGHT COLORS ---
-			const daySkyTop = new THREE.Color(0x3878cf),
-				daySkyBot = new THREE.Color(0x92c4f2);
-			const sunsetSkyTop = new THREE.Color(0x283b6b),
-				sunsetSkyBot = new THREE.Color(0xf08053);
-			const nightSkyTop = new THREE.Color(0x050a14),
-				nightSkyBot = new THREE.Color(0x0d1b36);
-			const fogColor = new THREE.Color();
-
-			// --- ANIMATION LOOP ---
-			let angle = 0;
-			const clock = new THREE.Clock();
-
-			function animate() {
-				requestAnimationFrame(animate);
-				const t = clock.getElapsedTime();
-
-				// FIXED Orbit Camera Distance
-				angle += 0.0004;
-				camera.position.x = Math.sin(angle) * CAMERA_DISTANCE;
-				camera.position.z = Math.cos(angle) * CAMERA_DISTANCE;
-				camera.position.y = CAMERA_HEIGHT;
-				camera.lookAt(0, 10, 0);
-
-				// Celestial Rotation
-				const daySpeed = 0.035;
-				celestialGroup.rotation.z = t * daySpeed;
-				const sunWorldPos = new THREE.Vector3();
-				sunMesh.getWorldPosition(sunWorldPos);
-				sunLight.position.copy(sunWorldPos);
-
-				// Sky & Lighting Transitions
-				const sunHeightRatio = Math.sin(t * daySpeed);
-				if (sunHeightRatio > 0.2) {
-					skyMat.uniforms.top.value.lerpColors(sunsetSkyTop, daySkyTop, (sunHeightRatio - 0.2) / 0.8);
-					skyMat.uniforms.bot.value.lerpColors(sunsetSkyBot, daySkyBot, (sunHeightRatio - 0.2) / 0.8);
-					ambientLight.intensity = THREE.MathUtils.lerp(0.4, 0.65, sunHeightRatio);
-					sunLight.intensity = THREE.MathUtils.lerp(0.2, 1.4, sunHeightRatio);
-				} else if (sunHeightRatio > -0.2) {
-					const factor = (sunHeightRatio + 0.2) / 0.4;
-					skyMat.uniforms.top.value.lerpColors(nightSkyTop, sunsetSkyTop, factor);
-					skyMat.uniforms.bot.value.lerpColors(nightSkyBot, sunsetSkyBot, factor);
-					ambientLight.intensity = THREE.MathUtils.lerp(0.15, 0.4, factor);
-					sunLight.intensity = THREE.MathUtils.lerp(0.0, 0.3, factor);
-				} else {
-					skyMat.uniforms.top.value.copy(nightSkyTop);
-					skyMat.uniforms.bot.value.copy(nightSkyBot);
-					ambientLight.intensity = 0.12;
-					sunLight.intensity = 0.0;
-				}
-				fogColor.copy(skyMat.uniforms.bot.value);
-				scene.fog = new THREE.FogExp2(fogColor, 0.002);
-
-				// Infinite Ocean Waves
-				for (let i = 0; i < waterPositions.count; i++) {
-					const u = waterPositions.getX(i),
-						v = waterPositions.getZ(i);
-					const wave = Math.sin(t * 2.0 + u * 0.15 + v * 0.12) * 0.16 + Math.cos(t * 1.4 + v * 0.2) * 0.1;
-					waterPositions.setY(i, initialWaterY[i] + wave);
-				}
-				waterPositions.needsUpdate = true;
-				waterGeo.computeVertexNormals();
-
-				// Cloud Drift
-				cloudGroup.position.x += 0.015;
-				if (cloudGroup.position.x > HALF + 10) cloudGroup.position.x = -(HALF + 10);
-
-				renderer.render(scene, camera);
-			}
-			animate();
-		})();
-		// Touch-friendly improvements
-document.addEventListener('touchstart', function() {
-    // Enable touch feedback for all interactive elements
-}, { passive: true });
-
-// Prevent zoom on double tap for better UX
-document.addEventListener('dblclick', function(e) {
-    e.preventDefault();
-}, { passive: false });
-
-// Better scrolling for sections on mobile
-document.querySelectorAll('.section-header').forEach(function(header) {
-    header.addEventListener('touchstart', function(e) {
-        // Prevent accidental scroll while tapping section header
-        this.click();
-    }, { passive: true });
-});
-
-// Improve touch feedback for buttons
-document.querySelectorAll('.mc-btn, .chip, .preset-btn, .item-cell').forEach(function(el) {
-    el.addEventListener('touchstart', function() {
-        this.style.transform = 'scale(0.95)';
-    }, { passive: true });
-    
-    el.addEventListener('touchend', function() {
-        this.style.transform = '';
-    }, { passive: true });
-});
-
-// Fix for iOS input zoom
-document.querySelectorAll('input, select, textarea').forEach(function(el) {
-    el.addEventListener('focus', function() {
-        if (window.innerWidth < 768) {
-            setTimeout(function() {
-                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 300);
+    const dirtTex = createPixelTexture((ctx, s) => {
+        ctx.fillStyle = "#866043";
+        ctx.fillRect(0, 0, s, s);
+        for (let i = 0; i < s * s * 0.4; i++) {
+            ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
+            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
         }
     });
-});
+
+    const grassTopTex = createPixelTexture((ctx, s) => {
+        ctx.fillStyle = "#5cbf3f";
+        ctx.fillRect(0, 0, s, s);
+        for (let i = 0; i < s * s * 0.4; i++) {
+            ctx.fillStyle = Math.random() > 0.5 ? "#489e2e" : "#72d651";
+            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+        }
+    });
+
+    // LEAF TEXTURE - FIXED (no transparency)
+    const LeafTex = createPixelTexture((ctx, s) => {
+        // Base green - solid
+        ctx.fillStyle = "#4caf50";
+        ctx.fillRect(0, 0, s, s);
+        
+        // Add varied green patches
+        const colors = [
+            "#2e7d32", "#388e3c", "#43a047", "#4caf50", "#66bb6a",
+            "#81c784", "#a5d6a7", "#1b5e20", "#6b8c23", "#8bc34a"
+        ];
+        
+        for (let i = 0; i < s * s * 0.7; i++) {
+            const x = Math.floor(Math.random() * s);
+            const y = Math.floor(Math.random() * s);
+            ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+            ctx.fillRect(x, y, 1, 1);
+        }
+        
+        // Yellow-green highlights
+        for (let i = 0; i < s * s * 0.2; i++) {
+            const x = Math.floor(Math.random() * s);
+            const y = Math.floor(Math.random() * s);
+            ctx.fillStyle = Math.random() > 0.5 ? "#cddc39" : "#c0ca33";
+            ctx.fillRect(x, y, 1, 1);
+        }
+        
+        // Brown spots
+        for (let i = 0; i < s * s * 0.05; i++) {
+            const x = Math.floor(Math.random() * s);
+            const y = Math.floor(Math.random() * s);
+            ctx.fillStyle = Math.random() > 0.5 ? "#8d6e63" : "#6d4c41";
+            ctx.fillRect(x, y, 1, 1);
+        }
+    });
+
+    const grassSideTex = createPixelTexture((ctx, s) => {
+        ctx.fillStyle = "#866043";
+        ctx.fillRect(0, 0, s, s);
+        for (let i = 0; i < s * s * 0.3; i++) {
+            ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
+            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+        }
+        ctx.fillStyle = "#5cbf3f";
+        ctx.fillRect(0, 0, s, 3);
+        for (let x = 0; x < s; x++) {
+            ctx.fillRect(x, 0, 1, 3 + Math.floor(Math.random() * 3));
+        }
+    });
+
+    const stoneTex = createPixelTexture((ctx, s) => {
+        ctx.fillStyle = "#737373";
+        ctx.fillRect(0, 0, s, s);
+        for (let i = 0; i < s * s * 0.45; i++) {
+            ctx.fillStyle = Math.random() > 0.5 ? "#525252" : "#8f8f8f";
+            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+        }
+    });
+
+    const sandTex = createPixelTexture((ctx, s) => {
+        ctx.fillStyle = "#dcd299";
+        ctx.fillRect(0, 0, s, s);
+        for (let i = 0; i < s * s * 0.35; i++) {
+            ctx.fillStyle = Math.random() > 0.5 ? "#c2b67a" : "#ebd8aa";
+            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+        }
+    });
+
+    const snowTex = createPixelTexture((ctx, s) => {
+        ctx.fillStyle = "#f0f5fb";
+        ctx.fillRect(0, 0, s, s);
+        for (let i = 0; i < s * s * 0.25; i++) {
+            ctx.fillStyle = Math.random() > 0.5 ? "#d3e0f0" : "#ffffff";
+            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+        }
+    });
+
+    // MATERIALS
+    const MaterialClass = isLowEnd ? THREE.MeshBasicMaterial : THREE.MeshStandardMaterial;
+    const materialConfig = isLowEnd ? {} : { roughness: 0.8 };
+
+    const grassMatList = [
+        new MaterialClass({ map: grassSideTex, ...materialConfig }),
+        new MaterialClass({ map: grassSideTex, ...materialConfig }),
+        new MaterialClass({ map: grassTopTex, ...materialConfig }),
+        new MaterialClass({ map: dirtTex, ...materialConfig }),
+        new MaterialClass({ map: grassSideTex, ...materialConfig }),
+        new MaterialClass({ map: grassSideTex, ...materialConfig })
+    ];
+    
+    const dirtMat = new MaterialClass({ map: dirtTex, ...materialConfig });
+    const stoneMat = new MaterialClass({ map: stoneTex, ...materialConfig });
+    const sandMat = new MaterialClass({ map: sandTex, ...materialConfig });
+    const snowMat = new MaterialClass({ map: snowTex, ...materialConfig });
+    
+    // LEAF MATERIAL - FIXED (transparent: false)
+    const leafMat = new MaterialClass({ 
+        map: LeafTex, 
+        transparent: false,
+        ...materialConfig 
+    });
+
+    // LIGHTS
+    const ambientLight = new THREE.AmbientLight(0xffffff, isLowEnd ? 0.6 : 0.4);
+    scene.add(ambientLight);
+
+    const sunLight = new THREE.DirectionalLight(0xfffaed, isLowEnd ? 1.0 : 1.3);
+    if (!isLowEnd) {
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.width = isLowEnd ? 1024 : 4096;
+        sunLight.shadow.mapSize.height = isLowEnd ? 1024 : 4096;
+        sunLight.shadow.camera.far = 300;
+        const sSize = 90;
+        sunLight.shadow.camera.left = -sSize;
+        sunLight.shadow.camera.right = sSize;
+        sunLight.shadow.camera.top = sSize;
+        sunLight.shadow.camera.bottom = -sSize;
+    }
+    scene.add(sunLight);
+
+    // SKY
+    const skyMat = new THREE.ShaderMaterial({
+        side: THREE.BackSide,
+        uniforms: {
+            top: { value: new THREE.Color(0x3878cf) },
+            bot: { value: new THREE.Color(0x92c4f2) }
+        },
+        vertexShader: "varying vec3 vP; void main() { vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
+        fragmentShader: "varying vec3 vP; uniform vec3 top; uniform vec3 bot; void main() { float h = normalize(vP).y * 0.5 + 0.5; gl_FragColor = vec4(mix(bot, top, h), 1.0); }"
+    });
+    scene.add(new THREE.Mesh(new THREE.SphereGeometry(isLowEnd ? 800 : 1200, isLowEnd ? 8 : 16, isLowEnd ? 8 : 16), skyMat));
+
+    // CELESTIAL
+    const celestialGroup = new THREE.Group();
+    scene.add(celestialGroup);
+    const sunMesh = new THREE.Mesh(new THREE.BoxGeometry(14, 14, 0.2), new THREE.MeshBasicMaterial({ color: 0xffffeb }));
+    sunMesh.position.set(0, 160, 0);
+    sunMesh.rotation.x = Math.PI / 2;
+    celestialGroup.add(sunMesh);
+    const moonMesh = new THREE.Mesh(new THREE.BoxGeometry(12, 12, 0.2), new THREE.MeshBasicMaterial({ color: 0xe0e8f5 }));
+    moonMesh.position.set(0, -160, 0);
+    moonMesh.rotation.x = Math.PI / 2;
+    celestialGroup.add(moonMesh);
+
+    // INSTANCED MESH HELPER
+    function makeInstanced(positions, material) {
+        if (!positions.length) return null;
+        const inst = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), material, positions.length);
+        if (!isLowEnd) {
+            inst.castShadow = true;
+            inst.receiveShadow = true;
+        }
+        const m = new THREE.Matrix4();
+        positions.forEach((pos, i) => {
+            m.makeTranslation(pos.x, pos.y, pos.z);
+            inst.setMatrixAt(i, m);
+        });
+        inst.instanceMatrix.needsUpdate = true;
+        scene.add(inst);
+        return inst;
+    }
+
+    // TERRAIN
+    const SIZE = isLowEnd ? 60 : 100;
+    const HALF = SIZE / 2;
+    const waterLevel = 6;
+    const snowLevel = 16;
+
+    const n1 = new Date().getTime() * 0.001;
+    const n2 = n1 + 100;
+    const n3 = n2 + 100;
+
+    function heightAt(x, z) {
+        const dX = x + HALF;
+        const dZ = z + HALF;
+        const islandFactor = Math.cos((dX / SIZE) * Math.PI - Math.PI / 2) * Math.cos((dZ / SIZE) * Math.PI - Math.PI / 2);
+        const river = 11.0 * Math.exp(-Math.pow((z - 15 * Math.sin(x * 0.08)) * 0.16, 2));
+        const h = Math.round((
+            10.0 * Math.sin(dX * 0.12 + n1) * Math.cos(dZ * 0.10 + n2) +
+            6.0 * Math.sin(dX * 0.06 + n3) +
+            5.0 * Math.cos(dZ * 0.08 - n1) +
+            3.0 * Math.sin(dX * 0.03) * Math.cos(dZ * 0.04) +
+            12 - river
+        ) * Math.pow(islandFactor, 1.5));
+        return Math.max(0, h);
+    }
+
+    const grassPos = [];
+    const dirtPos = [];
+    const stonePos = [];
+    const sandPos = [];
+    const snowPos = [];
+    const treeSpots = [];
+
+    for (let x = -HALF; x < HALF; x++) {
+        for (let z = -HALF; z < HALF; z++) {
+            const topH = heightAt(x, z);
+            for (let y = topH; y >= 0; y--) {
+                const pos = { x, y, z };
+                if (y === topH) {
+                    if (topH <= waterLevel) {
+                        sandPos.push(pos);
+                    } else if (topH >= snowLevel) {
+                        snowPos.push(pos);
+                    } else if (topH > 18) {
+                        stonePos.push(pos);
+                    } else {
+                        grassPos.push(pos);
+                        if (topH > waterLevel + 1 && Math.random() < (isLowEnd ? 0.015 : 0.02)) {
+                            treeSpots.push({ x, z, h: topH });
+                        }
+                    }
+                } else if (y > topH - 4 && y > waterLevel) {
+                    dirtPos.push(pos);
+                } else {
+                    stonePos.push(pos);
+                }
+            }
+        }
+    }
+
+    makeInstanced(grassPos, grassMatList);
+    makeInstanced(dirtPos, dirtMat);
+    makeInstanced(stonePos, stoneMat);
+    makeInstanced(sandPos, sandMat);
+    makeInstanced(snowPos, snowMat);
+
+    // WATER
+    const waterSegments = isLowEnd ? 40 : 120;
+    const waterGeo = new THREE.PlaneGeometry(isLowEnd ? 800 : 1200, isLowEnd ? 800 : 1200, waterSegments, waterSegments);
+    waterGeo.rotateX(-Math.PI / 2);
+    const waterMat = new MaterialClass({
+        color: 0x1d66c4,
+        transparent: true,
+        opacity: 0.8,
+        flatShading: true,
+        ...(isLowEnd ? {} : { roughness: 0.1, metalness: 0.8 })
+    });
+    const waterMesh = new THREE.Mesh(waterGeo, waterMat);
+    waterMesh.position.set(0, waterLevel + 0.1, 0);
+    if (!isLowEnd) waterMesh.receiveShadow = true;
+    scene.add(waterMesh);
+    const waterPositions = waterGeo.attributes.position;
+    const initialWaterY = new Float32Array(waterPositions.count);
+    for (let i = 0; i < waterPositions.count; i++) {
+        initialWaterY[i] = waterPositions.getY(i);
+    }
+
+    // TREES - MORE LEAVES
+    const trunkPos = [];
+    const leafPos = [];
+    const treeLimit = isLowEnd ? Math.floor(treeSpots.length * 0.5) : treeSpots.length;
+
+    for (let i = 0; i < treeLimit && i < treeSpots.length; i++) {
+        const s = treeSpots[i];
+        
+        const trunkHeight = isLowEnd ? 4 : 6;
+        for (let t = 1; t <= trunkHeight; t++) {
+            trunkPos.push({ x: s.x, y: s.h + t, z: s.z });
+        }
+        
+        const leafRadius = isLowEnd ? 2 : 3;
+        const leafHeight = isLowEnd ? 3 : 4;
+        const startY = s.h + trunkHeight;
+        
+        for (let lx = -leafRadius; lx <= leafRadius; lx++) {
+            for (let lz = -leafRadius; lz <= leafRadius; lz++) {
+                if (Math.abs(lx) === leafRadius && Math.abs(lz) === leafRadius) {
+                    if (Math.random() < 0.7) continue;
+                }
+                for (let ly = 0; ly < leafHeight; ly++) {
+                    const taper = 1 - (ly / leafHeight) * 0.4;
+                    const maxDist = Math.floor(leafRadius * taper);
+                    if (Math.abs(lx) > maxDist || Math.abs(lz) > maxDist) continue;
+                    if (lx === 0 && lz === 0 && ly < 2) continue;
+                    if (Math.random() < 0.85) {
+                        leafPos.push({ 
+                            x: s.x + lx + (Math.random() - 0.5) * 0.3, 
+                            y: startY + ly + (Math.random() - 0.5) * 0.2, 
+                            z: s.z + lz + (Math.random() - 0.5) * 0.3 
+                        });
+                    }
+                }
+            }
+        }
+        
+        if (!isLowEnd) {
+            for (let d = 1; d <= 2; d++) {
+                const spread = leafRadius - d * 0.5;
+                for (let lx = -spread; lx <= spread; lx++) {
+                    for (let lz = -spread; lz <= spread; lz++) {
+                        if (Math.abs(lx) === Math.floor(spread) && Math.abs(lz) === Math.floor(spread)) continue;
+                        if (Math.random() < 0.3) {
+                            leafPos.push({ 
+                                x: s.x + lx + (Math.random() - 0.5) * 0.2, 
+                                y: startY - d + (Math.random() - 0.5) * 0.1, 
+                                z: s.z + lz + (Math.random() - 0.5) * 0.2 
+                            });
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    makeInstanced(trunkPos, dirtMat);
+    makeInstanced(leafPos, leafMat);
+
+    // TEXT
+    const textGroup = new THREE.Group();
+    scene.add(textGroup);
+
+    function addPixelTextBlock(char, tx, ty, tz) {
+        const font = {
+            'g': [0x7c, 0x02, 0x7e, 0x02, 0x7e, 0x02, 0x7c, 0x00],
+            'i': [0x10, 0x18, 0x1c, 0x10, 0x10, 0x10, 0x7c, 0x00],
+            'v': [0x22, 0x22, 0x22, 0x22, 0x22, 0x14, 0x08, 0x00],
+            'e': [0x3e, 0x20, 0x3e, 0x22, 0x22, 0x20, 0x3e, 0x00],
+            'n': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x00],
+            'r': [0x3e, 0x22, 0x3c, 0x24, 0x22, 0x22, 0x22, 0x00],
+            'a': [0x1c, 0x22, 0x22, 0x3e, 0x22, 0x22, 0x22, 0x00],
+            't': [0x3c, 0x10, 0x10, 0x3c, 0x10, 0x10, 0x10, 0x00],
+            'o': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3c, 0x00],
+            'l': [0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x7c, 0x00],
+            'd': [0x3e, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3e, 0x00],
+            's': [0x3e, 0x20, 0x3c, 0x02, 0x02, 0x22, 0x3c, 0x00],
+            'y': [0x22, 0x22, 0x14, 0x08, 0x08, 0x08, 0x08, 0x00]
+        };
+        const blockMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const geo = new THREE.BoxGeometry(0.3, 0.3, 0.05);
+        if (!font[char]) return;
+        for (let iy = 0; iy < 8; iy++) {
+            const line = font[char][iy];
+            for (let ix = 0; ix < 8; ix++) {
+                if ((line >> (7 - ix)) & 1) {
+                    const m = new THREE.Mesh(geo, blockMat);
+                    m.position.set(tx + ix * 0.3, ty - iy * 0.3, tz);
+                    textGroup.add(m);
+                }
+            }
+        }
+    }
+
+    const textString = "GIVE GENERATOR";
+    let curX = -textString.length * 1.5 + (isLowEnd ? 15 : 20);
+    const textY = isLowEnd ? 32 : 36;
+    const textZ = isLowEnd ? 8 : 12;
+    for (let i = 0; i < textString.length; i++) {
+        addPixelTextBlock(textString[i], curX, textY, textZ);
+        curX += 3.2;
+        if (textString[i] === " ") curX += 1.5;
+    }
+
+    // CLOUDS
+    const cloudGroup = new THREE.Group();
+    if (!isSmallPhone) {
+        const cloudMat = new THREE.MeshBasicMaterial({
+            color: 0xffffff,
+            transparent: true,
+            opacity: 0.85
+        });
+
+        function addCloud(cx, cy, cz) {
+            const parts = isLowEnd ? 4 + Math.floor(Math.random() * 3) : 8 + Math.floor(Math.random() * 6);
+            for (let i = 0; i < parts; i++) {
+                const c = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), cloudMat);
+                c.position.set(cx + i * 2.5, cy + (Math.random() - 0.5) * 1.8, cz + (Math.random() - 0.5) * 4.0);
+                c.scale.set(4.0, 1.4, 2.8);
+                cloudGroup.add(c);
+            }
+        }
+
+        if (isLowEnd) {
+            addCloud(-30, 40, -20);
+            addCloud(15, 44, 15);
+            addCloud(30, 38, -25);
+        } else {
+            addCloud(-40, 42, -28);
+            addCloud(20, 48, 18);
+            addCloud(12, 38, -36);
+            addCloud(-25, 52, 14);
+            addCloud(45, 46, -20);
+        }
+        scene.add(cloudGroup);
+    }
+
+    // RESIZE
+    function resize() {
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        renderer.setSize(w, h, false);
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    // DAY/NIGHT COLORS
+    const daySkyTop = new THREE.Color(0x3878cf);
+    const daySkyBot = new THREE.Color(0x92c4f2);
+    const sunsetSkyTop = new THREE.Color(0x283b6b);
+    const sunsetSkyBot = new THREE.Color(0xf08053);
+    const nightSkyTop = new THREE.Color(0x050a14);
+    const nightSkyBot = new THREE.Color(0x0d1b36);
+    const fogColor = new THREE.Color();
+
+    // ANIMATION
+    let angle = 0;
+    const clock = new THREE.Clock();
+    const targetFPS = isLowEnd ? 30 : 60;
+    let lastFrameTime = 0;
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        const now = performance.now();
+        const delta = now - lastFrameTime;
+
+        if (delta < 1000 / targetFPS) return;
+        lastFrameTime = now;
+
+        const t = clock.getElapsedTime();
+
+        // Camera orbit
+        angle += isLowEnd ? 0.0003 : 0.0004;
+        camera.position.x = Math.sin(angle) * CAMERA_DISTANCE;
+        camera.position.z = Math.cos(angle) * CAMERA_DISTANCE;
+        camera.position.y = CAMERA_HEIGHT;
+        camera.lookAt(0, 10, 0);
+
+        // Celestial
+        const daySpeed = 0.035;
+        celestialGroup.rotation.z = t * daySpeed;
+        const sunWorldPos = new THREE.Vector3();
+        sunMesh.getWorldPosition(sunWorldPos);
+        sunLight.position.copy(sunWorldPos);
+
+        // Sky
+        const sunHeightRatio = Math.sin(t * daySpeed);
+        if (sunHeightRatio > 0.2) {
+            skyMat.uniforms.top.value.lerpColors(sunsetSkyTop, daySkyTop, (sunHeightRatio - 0.2) / 0.8);
+            skyMat.uniforms.bot.value.lerpColors(sunsetSkyBot, daySkyBot, (sunHeightRatio - 0.2) / 0.8);
+            ambientLight.intensity = THREE.MathUtils.lerp(0.4, 0.65, sunHeightRatio);
+            sunLight.intensity = THREE.MathUtils.lerp(0.2, 1.4, sunHeightRatio);
+        } else if (sunHeightRatio > -0.2) {
+            const factor = (sunHeightRatio + 0.2) / 0.4;
+            skyMat.uniforms.top.value.lerpColors(nightSkyTop, sunsetSkyTop, factor);
+            skyMat.uniforms.bot.value.lerpColors(nightSkyBot, sunsetSkyBot, factor);
+            ambientLight.intensity = THREE.MathUtils.lerp(0.15, 0.4, factor);
+            sunLight.intensity = THREE.MathUtils.lerp(0.0, 0.3, factor);
+        } else {
+            skyMat.uniforms.top.value.copy(nightSkyTop);
+            skyMat.uniforms.bot.value.copy(nightSkyBot);
+            ambientLight.intensity = 0.12;
+            sunLight.intensity = 0.0;
+        }
+        fogColor.copy(skyMat.uniforms.bot.value);
+        scene.fog = new THREE.FogExp2(fogColor, isLowEnd ? 0.003 : 0.002);
+
+        // Water waves
+        for (let i = 0; i < waterPositions.count; i++) {
+            const u = waterPositions.getX(i);
+            const v = waterPositions.getZ(i);
+            let wave;
+            if (isLowEnd) {
+                wave = Math.sin(t * 2.0 + u * 0.15 + v * 0.12) * 0.2;
+            } else {
+                wave = Math.sin(t * 2.0 + u * 0.15 + v * 0.12) * 0.16 + Math.cos(t * 1.4 + v * 0.2) * 0.1;
+            }
+            waterPositions.setY(i, initialWaterY[i] + wave);
+        }
+        waterPositions.needsUpdate = true;
+        waterGeo.computeVertexNormals();
+
+        // Clouds
+        if (!isSmallPhone) {
+            cloudGroup.position.x += 0.015;
+            if (cloudGroup.position.x > HALF + 10) cloudGroup.position.x = -(HALF + 10);
+        }
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+})();
 	</script>
 </body>
 
