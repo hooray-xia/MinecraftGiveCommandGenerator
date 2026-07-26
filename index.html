@@ -1843,6 +1843,479 @@ If this gets 70+ votes I make a /summon 1
 				gap: 4px;
 			}
 		}
+		/* Mobile-First Improvements */
+@media (max-width: 768px) {
+    /* Increase touch targets */
+    .mc-btn, .chip, .preset-btn, .item-cell {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .mc-btn {
+        padding: 12px 18px;
+        font-size: 14px;
+    }
+    
+    .chip {
+        padding: 10px 14px;
+        font-size: 12px;
+    }
+    
+    .preset-btn {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+    
+    .item-cell {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    /* Larger inputs for touch */
+    .input, .select, .textarea {
+        font-size: 16px; /* Prevents iOS zoom */
+        padding: 12px 14px;
+        min-height: 44px;
+    }
+    
+    /* Better section spacing */
+    .section-body {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .controls-panel {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    /* Stack grids */
+    .preset-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    
+    .options-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .filters-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .attr-mod-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        padding: 8px;
+    }
+    
+    /* Better item grid */
+    .item-grid {
+        grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+        gap: 6px;
+        max-height: 250px;
+    }
+    
+    /* Preview panel improvements */
+    .preview-panel {
+        position: relative;
+        top: 0;
+        height: auto;
+        max-height: 60vh;
+        border-left: none;
+        border-top: 3px solid var(--bd-dark);
+        order: -1;
+        padding: 12px;
+        overflow-y: auto;
+    }
+    
+    /* Command box */
+    .command-box {
+        font-size: 14px;
+        padding: 12px;
+        min-height: 70px;
+        max-height: 150px;
+        overflow-y: auto;
+    }
+    
+    /* Tooltip preview */
+    .tooltip-preview {
+        min-height: 60px;
+        padding: 8px 10px;
+    }
+    
+    /* Header improvements */
+    .header {
+        padding: 10px 12px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .header-left {
+        justify-content: center;
+    }
+    
+    .header-controls {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .title {
+        font-size: 11px;
+    }
+    
+    .logo {
+        width: 36px;
+        height: 36px;
+    }
+    
+    /* Edition toggle */
+    .edition-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-height: 36px;
+    }
+    
+    .version-select {
+        font-size: 12px;
+        padding: 8px 28px 8px 10px;
+        min-height: 36px;
+    }
+    
+    /* Target presets */
+    .target-presets {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 6px;
+    }
+    
+    .preset-btn .sel-code {
+        font-size: 15px;
+    }
+    .preset-btn .sel-mean {
+        font-size: 10px;
+    }
+    
+    /* Enchantment pool */
+    .ench-pool {
+        max-height: 150px;
+    }
+    
+    .ench-pool-item {
+        padding: 10px 12px;
+        font-size: 13px;
+        min-height: 40px;
+    }
+    
+    /* Selected item */
+    .selected-item {
+        padding: 10px 12px;
+        flex-wrap: wrap;
+    }
+    
+    .selected-item-icon {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .selected-item-icon img {
+        width: 28px;
+        height: 28px;
+    }
+    
+    .selected-item-name {
+        font-size: 13px;
+    }
+    
+    .selected-item-id {
+        font-size: 12px;
+    }
+    
+    /* Random generator */
+    .rand-options {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    
+    .rand-result {
+        padding: 10px 12px;
+        font-size: 13px;
+        flex-wrap: wrap;
+    }
+    
+    /* Toggle switches */
+    .toggle {
+        width: 48px;
+        height: 28px;
+    }
+    
+    .toggle::after {
+        width: 20px;
+        height: 20px;
+        top: 2px;
+        left: 2px;
+    }
+    
+    .toggle.on::after {
+        left: 24px;
+    }
+    
+    .toggle-label {
+        font-size: 14px;
+    }
+    
+    /* Banner preview */
+    .banner-preview-wrap {
+        padding: 8px;
+    }
+    
+    /* Color swatches */
+    .color-swatch {
+        width: 28px;
+        height: 28px;
+    }
+    
+    /* Format buttons */
+    .fmt-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        min-height: 32px;
+        min-width: 32px;
+    }
+    
+    /* Lore and book pages */
+    .lore-line-top, .book-page-top {
+        flex-wrap: wrap;
+    }
+    
+    .lore-line-top .input, .book-page-top textarea {
+        min-width: 100px;
+    }
+    
+    /* Enchantment rows */
+    .ench-row {
+        padding: 8px 10px;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    
+    .ench-lvl {
+        width: 48px;
+        font-size: 16px;
+        padding: 4px 6px;
+        min-height: 32px;
+    }
+    
+    .ench-remove {
+        font-size: 20px;
+        padding: 4px 8px;
+        min-height: 32px;
+        min-width: 32px;
+    }
+    
+    /* Attribute rows */
+    .attr-mod-row .select,
+    .attr-mod-row .input {
+        padding: 6px 8px;
+        font-size: 12px;
+        min-height: 36px;
+    }
+    
+    .attr-mod-remove {
+        padding: 6px 10px;
+        font-size: 16px;
+        min-height: 36px;
+        min-width: 36px;
+    }
+    
+    /* KV rows */
+    .kv-row, .banner-row {
+        padding: 8px 10px;
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+    
+    .kv-row .kv-key, .kv-row .kv-val {
+        font-size: 12px;
+    }
+    
+    /* Sub fields */
+    .sub-fields {
+        padding: 8px;
+        gap: 8px;
+    }
+    
+    /* Book page cards */
+    .book-page-card {
+        padding: 8px;
+    }
+    
+    .book-page-top textarea {
+        min-height: 50px;
+    }
+    
+    /* Map decorations */
+    .map-dec-row {
+        grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr auto !important;
+        gap: 4px !important;
+        padding: 6px !important;
+    }
+    
+    .map-dec-row .input, .map-dec-row .select {
+        font-size: 12px !important;
+        padding: 4px 6px !important;
+        min-height: 32px !important;
+    }
+    
+    /* Scrollbar improvements */
+    .item-grid, .ench-pool, .preview-panel {
+        scrollbar-width: thin;
+    }
+    
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+    
+    /* Toast message */
+    .toast {
+        bottom: 20px;
+        padding: 12px 20px;
+        font-size: 13px;
+        max-width: 90%;
+    }
+    
+    /* Info note */
+    .info-note {
+        font-size: 11px;
+        padding: 8px 10px;
+    }
+    
+    /* Preset grid on very small screens */
+    @media (max-width: 480px) {
+        .preset-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .target-presets {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .rand-options {
+            grid-template-columns: 1fr;
+        }
+        
+        .header-controls {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 6px;
+        }
+        
+        .edition-toggle {
+            width: 100%;
+        }
+        
+        .edition-btn {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .version-select {
+            width: 100%;
+        }
+        
+        .item-grid {
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+            gap: 4px;
+            max-height: 180px;
+        }
+        
+        .mc-banner {
+            height: 120px;
+        }
+        
+        .title {
+            font-size: 9px;
+        }
+        
+        .preview-actions {
+            flex-direction: column;
+        }
+        
+        .preview-actions .mc-btn {
+            width: 100%;
+        }
+        
+        .command-box {
+            font-size: 12px;
+            max-height: 120px;
+        }
+    }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+    /* Remove hover effects that cause issues on touch */
+    .mc-btn:hover,
+    .chip:hover,
+    .preset-btn:hover,
+    .item-cell:hover {
+        transform: none;
+    }
+    
+    .mc-btn:active {
+        transform: scale(0.95);
+    }
+    
+    /* Larger touch targets for all interactive elements */
+    .mc-btn, .chip, .preset-btn, .item-cell {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .input, .select, .textarea {
+        font-size: 16px;
+        min-height: 44px;
+    }
+    
+    .toggle {
+        width: 52px;
+        height: 30px;
+    }
+    
+    .toggle::after {
+        width: 22px;
+        height: 22px;
+    }
+    
+    .toggle.on::after {
+        left: 26px;
+    }
+}
+
+/* Landscape phone optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+    .mc-banner {
+        height: 80px;
+    }
+    
+    .preview-panel {
+        max-height: 40vh;
+    }
+    
+    .command-box {
+        max-height: 60px;
+        min-height: 50px;
+    }
+    
+    .tooltip-preview {
+        min-height: 40px;
+    }
+    
+    .item-grid {
+        max-height: 150px;
+    }
+}
 	</style>
 </head>
 
@@ -11342,6 +11815,45 @@ If this gets 70+ votes I make a /summon 1
 			}
 			animate();
 		})();
+		// Touch-friendly improvements
+document.addEventListener('touchstart', function() {
+    // Enable touch feedback for all interactive elements
+}, { passive: true });
+
+// Prevent zoom on double tap for better UX
+document.addEventListener('dblclick', function(e) {
+    e.preventDefault();
+}, { passive: false });
+
+// Better scrolling for sections on mobile
+document.querySelectorAll('.section-header').forEach(function(header) {
+    header.addEventListener('touchstart', function(e) {
+        // Prevent accidental scroll while tapping section header
+        this.click();
+    }, { passive: true });
+});
+
+// Improve touch feedback for buttons
+document.querySelectorAll('.mc-btn, .chip, .preset-btn, .item-cell').forEach(function(el) {
+    el.addEventListener('touchstart', function() {
+        this.style.transform = 'scale(0.95)';
+    }, { passive: true });
+    
+    el.addEventListener('touchend', function() {
+        this.style.transform = '';
+    }, { passive: true });
+});
+
+// Fix for iOS input zoom
+document.querySelectorAll('input, select, textarea').forEach(function(el) {
+    el.addEventListener('focus', function() {
+        if (window.innerWidth < 768) {
+            setTimeout(function() {
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+    });
+});
 	</script>
 </body>
 
