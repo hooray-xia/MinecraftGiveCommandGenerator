@@ -2848,6 +2848,62 @@ If this gets 70+ votes I make a /summon 1
         margin-top: 12px !important;
         line-height: 1.6 !important;
     }
+}/* Fix live preview overflow on mobile */
+@media (max-width: 768px) {
+    .tooltip-preview {
+        min-height: 150px !important;
+        max-height: 300px !important;
+        overflow-y: auto !important;
+        padding: 12px !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+    }
+    
+    .tooltip-preview span {
+        display: block !important;
+        width: 100% !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        white-space: normal !important;
+        padding: 2px 0 !important;
+    }
+    
+    .tt-name {
+        font-size: 16px !important;
+        word-wrap: break-word !important;
+    }
+    
+    .tt-ench, .tt-lore, .tt-mod {
+        font-size: 13px !important;
+        word-wrap: break-word !important;
+        white-space: normal !important;
+    }
+    
+    .tt-icon {
+        width: 32px !important;
+        height: 32px !important;
+        flex-shrink: 0 !important;
+    }
+}/* Bigger scrollable preview on mobile */
+@media (max-width: 480px) {
+    .tooltip-preview {
+        min-height: 200px !important;
+        max-height: 400px !important;
+        font-size: 14px !important;
+    }
+    
+    .tooltip-preview span {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+        padding: 3px 0 !important;
+    }
+    
+    .tt-name {
+        font-size: 18px !important;
+    }
 }
 	</style>
 </head>
@@ -3337,7 +3393,7 @@ If this gets 70+ votes I make a /summon 1
 			<div class="preview-title">Live Preview</div>
 			<div class="version-badge" id="versionBadge">Format: 1.21.5+ (Latest)</div>
 			<div class="preview-subtitle">Item Tooltip</div>
-			<div class="tooltip-preview" id="tooltipPreview"><span class="tt-empty">Select an item to see a preview...</span></div>
+			<div class="tooltip-preview" id="tooltipPreview" style="overflow-y:auto;word-wrap:break-word;overflow-wrap:break-word;max-height:300px;"><span class="tt-empty">Select an item to see a preview...</span></div>
 			<div class="preview-subtitle">Command</div>
 			<div class="command-box" id="commandBox"><span class="ph">Select an item and adjust settings to generate a command...</span></div>
 			<div class="preview-actions"><button class="mc-btn primary" id="copyBtn">Copy Command</button><button class="mc-btn" id="resetBtn">Reset All</button></div>
@@ -11911,10 +11967,13 @@ If this gets 70+ votes I make a /summon 1
     }
 
     // CAMERA
-    const CAMERA_DISTANCE = isLowEnd ? 60 : 80;
-	const CAMERA_HEIGHT = isLowEnd ? 35 : 48;
-    const camera = new THREE.PerspectiveCamera(23, 1, 0.1, isLowEnd ? 800 : 1500);
-    camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
+    // CAMERA - ZOOMED IN ON MOBILE
+const CAMERA_DISTANCE = isLowEnd ? 28 : 80;
+const CAMERA_HEIGHT = isLowEnd ? 18 : 48;
+const camera = new THREE.PerspectiveCamera(isLowEnd ? 40 : 23, 1, 0.1, isLowEnd ? 800 : 1500);
+camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
+
+
 
     // TEXTURE GENERATOR - WITH SIZE OPTION
 function createPixelTexture(drawFn, size) {
@@ -12113,8 +12172,9 @@ const texSize = isLowEnd ? 2 : 16;
     }
 
     // TERRAIN
-    const SIZE = isLowEnd ? 60 : 100;
-    const HALF = SIZE / 2;
+    // TERRAIN - MUCH SMALLER ON MOBILE
+const SIZE = isLowEnd ? 30 : 100;
+const HALF = SIZE / 2;
     const waterLevel = 6;
     const snowLevel = 16;
 
