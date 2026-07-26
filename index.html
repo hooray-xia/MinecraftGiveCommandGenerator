@@ -2764,6 +2764,27 @@ If this gets 70+ votes I make a /summon 1
         margin-top: 8px !important;
         border-radius: 0 !important;
     }
+}/* Mobile: Info note under command */
+@media (max-width: 768px) {
+    .preview-panel {
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    .info-note {
+        order: 10 !important;
+        margin-top: 10px !important;
+        position: relative !important;
+        bottom: auto !important;
+    }
+    
+    .command-box {
+        order: 8 !important;
+    }
+    
+    .preview-actions {
+        order: 9 !important;
+    }
 }
 	</style>
 </head>
@@ -11827,8 +11848,8 @@ If this gets 70+ votes I make a /summon 1
     }
 
     // CAMERA
-    const CAMERA_DISTANCE = isLowEnd ? 90 : 80;
-    const CAMERA_HEIGHT = isLowEnd ? 52 : 48;
+    const CAMERA_DISTANCE = isLowEnd ? 60 : 80;
+	const CAMERA_HEIGHT = isLowEnd ? 35 : 48;
     const camera = new THREE.PerspectiveCamera(23, 1, 0.1, isLowEnd ? 800 : 1500);
     camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
 
