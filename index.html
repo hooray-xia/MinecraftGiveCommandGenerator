@@ -10858,7 +10858,7 @@ If this gets 70+ votes I make a /summon 1
 			camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
 
 			function createPixelTexture(drawFn) {
-				const size = 16;
+				const size = 4;
 				const canvas = document.createElement("canvas");
 				canvas.width = canvas.height = size;
 				const ctx = canvas.getContext("2d");
@@ -11028,10 +11028,10 @@ If this gets 70+ votes I make a /summon 1
 			}
 
 			// --- TERRAIN GENERATION (100x100) ---
-			const SIZE = 150;
+			const SIZE = 100;
 			const HALF = SIZE / 2;
 			const waterLevel = 6;
-			const snowLevel = 18;
+			const snowLevel = 16;
 
 			const n1 = new Date().getTime() * 0.001,
 				n2 = n1 + 100,
