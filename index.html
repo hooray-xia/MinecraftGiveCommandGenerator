@@ -419,30 +419,26 @@ If this gets 70+ votes I make a /summon 1
 		}
 
 		.logo {
-			width: 46px;
-			height: 46px;
-			border: 3px solid var(--bd-dark);
-			border-radius: 6px;
-			background: var(--bg-inset);
-			image-rendering: pixelated;
-			box-shadow: 0 0 14px var(--amber-glow);
-			animation: logoPulse 2.4s ease-in-out infinite;
-			flex-shrink: 0;
+		width: 46px;
+		height: 46px;
+		border: 3px solid var(--bd-dark);
+		border-radius: 6px;
+		background: #080a0c;
+		box-shadow: 0 0 14px rgba(0, 255, 255, 0.45);
+		animation: logoPulse 2.4s ease-in-out infinite;
+		flex-shrink: 0;
+	}
+
+	@keyframes logoPulse {
+		0%, 100% {
+			box-shadow: 0 0 8px rgba(0, 255, 255, 0.35), 0 0 0 rgba(0, 255, 255, 0);
 		}
-
-		@keyframes logoPulse {
-
-			0%,
-			100% {
-				box-shadow: 0 0 8px var(--amber-glow), 0 0 0 rgba(252, 211, 77, 0);
-			}
-
-			50% {
-				box-shadow: 0 0 18px rgba(252, 211, 77, 0.75), 0 0 28px rgba(252, 211, 77, 0.35);
-			}
+		50% {
+			box-shadow: 0 0 16px rgba(0, 255, 255, 0.7), 0 0 26px rgba(0, 255, 255, 0.3);
 		}
+	}
 
-		.title {
+	.title {
 			font-family: 'Press Start 2P', monospace;
 			font-size: 14px;
 			color: var(--amber);
@@ -2905,30 +2901,7 @@ If this gets 70+ votes I make a /summon 1
 <body>
 	<header class="header">
 		<div class="header-left">
-			<svg class="logo" viewBox="0 0 48 48" shape-rendering="crispEdges" aria-label="Give Generator">
-				<defs>
-					<linearGradient id="logoTop" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0" stop-color="#ffe08a" />
-						<stop offset="1" stop-color="#fcd34d" />
-					</linearGradient>
-					<linearGradient id="logoLeft" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0" stop-color="#d97706" />
-						<stop offset="1" stop-color="#b45309" />
-					</linearGradient>
-					<linearGradient id="logoRight" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0" stop-color="#92400e" />
-						<stop offset="1" stop-color="#7c2d12" />
-					</linearGradient>
-				</defs>
-				<rect x="2" y="2" width="44" height="44" rx="5" fill="#1a1a1e" stroke="#3a3a40" stroke-width="2" />
-				<polygon points="24,9 39,18 24,27 9,18" fill="url(#logoTop)" />
-				<polygon points="9,18 24,27 24,41 9,32" fill="url(#logoLeft)" />
-				<polygon points="24,27 39,18 39,32 24,41" fill="url(#logoRight)" />
-				<polyline points="24,9 39,18 24,27 9,18 24,9" fill="none" stroke="#0a0a0c" stroke-width="1.6" />
-				<line x1="24" y1="27" x2="24" y2="41" stroke="#0a0a0c" stroke-width="1.6" />
-				<path d="M33 8 L34.4 12 L38.5 13.4 L34.4 14.8 L33 18.8 L31.6 14.8 L27.5 13.4 L31.6 12 Z" fill="#ffffff" />
-				<circle cx="14" cy="11" r="1.1" fill="#ffffff" opacity="0.85" />
-			</svg>
+			<canvas class="logo" id="logoCanvas" aria-label="Give Generator"></canvas>
 			<h1 class="title">/give <span>Generator</span></h1>
 		</div>
 		<div class="header-controls">
@@ -3467,12 +3440,14 @@ If this gets 70+ votes I make a /summon 1
 		camera.lookAt(0, 0, 0);
 
 		// preserveDrawingBuffer is enabled so toDataURL can capture the rendered canvas for the favicon
+		const logoCanvas = document.getElementById('logoCanvas');
 		const renderer = new THREE.WebGLRenderer({
+			canvas: logoCanvas,
 			antialias: true,
 			alpha: true,
 			preserveDrawingBuffer: true
 		});
-		renderer.setSize(500, 500);
+		renderer.setSize(72, 72, false);
 		renderer.setPixelRatio(window.devicePixelRatio);
 		renderer.shadowMap.enabled = true;
 		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -3533,15 +3508,27 @@ If this gets 70+ votes I make a /summon 1
 		mainGroup.rotation.y = Math.PI / 4;
 		mainGroup.rotation.x = Math.PI / 8;
 
-		// Render 3D Scene
+		// Render 3D Scene (one frame for the favicon snapshot)
 		renderer.render(scene, camera);
 
-		// Set 3D render snapshot as Favicon// Generate favicon from Three.js scene
-
+		// Set 3D render snapshot as Favicon
 		const favicon = document.getElementById('dynamicFavicon');
 		if (favicon) {
 			favicon.href = renderer.domElement.toDataURL('image/png');
 		}
+
+		// Animate the logo in the header (slow rotation + floating gem)
+		let logoT = 0;
+		function animateLogo() {
+			requestAnimationFrame(animateLogo);
+			logoT += 0.012;
+			mainGroup.rotation.y = Math.PI / 4 + logoT;
+			mainGroup.rotation.x = Math.PI / 8 + Math.sin(logoT * 0.5) * 0.12;
+			gem.position.y = 1.7 + Math.sin(logoT * 1.5) * 0.12;
+			gem.rotation.y += 0.04;
+			renderer.render(scene, camera);
+		}
+		animateLogo();
 		})();
 	</script>
 	<script type>
@@ -4612,21 +4599,21 @@ If this gets 70+ votes I make a /summon 1
 			c: "potions",
 			s: 1,
 			dur: 0,
-			img: "https://minecraft.wiki/images/Water_Bottle_JE2_BE2.png"
+			img: "https://minecraft.wiki/images/Water_Bottle_JE2.png?acae5&format=original"
 		}, {
 			d: "minecraft:splash_potion",
 			n: "Splash Potion",
 			c: "potions",
 			s: 1,
 			dur: 0,
-			img: "https://minecraft.wiki/images/Splash_Water_Bottle_JE2_BE2.png"
+			img: "https://minecraft.wiki/images/Splash_Water_Bottle_JE2.png?7a92d&format=original"
 		}, {
 			d: "minecraft:lingering_potion",
 			n: "Lingering Potion",
 			c: "potions",
 			s: 1,
 			dur: 0,
-			img: "https://minecraft.wiki/images/Lingering_Water_Bottle_JE2_BE2.png"
+			img: "https://minecraft.wiki/images/Lingering_Water_Bottle_JE2.png?ed26b"
 		}, {
 			d: "minecraft:experience_bottle",
 			n: "Bottle o' Enchanting",
@@ -4762,7 +4749,8 @@ If this gets 70+ votes I make a /summon 1
 			n: "Chain",
 			c: "misc",
 			s: 64,
-			dur: 0
+			dur: 0,
+			img: "https://minecraft.wiki/images/Invicon_Iron_Chain.png?5d1e7"
 		}, {
 			d: "minecraft:conduit",
 			n: "Conduit",
