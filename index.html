@@ -3260,23 +3260,6 @@ If this gets 70+ votes I make a /summon 1
 					<div class="toggle-row java-only"><span class="toggle-label">Death Protection</span>
 						<div class="toggle" id="deathProtToggle"></div>
 					</div>
-					<div class="field java-only"><label class="label">Damage Resistant (tag)</label><select class="select" id="dmgResistantSelect">
-							<option value="">(none)</option>
-							<option value="#minecraft:is_fire">Fire</option>
-							<option value="#minecraft:is_lava">Lava</option>
-							<option value="#minecraft:is_lightning">Lightning</option>
-							<option value="#minecraft:is_explosion">Explosion</option>
-							<option value="#minecraft:is_projectile">Projectile</option>
-							<option value="#minecraft:is_falling">Falling</option>
-							<option value="#minecraft:is_drowning">Drowning</option>
-							<option value="#minecraft:is_freezing">Freezing</option>
-							<option value="#minecraft:is_contact">Contact</option>
-							<option value="#minecraft:is_entity_attack">Entity Attack</option>
-							<option value="#minecraft:is_player_attack">Player Attack</option>
-							<option value="#minecraft:is_mob_attack">Mob Attack</option>
-							<option value="#minecraft:is_thorns">Thorns</option>
-						</select></div>
-
 					<div id="bedrock-options" class="bedrock-only">
 						<div class="adv-label">Bedrock-Only Components</div>
 						<div class="field"><label class="label">Item Lock</label><select class="select" id="itemLockSelect">
@@ -4781,6 +4764,78 @@ If this gets 70+ votes I make a /summon 1
 			n: "Goat Horn",
 			c: "misc",
 			s: 1,
+			dur: 0
+		}, {
+			d: "minecraft:bell",
+			n: "Bell",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:lodestone",
+			n: "Lodestone",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:composter",
+			n: "Composter",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:daylight_detector",
+			n: "Daylight Detector",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:target",
+			n: "Target",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:campfire",
+			n: "Campfire",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:soul_campfire",
+			n: "Soul Campfire",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:barrier",
+			n: "Barrier",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:light",
+			n: "Light Block",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:jigsaw",
+			n: "Jigsaw Block",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:structure_block",
+			n: "Structure Block",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		}, {
+			d: "minecraft:structure_void",
+			n: "Structure Void",
+			c: "blocks",
+			s: 64,
 			dur: 0
 		}, {
 			d: "minecraft:recovery_compass",
@@ -8553,7 +8608,7 @@ If this gets 70+ votes I make a /summon 1
 			"item.shield.block",
 			"item.trident.throw"
 		];
-		var COMPONENT_KEYS = ["custom_name", "lore", "enchantments", "stored_enchantments", "rarity", "unbreakable", "damage", "max_damage", "custom_model_data", "max_stack_size", "hide_additional_tooltip", "tooltip_display", "enchantment_glint_override", "attribute_modifiers", "equippable", "food", "consumable", "glider", "repairable", "use_cooldown", "item_model", "dyed_color", "potion_contents", "fireworks", "custom_data", "can_break", "can_place_on", "death_protection", "damage_resistant", "banner_patterns", "writable_book_content", "written_book_content", "map_id", "map_decorations"];
+		var COMPONENT_KEYS = ["custom_name", "lore", "enchantments", "stored_enchantments", "rarity", "unbreakable", "damage", "max_damage", "custom_model_data", "max_stack_size", "hide_additional_tooltip", "tooltip_display", "enchantment_glint_override", "attribute_modifiers", "equippable", "food", "consumable", "glider", "repairable", "use_cooldown", "item_model", "dyed_color", "potion_contents", "fireworks", "custom_data", "can_break", "can_place_on", "death_protection", "banner_patterns", "writable_book_content", "written_book_content", "map_id", "map_decorations"];
 		var VERSION_LABELS = {
 			"1.21.5+": "1.21.5+ (Latest)",
 			"1.21": "1.21 - 1.21.4",
@@ -8629,7 +8684,6 @@ If this gets 70+ votes I make a /summon 1
 			canBreak: "",
 			canPlaceOn: "",
 			deathProtection: false,
-			damageResistant: "",
 			itemLock: "",
 			keepOnDeath: false,
 			blockStates: [],
@@ -9514,10 +9568,6 @@ If this gets 70+ votes I make a /summon 1
 			S.canPlaceOn = this.value.trim();
 			updateAll();
 		});
-		$("dmgResistantSelect").addEventListener("change", function() {
-			S.damageResistant = this.value;
-			updateAll();
-		});
 		$("itemLockSelect").addEventListener("change", function() {
 			S.itemLock = this.value;
 			updateAll();
@@ -10395,7 +10445,6 @@ If this gets 70+ votes I make a /summon 1
 				return b !== '""';
 			}).join(",") + "]");
 			if (S.deathProtection) comps.push("death_protection={}");
-			if (S.damageResistant) comps.push('damage_resistant={types:"' + S.damageResistant + '"}');
 			if (S.bannerPatterns.length) {
 				var bpArr = S.bannerPatterns.map(function(p) {
 					return '{pattern:"minecraft:' + p.pattern + '",color:"' + p.color + '"}';
@@ -11026,11 +11075,6 @@ If this gets 70+ votes I make a /summon 1
 				S.canPlaceOn = cpParts.join(",");
 			}
 			S.deathProtection = !!p.comps.death_protection;
-			S.damageResistant = "";
-			if (p.comps.damage_resistant) {
-				var dr = parseSNBTPairs(p.comps.damage_resistant);
-				S.damageResistant = stripQuotes(dr.types || "");
-			}
 			S.blockStates = (p.blockStates || []).slice();
 			S.bannerPatterns = [];
 			if (p.comps.banner_patterns) {
@@ -11174,7 +11218,6 @@ If this gets 70+ votes I make a /summon 1
 			$("customDataInput").value = S.customData;
 			$("canBreakInput").value = S.canBreak;
 			$("canPlaceOnInput").value = S.canPlaceOn;
-			$("dmgResistantSelect").value = S.damageResistant;
 			$("deathProtToggle").classList.toggle("on", S.deathProtection);
 			$("itemLockSelect").value = S.itemLock;
 			$("keepOnDeathToggle").classList.toggle("on", S.keepOnDeath);
@@ -11316,7 +11359,6 @@ If this gets 70+ votes I make a /summon 1
 			S.canBreak = "";
 			S.canPlaceOn = "";
 			S.deathProtection = false;
-			S.damageResistant = "";
 			S.itemLock = "";
 			S.keepOnDeath = false;
 			S.blockStates = [];
