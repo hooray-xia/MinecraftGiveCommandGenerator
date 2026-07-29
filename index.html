@@ -3280,9 +3280,9 @@ pls post ur generated OP items in a new branch after permission bc the quick pre
 				<div class="section-header"><span class="section-title">Quick Presets</span><span class="section-chevron">v</span></div>
 				<div class="section-body">
 					<div class="preset-grid" id="presetGrid">
-						<button class="mc-btn" data-preset="godSword">God Sword</button>
-						<button class="mc-btn" data-preset="godArmor">God Armor</button>
-						<button class="mc-btn" data-preset="fortunePick">Fortune Pick</button>
+						<button class="mc-btn" data-preset="chocolate">Chocolate</button>
+						<button class="mc-btn" data-preset="crystallineArmor">Crystalline Armor (Interchangeable)</button>
+						<button class="mc-btn" data-preset="fortunePick">Fortune Pickaxe</button>
 						<button class="mc-btn" data-preset="ravenclaw">Ravenclaw's Diadem</button>
 						<button class="mc-btn" data-preset="excalibur">Excalibur</button>
 						<button class="mc-btn" data-preset="elderWand">Elder Wand</button>
@@ -13090,84 +13090,91 @@ pls post ur generated OP items in a new branch after permission bc the quick pre
 				refreshUIFromState();
 				return;
 			}
-			if (name === "godSword") {
-				S.item = findItem("minecraft:netherite_sword");
-				S.enchantments = [{
-					id: "sharpness",
-					level: 255
-				}, {
-					id: "smite",
-					level: 255
-				}, {
-					id: "bane_of_arthropods",
-					level: 255
-				}, {
-					id: "knockback",
-					level: 10
-				}, {
-					id: "fire_aspect",
-					level: 5
-				}, {
-					id: "looting",
-					level: 10
-				}, {
-					id: "sweeping_edge",
-					level: 5
-				}, {
-					id: "unbreaking",
-					level: 255
-				}, {
-					id: "mending",
-					level: 1
-				}];
-				S.name = {
-					text: "God Sword",
-					color: "gold",
-					bold: true,
-					italic: false,
-					underlined: false,
-					strikethrough: false,
-					obfuscated: false
-				};
-				S.rarity = "epic";
-				S.unbreakable = true;
-			} else if (name === "godArmor") {
-				S.item = findItem("minecraft:netherite_chestplate");
-				S.enchantments = [{
-					id: "protection",
-					level: 255
-				}, {
-					id: "fire_protection",
-					level: 255
-				}, {
-					id: "blast_protection",
-					level: 255
-				}, {
-					id: "projectile_protection",
-					level: 255
-				}, {
-					id: "thorns",
-					level: 255
-				}, {
-					id: "unbreaking",
-					level: 255
-				}, {
-					id: "mending",
-					level: 1
-				}];
-				S.name = {
-					text: "God Armor",
-					color: "aqua",
-					bold: true,
-					italic: false,
-					underlined: false,
-					strikethrough: false,
-					obfuscated: false
-				};
-				S.rarity = "epic";
-				S.unbreakable = true;
-			} else if (name === "fortunePick") {
-				S.item = findItem("minecraft:diamond_pickaxe");
+			if (name === "chocolate") {
+    S.item = findItem("minecraft:nether_brick");
+    S.enchantments = [];
+    S.name = {
+        text: "Chocolate",
+        color: "dark_red",
+        bold: false,
+        italic: false,
+        underlined: false,
+        strikethrough: false,
+        obfuscated: false
+    };
+    S.lore = [
+        {
+            text: "A sweet treat crafted from the finest cocoa beans.",
+            color: "orange",
+            bold: false,
+            italic: false,
+            underlined: false,
+            strikethrough: false,
+            obfuscated: false
+        },
+        {
+            text: "Said to be a favorite of villagers during festivals.",
+            color: "gold",
+            bold: false,
+            italic: false,
+            underlined: false,
+            strikethrough: false,
+            obfuscated: false
+        },
+        {
+            text: "Eating it fills you with warmth and a sense of comfort.",
+            color: "yellow",
+            bold: false,
+            italic: false,
+            underlined: false,
+            strikethrough: false,
+            obfuscated: false
+        }
+    ];
+    S.rarity = "epic";
+    S.unbreakable = false;
+    S.attributeModifiers = [
+        {
+            type: "attack_damage",
+            slot: "any",
+            operation: "add_value",
+            amount: 3
+        },
+        {
+            type: "attack_knockback",
+            slot: "any",
+            operation: "add_value",
+            amount: 5
+        }
+    ];
+    S.food = {
+        enabled: true,
+        nutrition: 8,
+        saturation: 6,
+        canAlwaysEat: true
+    };
+    S.consumable = {
+        enabled: true,
+        seconds: 1.2,
+        animation: "eat",
+        sound: "entity.generic.eat"
+    };
+    S.potionCustomEffects = [
+        {
+            id: "regeneration",
+            amplifier: 2,
+            duration: 36000
+        },
+        {
+            id: "speed",
+            amplifier: 1,
+            duration: 36000
+        }
+    ];
+    S.potionContents = "";
+    S.deathProtection = true;
+} else if (name === "fortunePick") {
+				S.item = findItem("minecraft:netherite_pickaxe");
 				S.enchantments = [{
 					id: "efficiency",
 					level: 255
@@ -13182,7 +13189,7 @@ pls post ur generated OP items in a new branch after permission bc the quick pre
 					level: 1
 				}];
 				S.name = {
-					text: "Fortune Pick",
+					text: "Fortune Pickaxe",
 					color: "green",
 					bold: true,
 					italic: false,
@@ -13300,7 +13307,103 @@ pls post ur generated OP items in a new branch after permission bc the quick pre
 					damageOnHurt: true,
 					cameraOverlay: ""
 				};
-			} else if (name === "excalibur") {
+			} else if (name === "crystallineArmor") {
+    S.item = findItem("minecraft:netherite_chestplate");
+    S.enchantments = [
+        {
+            id: "protection",
+            level: 255
+        },
+        {
+            id: "fire_protection",
+            level: 255
+        },
+        {
+            id: "blast_protection",
+            level: 255
+        },
+        {
+            id: "projectile_protection",
+            level: 255
+        },
+        {
+            id: "thorns",
+            level: 255
+        },
+        {
+            id: "unbreaking",
+            level: 255
+        },
+        {
+            id: "mending",
+            level: 255
+        },
+        {
+            id: "respiration",
+            level: 255
+        },
+        {
+            id: "aqua_affinity",
+            level: 255
+        },
+        {
+            id: "swift_sneak",
+            level: 255
+        },
+        {
+            id: "feather_falling",
+            level: 255
+        },
+        {
+            id: "depth_strider",
+            level: 255
+        },
+        {
+            id: "frost_walker",
+            level: 255
+        },
+        {
+            id: "soul_speed",
+            level: 255
+        }
+    ];
+    S.name = {
+        text: "Crystalline Armor",
+        color: "gold",
+        bold: true,
+        italic: false,
+        underlined: false,
+        strikethrough: false,
+        obfuscated: false
+    };
+    S.rarity = "epic";
+    S.unbreakable = true;
+    S.attributeModifiers = [
+        {
+            type: "max_health",
+            slot: "any",
+            operation: "add_value",
+            amount: 40
+        },
+        {
+            type: "armor_toughness",
+            slot: "any",
+            operation: "add_value",
+            amount: 40
+        },
+        {
+            type: "armor",
+            slot: "any",
+            operation: "add_value",
+            amount: 80
+        }
+    ];
+    S.glider = true;
+    S.target = {
+        type: "@r",
+        filters: {}
+    };
+}else if (name === "excalibur") {
 				S.item = findItem("minecraft:golden_sword");
 				S.count = 1;
 				S.target = {
