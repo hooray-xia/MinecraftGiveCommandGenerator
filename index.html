@@ -3614,7 +3614,6 @@ pls post ur generated OP items in a new branch after permission bc the quick pre
 						<div class="toggle" id="deathProtToggle"></div>
 					</div>
 					<div id="bedrock-options" class="bedrock-only">
-						<div class="adv-label">Bedrock-Only Components</div>
 						<div class="field"><label class="label">Item Lock</label><select class="select" id="itemLockSelect">
 								<option value="">(none)</option>
 								<option value="lock_in_inventory">Lock in Inventory</option>
@@ -11951,18 +11950,8 @@ pls post ur generated OP items in a new branch after permission bc the quick pre
 			var cmd = "/give " + targetStr() + " " + bedrockItemId(S.item.d);
 
 			var comps = {};
+			/* Custom name and lore are disabled in Bedrock mode */
 			var display = {};
-			if (S.name.text) {
-				display.Name = textToBedrock(S.name);
-			}
-			var loreLines = S.lore.filter(function(l) {
-				return l.text.trim();
-			});
-			if (loreLines.length) {
-				display.Lore = loreLines.map(function(l) {
-					return textToBedrock(l);
-				});
-			}
 			if (Object.keys(display).length) comps["minecraft:display"] = display;
 			var enchs = S.enchantments.filter(function(e) {
 				return e.id;
