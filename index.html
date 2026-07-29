@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!--
+pls post ur generated OP items in a new branch after permission bc the quick presets need to be filled with human OP commands.
+-->
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
@@ -11,48 +15,51 @@
 	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 	<style>
-		/* Add touch-friendly sizing */
-		/* Hide scrollbar on mobile for cleaner look */
 		.mc-btn:active,
-.chip:active,
-.preset-btn:active,
-.item-cell:active {
-    transform: scale(0.95);
-    transition: transform 0.05s;
-}
+		.chip:active,
+		.preset-btn:active,
+		.item-cell:active {
+			transform: scale(0.95);
+			transition: transform 0.05s;
+		}
 
-/* Remove hover effects on touch devices */
-@media (hover: none) {
-    .mc-btn:hover,
-    .chip:hover,
-    .preset-btn:hover,
-    .item-cell:hover {
-        transform: none;
-    }
-    
-    .mc-btn:active {
-        transform: scale(0.95);
-    }
-}
-@media (max-width: 768px) {
-    ::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
-    }
-    
-    .item-grid,
-    .ench-pool,
-    .preview-panel {
-        scrollbar-width: thin;
-    }
-}
+
+		@media (hover: none) {
+
+			.mc-btn:hover,
+			.chip:hover,
+			.preset-btn:hover,
+			.item-cell:hover {
+				transform: none;
+			}
+
+			.mc-btn:active {
+				transform: scale(0.95);
+			}
+		}
+
 		@media (max-width: 768px) {
-    .input,
-    .select,
-    .textarea {
-        font-size: 16px; /* Prevents iOS auto-zoom */
-    }
-}
+			::-webkit-scrollbar {
+				width: 4px;
+				height: 4px;
+			}
+
+			.item-grid,
+			.ench-pool,
+			.preview-panel {
+				scrollbar-width: thin;
+			}
+		}
+
+		@media (max-width: 768px) {
+
+			.input,
+			.select,
+			.textarea {
+				font-size: 16px;
+			}
+		}
+
 		@media (pointer: coarse) {
 			.mc-btn {
 				min-height: 44px;
@@ -78,17 +85,17 @@
 			.select {
 				min-height: 40px;
 				font-size: 16px;
-				/* Prevents iOS zoom */
+
 			}
 
 			@media (max-width: 480px) {
 				.mc-banner {
 					height: 160px;
-					/* Smaller on phones */
+
 				}
 			}
 
-			/* Hide scrollbar on mobile for cleaner look */
+
 			@media (max-width: 768px) {
 				::-webkit-scrollbar {
 					width: 4px;
@@ -102,7 +109,7 @@
 				}
 			}
 
-			/* Remove hover effects on touch devices */
+
 			@media (hover: none) {
 
 				.mc-btn:hover,
@@ -127,19 +134,19 @@
 		@media (max-width: 920px) {
 			.preview-panel {
 				position: relative;
-				/* Remove sticky on mobile */
+
 				top: 0;
 				height: auto;
 				border-left: none;
 				border-top: 3px solid var(--bd-dark);
 				order: -1;
 				max-height: 50vh;
-				/* Limit height on mobile */
+
 				overflow-y: auto;
 			}
 		}
 
-		/* Phones */
+
 		@media (max-width: 480px) {
 			.item-grid {
 				grid-template-columns: repeat(auto-fill, minmax(38px, 1fr));
@@ -148,7 +155,7 @@
 			}
 		}
 
-		/* Small phones (320px - 480px) */
+
 		@media (max-width: 480px) {
 			.header {
 				padding: 10px 12px;
@@ -218,7 +225,7 @@
 			}
 		}
 
-		/* Mobile landscape (480px - 768px) */
+
 		@media (min-width: 481px) and (max-width: 768px) {
 			.title {
 				font-size: 11px;
@@ -229,7 +236,7 @@
 			}
 		}
 
-		/* Tablet (768px - 920px) */
+
 		@media (min-width: 769px) and (max-width: 920px) {
 			.controls-panel {
 				padding: 16px;
@@ -240,7 +247,7 @@
 			}
 		}
 
-		/* Larger screens (1200px+) */
+
 		@media (min-width: 1200px) {
 			.controls-panel {
 				padding: 28px;
@@ -405,26 +412,29 @@
 		}
 
 		.logo {
-		width: 46px;
-		height: 46px;
-		border: 3px solid var(--bd-dark);
-		border-radius: 6px;
-		background: #080a0c;
-		box-shadow: 0 0 14px rgba(0, 255, 255, 0.45);
-		animation: logoPulse 2.4s ease-in-out infinite;
-		flex-shrink: 0;
-	}
-
-	@keyframes logoPulse {
-		0%, 100% {
-			box-shadow: 0 0 8px rgba(0, 255, 255, 0.35), 0 0 0 rgba(0, 255, 255, 0);
+			width: 46px;
+			height: 46px;
+			border: 3px solid var(--bd-dark);
+			border-radius: 6px;
+			background: #080a0c;
+			box-shadow: 0 0 14px rgba(0, 255, 255, 0.45);
+			animation: logoPulse 2.4s ease-in-out infinite;
+			flex-shrink: 0;
 		}
-		50% {
-			box-shadow: 0 0 16px rgba(0, 255, 255, 0.7), 0 0 26px rgba(0, 255, 255, 0.3);
-		}
-	}
 
-	.title {
+		@keyframes logoPulse {
+
+			0%,
+			100% {
+				box-shadow: 0 0 8px rgba(0, 255, 255, 0.35), 0 0 0 rgba(0, 255, 255, 0);
+			}
+
+			50% {
+				box-shadow: 0 0 16px rgba(0, 255, 255, 0.7), 0 0 26px rgba(0, 255, 255, 0.3);
+			}
+		}
+
+		.title {
 			font-family: 'Press Start 2P', monospace;
 			font-size: 14px;
 			color: var(--amber);
@@ -1421,19 +1431,26 @@
 		}
 
 		.command-box .ph {
-		color: var(--txt3);
-		font-style: italic;
-		font-size: 15px;
-	}
+			color: var(--txt3);
+			font-style: italic;
+			font-size: 15px;
+		}
 
-	.command-box.flash {
-		animation: cmdFlash .45s ease;
-	}
+		.command-box.flash {
+			animation: cmdFlash .45s ease;
+		}
 
-	@keyframes cmdFlash {
-		0% { opacity: .25; box-shadow: inset 0 0 0 1px var(--bd-light), inset 0 0 20px rgba(0, 0, 0, .5), 0 0 0 3px var(--amber); }
-		100% { opacity: 1; box-shadow: inset 0 0 0 1px var(--bd-light), inset 0 0 20px rgba(0, 0, 0, .5); }
-	}
+		@keyframes cmdFlash {
+			0% {
+				opacity: .25;
+				box-shadow: inset 0 0 0 1px var(--bd-light), inset 0 0 20px rgba(0, 0, 0, .5), 0 0 0 3px var(--amber);
+			}
+
+			100% {
+				opacity: 1;
+				box-shadow: inset 0 0 0 1px var(--bd-light), inset 0 0 20px rgba(0, 0, 0, .5);
+			}
+		}
 
 		.tok-cmd {
 			color: var(--amber);
@@ -1644,7 +1661,7 @@
 			margin-top: 6px;
 		}
 
-		/* Edition-based component visibility */
+
 		body.edition-bedrock .java-only {
 			display: none !important;
 		}
@@ -1653,7 +1670,7 @@
 			display: none !important;
 		}
 
-		/* Bedrock mode: minimal UI - hide everything except item picker, can break/place on, and bedrock-only components */
+
 		body.edition-bedrock #sec-presets,
 		body.edition-bedrock #sec-random,
 		body.edition-bedrock #sec-enchant,
@@ -1834,1053 +1851,1403 @@
 				gap: 4px;
 			}
 		}
-		/* Mobile-First Improvements */
-@media (max-width: 768px) {
-    /* Increase touch targets */
-    .mc-btn, .chip, .preset-btn, .item-cell {
-        min-height: 44px;
-        min-width: 44px;
-    }
-    
-    .mc-btn {
-        padding: 12px 18px;
-        font-size: 14px;
-    }
-    
-    .chip {
-        padding: 10px 14px;
-        font-size: 12px;
-    }
-    
-    .preset-btn {
-        padding: 12px 14px;
-        font-size: 14px;
-    }
-    
-    .item-cell {
-        min-width: 44px;
-        min-height: 44px;
-    }
-    
-    /* Larger inputs for touch */
-    .input, .select, .textarea {
-        font-size: 16px; /* Prevents iOS zoom */
-        padding: 12px 14px;
-        min-height: 44px;
-    }
-    
-    /* Better section spacing */
-    .section-body {
-        padding: 12px;
-        gap: 12px;
-    }
-    
-    .controls-panel {
-        padding: 12px;
-        gap: 12px;
-    }
-    
-    /* Stack grids */
-    .preset-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-    }
-    
-    .options-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .filters-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .attr-mod-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-        padding: 8px;
-    }
-    
-    /* Better item grid */
-    .item-grid {
-        grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
-        gap: 6px;
-        max-height: 250px;
-    }
-    
-    /* Preview panel improvements */
-    .preview-panel {
-        position: relative;
-        top: 0;
-        height: auto;
-        max-height: 60vh;
-        border-left: none;
-        border-top: 3px solid var(--bd-dark);
-        order: -1;
-        padding: 12px;
-        overflow-y: auto;
-    }
-    
-    /* Command box */
-    .command-box {
-        font-size: 14px;
-        padding: 12px;
-        min-height: 70px;
-        max-height: 150px;
-        overflow-y: auto;
-    }
-    
-    /* Tooltip preview */
-    .tooltip-preview {
-        min-height: 60px;
-        padding: 8px 10px;
-    }
-    
-    /* Header improvements */
-    .header {
-        padding: 10px 12px;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-    }
-    
-    .header-left {
-        justify-content: center;
-    }
-    
-    .header-controls {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    
-    .title {
-        font-size: 11px;
-    }
-    
-    .logo {
-        width: 36px;
-        height: 36px;
-    }
-    
-    /* Edition toggle */
-    .edition-btn {
-        padding: 8px 12px;
-        font-size: 12px;
-        min-height: 36px;
-    }
-    
-    .version-select {
-        font-size: 12px;
-        padding: 8px 28px 8px 10px;
-        min-height: 36px;
-    }
-    
-    /* Target presets */
-    .target-presets {
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 6px;
-    }
-    
-    .preset-btn .sel-code {
-        font-size: 15px;
-    }
-    .preset-btn .sel-mean {
-        font-size: 10px;
-    }
-    
-    /* Enchantment pool */
-    .ench-pool {
-        max-height: 150px;
-    }
-    
-    .ench-pool-item {
-        padding: 10px 12px;
-        font-size: 13px;
-        min-height: 40px;
-    }
-    
-    /* Selected item */
-    .selected-item {
-        padding: 10px 12px;
-        flex-wrap: wrap;
-    }
-    
-    .selected-item-icon {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .selected-item-icon img {
-        width: 28px;
-        height: 28px;
-    }
-    
-    .selected-item-name {
-        font-size: 13px;
-    }
-    
-    .selected-item-id {
-        font-size: 12px;
-    }
-    
-    /* Random generator */
-    .rand-options {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-    }
-    
-    .rand-result {
-        padding: 10px 12px;
-        font-size: 13px;
-        flex-wrap: wrap;
-    }
-    
-    /* Toggle switches */
-    .toggle {
-        width: 48px;
-        height: 28px;
-    }
-    
-    .toggle::after {
-        width: 20px;
-        height: 20px;
-        top: 2px;
-        left: 2px;
-    }
-    
-    .toggle.on::after {
-        left: 24px;
-    }
-    
-    .toggle-label {
-        font-size: 14px;
-    }
-    
-    /* Banner preview */
-    .banner-preview-wrap {
-        padding: 8px;
-    }
-    
-    /* Color swatches */
-    .color-swatch {
-        width: 28px;
-        height: 28px;
-    }
-    
-    /* Format buttons */
-    .fmt-btn {
-        padding: 6px 12px;
-        font-size: 12px;
-        min-height: 32px;
-        min-width: 32px;
-    }
-    
-    /* Lore and book pages */
-    .lore-line-top, .book-page-top {
-        flex-wrap: wrap;
-    }
-    
-    .lore-line-top .input, .book-page-top textarea {
-        min-width: 100px;
-    }
-    
-    /* Enchantment rows */
-    .ench-row {
-        padding: 8px 10px;
-        flex-wrap: wrap;
-        gap: 6px;
-    }
-    
-    .ench-lvl {
-        width: 48px;
-        font-size: 16px;
-        padding: 4px 6px;
-        min-height: 32px;
-    }
-    
-    .ench-remove {
-        font-size: 20px;
-        padding: 4px 8px;
-        min-height: 32px;
-        min-width: 32px;
-    }
-    
-    /* Attribute rows */
-    .attr-mod-row .select,
-    .attr-mod-row .input {
-        padding: 6px 8px;
-        font-size: 12px;
-        min-height: 36px;
-    }
-    
-    .attr-mod-remove {
-        padding: 6px 10px;
-        font-size: 16px;
-        min-height: 36px;
-        min-width: 36px;
-    }
-    
-    /* KV rows */
-    .kv-row, .banner-row {
-        padding: 8px 10px;
-        flex-wrap: wrap;
-        gap: 4px;
-    }
-    
-    .kv-row .kv-key, .kv-row .kv-val {
-        font-size: 12px;
-    }
-    
-    /* Sub fields */
-    .sub-fields {
-        padding: 8px;
-        gap: 8px;
-    }
-    
-    /* Book page cards */
-    .book-page-card {
-        padding: 8px;
-    }
-    
-    .book-page-top textarea {
-        min-height: 50px;
-    }
-    
-    /* Map decorations */
-    .map-dec-row {
-        grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr auto !important;
-        gap: 4px !important;
-        padding: 6px !important;
-    }
-    
-    .map-dec-row .input, .map-dec-row .select {
-        font-size: 12px !important;
-        padding: 4px 6px !important;
-        min-height: 32px !important;
-    }
-    
-    /* Scrollbar improvements */
-    .item-grid, .ench-pool, .preview-panel {
-        scrollbar-width: thin;
-    }
-    
-    ::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
-    }
-    
-    /* Toast message */
-    .toast {
-        bottom: 20px;
-        padding: 12px 20px;
-        font-size: 13px;
-        max-width: 90%;
-    }
-    
-    /* Info note */
-    .info-note {
-        font-size: 11px;
-        padding: 8px 10px;
-    }
-    
-    /* Preset grid on very small screens */
-    @media (max-width: 480px) {
-        .preset-grid {
-            grid-template-columns: 1fr 1fr;
-        }
-        
-        .target-presets {
-            grid-template-columns: 1fr 1fr;
-        }
-        
-        .rand-options {
-            grid-template-columns: 1fr;
-        }
-        
-        .header-controls {
-            flex-direction: column;
-            align-items: stretch;
-            gap: 6px;
-        }
-        
-        .edition-toggle {
-            width: 100%;
-        }
-        
-        .edition-btn {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .version-select {
-            width: 100%;
-        }
-        
-        .item-grid {
-            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-            gap: 4px;
-            max-height: 180px;
-        }
-        
-        .mc-banner {
-            height: 120px;
-        }
-        
-        .title {
-            font-size: 9px;
-        }
-        
-        .preview-actions {
-            flex-direction: column;
-        }
-        
-        .preview-actions .mc-btn {
-            width: 100%;
-        }
-        
-        .command-box {
-            font-size: 12px;
-            max-height: 120px;
-        }
-    }
-}
 
-/* Touch device optimizations */
-@media (pointer: coarse) {
-    /* Remove hover effects that cause issues on touch */
-    .mc-btn:hover,
-    .chip:hover,
-    .preset-btn:hover,
-    .item-cell:hover {
-        transform: none;
-    }
-    
-    .mc-btn:active {
-        transform: scale(0.95);
-    }
-    
-    /* Larger touch targets for all interactive elements */
-    .mc-btn, .chip, .preset-btn, .item-cell {
-        min-height: 44px;
-        min-width: 44px;
-    }
-    
-    .input, .select, .textarea {
-        font-size: 16px;
-        min-height: 44px;
-    }
-    
-    .toggle {
-        width: 52px;
-        height: 30px;
-    }
-    
-    .toggle::after {
-        width: 22px;
-        height: 22px;
-    }
-    
-    .toggle.on::after {
-        left: 26px;
-    }
-}
+		@media (max-width: 768px) {
 
-/* Landscape phone optimization */
-@media (max-height: 500px) and (orientation: landscape) {
-    .mc-banner {
-        height: 80px;
-    }
-    
-    .preview-panel {
-        max-height: 40vh;
-    }
-    
-    .command-box {
-        max-height: 60px;
-        min-height: 50px;
-    }
-    
-    .tooltip-preview {
-        min-height: 40px;
-    }
-    
-    .item-grid {
-        max-height: 150px;
-    }
-}/* ===== MOBILE-FRIENDLY ADDITIONS ===== */
+			.mc-btn,
+			.chip,
+			.preset-btn,
+			.item-cell {
+				min-height: 44px;
+				min-width: 44px;
+			}
 
-/* Better touch targets */
-.mc-btn:active,
-.chip:active,
-.preset-btn:active,
-.item-cell:active {
-    transform: scale(0.95);
-    transition: transform 0.05s;
-}
+			.mc-btn {
+				padding: 12px 18px;
+				font-size: 14px;
+			}
 
-/* Remove hover effects on touch devices */
-@media (hover: none) {
-    .mc-btn:hover,
-    .chip:hover,
-    .preset-btn:hover,
-    .item-cell:hover {
-        transform: none;
-    }
-    .mc-btn:active {
-        transform: scale(0.95);
-    }
-}
+			.chip {
+				padding: 10px 14px;
+				font-size: 12px;
+			}
 
-/* Mobile responsive layout */
-@media (max-width: 920px) {
-    .main {
-        grid-template-columns: 1fr;
-    }
-    .preview-panel {
-        position: relative;
-        top: 0;
-        height: auto;
-        max-height: 50vh;
-        border-left: none;
-        border-top: 3px solid var(--bd-dark);
-        order: -1;
-        overflow-y: auto;
-    }
-    .attr-mod-row {
-        grid-template-columns: 1fr 1fr;
-        gap: 4px;
-    }
-}
+			.preset-btn {
+				padding: 12px 14px;
+				font-size: 14px;
+			}
 
-@media (max-width: 768px) {
-    /* Header */
-    .header {
-        padding: 10px 12px;
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-    }
-    .header-left {
-        justify-content: center;
-    }
-    .title {
-        font-size: 10px;
-    }
-    .header-controls {
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    
-    /* Controls */
-    .controls-panel {
-        padding: 12px;
-        gap: 12px;
-    }
-    .preview-panel {
-        padding: 12px;
-    }
-    .section-body {
-        padding: 12px;
-        gap: 12px;
-    }
-    
-    /* Touch targets */
-    .mc-btn {
-        padding: 12px 16px;
-        min-height: 44px;
-        font-size: 13px;
-    }
-    .chip {
-        padding: 8px 12px;
-        min-height: 36px;
-        font-size: 11px;
-    }
-    .preset-btn {
-        padding: 10px 12px;
-        min-height: 40px;
-    }
-    .input,
-    .select,
-    .textarea {
-        font-size: 16px !important;
-        padding: 10px 12px;
-        min-height: 44px;
-    }
-    
-    /* Grids */
-    .item-grid {
-        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
-        gap: 4px;
-        max-height: 200px;
-    }
-    .target-presets {
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 6px;
-    }
-    .preset-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-    }
-    .rand-options {
-        grid-template-columns: 1fr 1fr;
-    }
-    .filters-grid {
-        grid-template-columns: 1fr;
-    }
-    .options-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    /* Edition toggle */
-    .edition-btn {
-        padding: 8px 12px;
-        font-size: 12px;
-        min-height: 36px;
-    }
-    .version-select {
-        font-size: 12px;
-        padding: 8px 28px 8px 10px;
-        min-height: 36px;
-    }
-    
-    /* Command box */
-    .command-box {
-        font-size: 14px;
-        padding: 12px;
-        min-height: 70px;
-        max-height: 150px;
-        overflow-y: auto;
-    }
-    .tooltip-preview {
-        min-height: 60px;
-        padding: 8px 10px;
-    }
-    
-    /* Toggle switches */
-    .toggle {
-        width: 48px;
-        height: 28px;
-    }
-    .toggle::after {
-        width: 20px;
-        height: 20px;
-        top: 2px;
-        left: 2px;
-    }
-    .toggle.on::after {
-        left: 24px;
-    }
-    
-    /* Color swatches */
-    .color-swatch {
-        width: 28px;
-        height: 28px;
-    }
-    
-    /* Format buttons */
-    .fmt-btn {
-        padding: 6px 12px;
-        font-size: 12px;
-        min-height: 32px;
-        min-width: 32px;
-    }
-    
-    /* Enchantments */
-    .ench-pool {
-        max-height: 150px;
-    }
-    .ench-pool-item {
-        padding: 10px 12px;
-        min-height: 40px;
-    }
-    .ench-lvl {
-        width: 48px;
-        font-size: 16px;
-        padding: 4px 6px;
-        min-height: 32px;
-    }
-    .ench-remove {
-        font-size: 20px;
-        padding: 4px 8px;
-        min-height: 32px;
-        min-width: 32px;
-    }
-    
-    /* Selected item */
-    .selected-item {
-        padding: 10px 12px;
-        flex-wrap: wrap;
-    }
-    .selected-item-icon {
-        width: 36px;
-        height: 36px;
-    }
-    .selected-item-icon img {
-        width: 28px;
-        height: 28px;
-    }
-    
-    /* Preview actions */
-    .preview-actions {
-        flex-direction: column;
-    }
-    .preview-actions .mc-btn {
-        width: 100%;
-    }
-    
-    /* Toast */
-    .toast {
-        bottom: 20px;
-        padding: 12px 20px;
-        font-size: 13px;
-        max-width: 90%;
-    }
-    
-    /* Scrollbar */
-    .item-grid,
-    .ench-pool,
-    .preview-panel {
-        scrollbar-width: thin;
-    }
-    ::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
-    }
-}
+			.item-cell {
+				min-width: 44px;
+				min-height: 44px;
+			}
 
-/* Extra small phones */
-@media (max-width: 480px) {
-    .mc-banner {
-        height: 120px;
-    }
-    .title {
-        font-size: 9px;
-    }
-    .item-grid {
-        grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
-        gap: 3px;
-        max-height: 150px;
-    }
-    .preset-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    .target-presets {
-        grid-template-columns: 1fr 1fr;
-    }
-    .rand-options {
-        grid-template-columns: 1fr;
-    }
-    .command-box {
-        font-size: 12px;
-        max-height: 100px;
-    }
-    .header-controls {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 6px;
-    }
-    .edition-toggle {
-        width: 100%;
-    }
-    .edition-btn {
-        flex: 1;
-        text-align: center;
-    }
-    .version-select {
-        width: 100%;
-    }
-}
 
-/* Landscape phones */
-@media (max-height: 500px) and (orientation: landscape) {
-    .mc-banner {
-        height: 80px;
-    }
-    .preview-panel {
-        max-height: 40vh;
-    }
-    .command-box {
-        max-height: 60px;
-        min-height: 50px;
-    }
-    .tooltip-preview {
-        min-height: 40px;
-    }
-    .item-grid {
-        max-height: 120px;
-    }
-}
+			.input,
+			.select,
+			.textarea {
+				font-size: 16px;
+				padding: 12px 14px;
+				min-height: 44px;
+			}
 
-/* Touch device optimizations */
-@media (pointer: coarse) {
-    .mc-btn {
-        min-height: 44px;
-        padding: 12px 16px;
-    }
-    .chip {
-        min-height: 36px;
-        padding: 8px 12px;
-    }
-    .preset-btn {
-        min-height: 40px;
-        padding: 10px 12px;
-    }
-    .item-cell {
-        min-height: 44px;
-        min-width: 44px;
-    }
-    .input,
-    .select {
-        min-height: 40px;
-        font-size: 16px;
-    }
-    .toggle {
-        width: 52px;
-        height: 30px;
-    }
-    .toggle::after {
-        width: 22px;
-        height: 22px;
-    }
-    .toggle.on::after {
-        left: 26px;
-    }
-}/* MOBILE FIX - OVERRIDE EVERYTHING */
-@media only screen and (max-width: 768px) {
-    body { overflow-x: hidden !important; }
-    .main { display: block !important; }
-    .controls-panel { width: 100% !important; padding: 8px !important; }
-    .preview-panel { 
-        width: 100% !important; 
-        position: relative !important; 
-        top: auto !important; 
-        height: auto !important; 
-        max-height: 300px !important;
-        border-left: none !important;
-        border-top: 3px solid var(--bd-dark) !important;
-        overflow-y: scroll !important;
-        padding: 10px !important;
-        margin-bottom: 10px !important;
-    }
-    .header { flex-wrap: wrap !important; padding: 8px !important; }
-    .header-left { flex: 1 1 auto !important; }
-    .title { font-size: 9px !important; }
-    .header-controls { flex-wrap: wrap !important; gap: 4px !important; }
-    .edition-btn { padding: 4px 8px !important; font-size: 11px !important; }
-    .version-select { font-size: 11px !important; padding: 4px 24px 4px 6px !important; }
-    .section-body { padding: 8px !important; gap: 8px !important; }
-    .mc-btn { min-height: 40px !important; padding: 8px 12px !important; font-size: 12px !important; }
-    .preset-grid { grid-template-columns: 1fr 1fr !important; gap: 4px !important; }
-    .target-presets { grid-template-columns: 1fr 1fr !important; gap: 4px !important; }
-    .item-grid { grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)) !important; gap: 3px !important; max-height: 150px !important; }
-    .input, .select, .textarea { font-size: 16px !important; min-height: 40px !important; padding: 6px 8px !important; }
-    .command-box { font-size: 12px !important; min-height: 50px !important; max-height: 100px !important; overflow-y: auto !important; padding: 8px !important; }
-    .options-grid { grid-template-columns: 1fr !important; gap: 6px !important; }
-    .filters-grid { grid-template-columns: 1fr !important; gap: 4px !important; }
-    .attr-mod-row { grid-template-columns: 1fr 1fr !important; gap: 4px !important; }
-    .ench-pool { max-height: 120px !important; }
-    .preview-actions { flex-direction: column !important; gap: 4px !important; }
-    .preview-actions .mc-btn { width: 100% !important; }
-    .selected-item { flex-wrap: wrap !important; gap: 6px !important; }
-    .toggle { width: 44px !important; height: 26px !important; }
-    .toggle::after { width: 18px !important; height: 18px !important; }
-    .toggle.on::after { left: 22px !important; }
-    .mc-banner { height: 100px !important; }
-    .rand-options { grid-template-columns: 1fr !important; gap: 4px !important; }
-    .ench-row { flex-wrap: wrap !important; gap: 4px !important; }
-    .ench-lvl { width: 40px !important; font-size: 14px !important; }
-    .kv-add-row { flex-wrap: wrap !important; }
-    .kv-row { flex-wrap: wrap !important; gap: 4px !important; }
-    .lore-line-top { flex-wrap: wrap !important; }
-    .book-page-top { flex-wrap: wrap !important; }
-    .color-swatch { width: 24px !important; height: 24px !important; }
-    .fmt-btn { min-height: 30px !important; min-width: 30px !important; padding: 4px 8px !important; font-size: 11px !important; }
-    .toast { max-width: 90% !important; font-size: 12px !important; padding: 8px 16px !important; }
-    .info-note { font-size: 10px !important; padding: 6px 8px !important; }
-    .preset-btn { min-height: 36px !important; padding: 6px 8px !important; font-size: 12px !important; }
-    .chip { min-height: 30px !important; padding: 4px 8px !important; font-size: 10px !important; }
-    .section-title { font-size: 8px !important; }
-    .label { font-size: 10px !important; }
-    .version-badge { font-size: 12px !important; padding: 2px 8px !important; }
-    .tooltip-preview { min-height: 50px !important; padding: 6px 8px !important; }
-    .tt-name { font-size: 13px !important; }
-    .tt-ench, .tt-lore, .tt-mod { font-size: 11px !important; }
-    .selected-item-name { font-size: 12px !important; }
-    .selected-item-id { font-size: 11px !important; }
-    .sub-fields { padding: 6px !important; gap: 6px !important; }
-    .banner-preview-wrap { padding: 6px !important; }
-    .count-input { width: 60px !important; font-size: 14px !important; }
-    .ench-search { min-width: 80px !important; }
-}
 
-@media only screen and (max-width: 480px) {
-    .mc-banner { height: 80px !important; }
-    .title { font-size: 7px !important; }
-    .logo { width: 30px !important; height: 30px !important; }
-    .item-grid { grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)) !important; max-height: 120px !important; }
-    .item-cell img { width: 24px !important; height: 24px !important; }
-    .header { padding: 4px 6px !important; gap: 4px !important; }
-    .controls-panel { padding: 4px !important; gap: 6px !important; }
-    .section-body { padding: 6px !important; gap: 6px !important; }
-    .preset-grid { grid-template-columns: 1fr 1fr !important; gap: 3px !important; }
-    .target-presets { grid-template-columns: 1fr 1fr !important; gap: 3px !important; }
-    .mc-btn { font-size: 10px !important; padding: 6px 8px !important; min-height: 32px !important; }
-    .edition-btn { font-size: 9px !important; padding: 3px 6px !important; min-height: 28px !important; }
-    .version-select { font-size: 9px !important; padding: 3px 20px 3px 4px !important; min-height: 28px !important; }
-    .preview-panel { max-height: 200px !important; padding: 6px !important; }
-    .command-box { font-size: 10px !important; max-height: 80px !important; min-height: 40px !important; padding: 6px !important; }
-    .input, .select, .textarea { font-size: 14px !important; min-height: 32px !important; padding: 4px 6px !important; }
-}/* INFO NOTE - page footer, static (does not follow the screen) */
-.info-note {
-    background: var(--bg-deep) !important;
-    border-left: 3px solid var(--blue) !important;
-    border-top: 2px solid var(--bd-dark) !important;
-    z-index: 5 !important;
-    padding: 12px 16px !important;
-    font-size: 11px !important;
-    max-width: 1440px;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
+			.section-body {
+				padding: 12px;
+				gap: 12px;
+			}
 
-/* Mobile adjustment */
-@media (max-width: 768px) {
-    .controls-panel {
-        padding-bottom: 0 !important;
-    }
-}/* Mobile: Info note under command */
-@media (max-width: 768px) {
-    .preview-panel {
-        display: flex !important;
-        flex-direction: column !important;
-    }
+			.controls-panel {
+				padding: 12px;
+				gap: 12px;
+			}
 
-    .command-box {
-        order: 8 !important;
-    }
 
-    .preview-actions {
-        order: 9 !important;
-    }
-}/* Mobile: Bigger command and preview */
-@media (max-width: 768px) {
-    .preview-panel {
-        max-height: none !important;
-        height: auto !important;
-        padding: 8px !important;
-        flex: 1 !important;
-    }
-    
-    .tooltip-preview {
-        min-height: 120px !important;
-        padding: 12px !important;
-        font-size: 16px !important;
-    }
-    
-    .tt-name {
-        font-size: 18px !important;
-    }
-    
-    .tt-ench, .tt-lore, .tt-mod {
-        font-size: 15px !important;
-    }
-    
-    .command-box {
-        font-size: 16px !important;
-        min-height: 120px !important;
-        max-height: 200px !important;
-        padding: 14px !important;
-        line-height: 1.8 !important;
-    }
-    
-    .preview-title {
-        font-size: 12px !important;
-        margin-bottom: 6px !important;
-    }
-    
-    .version-badge {
-        font-size: 14px !important;
-        padding: 4px 12px !important;
-    }
-    
-    .preview-subtitle {
-        font-size: 11px !important;
-        margin-bottom: 4px !important;
-    }
-    
-    .preview-actions .mc-btn {
-        min-height: 50px !important;
-        font-size: 16px !important;
-        padding: 14px !important;
-    }
-    
-    .preview-actions {
-        gap: 8px !important;
-        margin-top: 8px !important;
-    }
-    
-    .info-note {
-        font-size: 13px !important;
-        padding: 12px !important;
-        margin-top: 12px !important;
-        line-height: 1.6 !important;
-    }
-}/* Fix live preview overflow on mobile */
-@media (max-width: 768px) {
-    .tooltip-preview {
-        min-height: 150px !important;
-        max-height: 300px !important;
-        overflow-y: auto !important;
-        padding: 12px !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 4px !important;
-    }
-    
-    .tooltip-preview span {
-        display: block !important;
-        width: 100% !important;
-        word-wrap: break-word !important;
-        overflow-wrap: break-word !important;
-        white-space: normal !important;
-        padding: 2px 0 !important;
-    }
-    
-    .tt-name {
-        font-size: 16px !important;
-        word-wrap: break-word !important;
-    }
-    
-    .tt-ench, .tt-lore, .tt-mod {
-        font-size: 13px !important;
-        word-wrap: break-word !important;
-        white-space: normal !important;
-    }
-    
-    .tt-icon {
-        width: 32px !important;
-        height: 32px !important;
-        flex-shrink: 0 !important;
-    }
-}/* Bigger scrollable preview on mobile */
-@media (max-width: 480px) {
-    .tooltip-preview {
-        min-height: 200px !important;
-        max-height: 400px !important;
-        font-size: 14px !important;
-    }
-    
-    .tooltip-preview span {
-        font-size: 13px !important;
-        line-height: 1.5 !important;
-        padding: 3px 0 !important;
-    }
-    
-    .tt-name {
-        font-size: 18px !important;
-    }
-}
+			.preset-grid {
+				grid-template-columns: 1fr 1fr;
+				gap: 8px;
+			}
+
+			.options-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.filters-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.attr-mod-row {
+				grid-template-columns: 1fr 1fr;
+				gap: 6px;
+				padding: 8px;
+			}
+
+
+			.item-grid {
+				grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+				gap: 6px;
+				max-height: 250px;
+			}
+
+
+			.preview-panel {
+				position: relative;
+				top: 0;
+				height: auto;
+				max-height: 60vh;
+				border-left: none;
+				border-top: 3px solid var(--bd-dark);
+				order: -1;
+				padding: 12px;
+				overflow-y: auto;
+			}
+
+
+			.command-box {
+				font-size: 14px;
+				padding: 12px;
+				min-height: 70px;
+				max-height: 150px;
+				overflow-y: auto;
+			}
+
+
+			.tooltip-preview {
+				min-height: 60px;
+				padding: 8px 10px;
+			}
+
+
+			.header {
+				padding: 10px 12px;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 8px;
+			}
+
+			.header-left {
+				justify-content: center;
+			}
+
+			.header-controls {
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			.title {
+				font-size: 11px;
+			}
+
+			.logo {
+				width: 36px;
+				height: 36px;
+			}
+
+
+			.edition-btn {
+				padding: 8px 12px;
+				font-size: 12px;
+				min-height: 36px;
+			}
+
+			.version-select {
+				font-size: 12px;
+				padding: 8px 28px 8px 10px;
+				min-height: 36px;
+			}
+
+
+			.target-presets {
+				grid-template-columns: 1fr 1fr 1fr;
+				gap: 6px;
+			}
+
+			.preset-btn .sel-code {
+				font-size: 15px;
+			}
+
+			.preset-btn .sel-mean {
+				font-size: 10px;
+			}
+
+
+			.ench-pool {
+				max-height: 150px;
+			}
+
+			.ench-pool-item {
+				padding: 10px 12px;
+				font-size: 13px;
+				min-height: 40px;
+			}
+
+
+			.selected-item {
+				padding: 10px 12px;
+				flex-wrap: wrap;
+			}
+
+			.selected-item-icon {
+				width: 36px;
+				height: 36px;
+			}
+
+			.selected-item-icon img {
+				width: 28px;
+				height: 28px;
+			}
+
+			.selected-item-name {
+				font-size: 13px;
+			}
+
+			.selected-item-id {
+				font-size: 12px;
+			}
+
+
+			.rand-options {
+				grid-template-columns: 1fr 1fr;
+				gap: 8px;
+			}
+
+			.rand-result {
+				padding: 10px 12px;
+				font-size: 13px;
+				flex-wrap: wrap;
+			}
+
+
+			.toggle {
+				width: 48px;
+				height: 28px;
+			}
+
+			.toggle::after {
+				width: 20px;
+				height: 20px;
+				top: 2px;
+				left: 2px;
+			}
+
+			.toggle.on::after {
+				left: 24px;
+			}
+
+			.toggle-label {
+				font-size: 14px;
+			}
+
+
+			.banner-preview-wrap {
+				padding: 8px;
+			}
+
+
+			.color-swatch {
+				width: 28px;
+				height: 28px;
+			}
+
+
+			.fmt-btn {
+				padding: 6px 12px;
+				font-size: 12px;
+				min-height: 32px;
+				min-width: 32px;
+			}
+
+
+			.lore-line-top,
+			.book-page-top {
+				flex-wrap: wrap;
+			}
+
+			.lore-line-top .input,
+			.book-page-top textarea {
+				min-width: 100px;
+			}
+
+
+			.ench-row {
+				padding: 8px 10px;
+				flex-wrap: wrap;
+				gap: 6px;
+			}
+
+			.ench-lvl {
+				width: 48px;
+				font-size: 16px;
+				padding: 4px 6px;
+				min-height: 32px;
+			}
+
+			.ench-remove {
+				font-size: 20px;
+				padding: 4px 8px;
+				min-height: 32px;
+				min-width: 32px;
+			}
+
+
+			.attr-mod-row .select,
+			.attr-mod-row .input {
+				padding: 6px 8px;
+				font-size: 12px;
+				min-height: 36px;
+			}
+
+			.attr-mod-remove {
+				padding: 6px 10px;
+				font-size: 16px;
+				min-height: 36px;
+				min-width: 36px;
+			}
+
+
+			.kv-row,
+			.banner-row {
+				padding: 8px 10px;
+				flex-wrap: wrap;
+				gap: 4px;
+			}
+
+			.kv-row .kv-key,
+			.kv-row .kv-val {
+				font-size: 12px;
+			}
+
+
+			.sub-fields {
+				padding: 8px;
+				gap: 8px;
+			}
+
+
+			.book-page-card {
+				padding: 8px;
+			}
+
+			.book-page-top textarea {
+				min-height: 50px;
+			}
+
+
+			.map-dec-row {
+				grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr auto !important;
+				gap: 4px !important;
+				padding: 6px !important;
+			}
+
+			.map-dec-row .input,
+			.map-dec-row .select {
+				font-size: 12px !important;
+				padding: 4px 6px !important;
+				min-height: 32px !important;
+			}
+
+
+			.item-grid,
+			.ench-pool,
+			.preview-panel {
+				scrollbar-width: thin;
+			}
+
+			::-webkit-scrollbar {
+				width: 4px;
+				height: 4px;
+			}
+
+
+			.toast {
+				bottom: 20px;
+				padding: 12px 20px;
+				font-size: 13px;
+				max-width: 90%;
+			}
+
+
+			.info-note {
+				font-size: 11px;
+				padding: 8px 10px;
+			}
+
+
+			@media (max-width: 480px) {
+				.preset-grid {
+					grid-template-columns: 1fr 1fr;
+				}
+
+				.target-presets {
+					grid-template-columns: 1fr 1fr;
+				}
+
+				.rand-options {
+					grid-template-columns: 1fr;
+				}
+
+				.header-controls {
+					flex-direction: column;
+					align-items: stretch;
+					gap: 6px;
+				}
+
+				.edition-toggle {
+					width: 100%;
+				}
+
+				.edition-btn {
+					flex: 1;
+					text-align: center;
+				}
+
+				.version-select {
+					width: 100%;
+				}
+
+				.item-grid {
+					grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+					gap: 4px;
+					max-height: 180px;
+				}
+
+				.mc-banner {
+					height: 120px;
+				}
+
+				.title {
+					font-size: 9px;
+				}
+
+				.preview-actions {
+					flex-direction: column;
+				}
+
+				.preview-actions .mc-btn {
+					width: 100%;
+				}
+
+				.command-box {
+					font-size: 12px;
+					max-height: 120px;
+				}
+			}
+		}
+
+
+		@media (pointer: coarse) {
+
+			.mc-btn:hover,
+			.chip:hover,
+			.preset-btn:hover,
+			.item-cell:hover {
+				transform: none;
+			}
+
+			.mc-btn:active {
+				transform: scale(0.95);
+			}
+
+
+			.mc-btn,
+			.chip,
+			.preset-btn,
+			.item-cell {
+				min-height: 44px;
+				min-width: 44px;
+			}
+
+			.input,
+			.select,
+			.textarea {
+				font-size: 16px;
+				min-height: 44px;
+			}
+
+			.toggle {
+				width: 52px;
+				height: 30px;
+			}
+
+			.toggle::after {
+				width: 22px;
+				height: 22px;
+			}
+
+			.toggle.on::after {
+				left: 26px;
+			}
+		}
+
+
+		@media (max-height: 500px) and (orientation: landscape) {
+			.mc-banner {
+				height: 80px;
+			}
+
+			.preview-panel {
+				max-height: 40vh;
+			}
+
+			.command-box {
+				max-height: 60px;
+				min-height: 50px;
+			}
+
+			.tooltip-preview {
+				min-height: 40px;
+			}
+
+			.item-grid {
+				max-height: 150px;
+			}
+		}
+
+
+		.mc-btn:active,
+		.chip:active,
+		.preset-btn:active,
+		.item-cell:active {
+			transform: scale(0.95);
+			transition: transform 0.05s;
+		}
+
+
+		@media (hover: none) {
+
+			.mc-btn:hover,
+			.chip:hover,
+			.preset-btn:hover,
+			.item-cell:hover {
+				transform: none;
+			}
+
+			.mc-btn:active {
+				transform: scale(0.95);
+			}
+		}
+
+
+		@media (max-width: 920px) {
+			.main {
+				grid-template-columns: 1fr;
+			}
+
+			.preview-panel {
+				position: relative;
+				top: 0;
+				height: auto;
+				max-height: 50vh;
+				border-left: none;
+				border-top: 3px solid var(--bd-dark);
+				order: -1;
+				overflow-y: auto;
+			}
+
+			.attr-mod-row {
+				grid-template-columns: 1fr 1fr;
+				gap: 4px;
+			}
+		}
+
+		@media (max-width: 768px) {
+
+			.header {
+				padding: 10px 12px;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 8px;
+			}
+
+			.header-left {
+				justify-content: center;
+			}
+
+			.title {
+				font-size: 10px;
+			}
+
+			.header-controls {
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+
+			.controls-panel {
+				padding: 12px;
+				gap: 12px;
+			}
+
+			.preview-panel {
+				padding: 12px;
+			}
+
+			.section-body {
+				padding: 12px;
+				gap: 12px;
+			}
+
+
+			.mc-btn {
+				padding: 12px 16px;
+				min-height: 44px;
+				font-size: 13px;
+			}
+
+			.chip {
+				padding: 8px 12px;
+				min-height: 36px;
+				font-size: 11px;
+			}
+
+			.preset-btn {
+				padding: 10px 12px;
+				min-height: 40px;
+			}
+
+			.input,
+			.select,
+			.textarea {
+				font-size: 16px !important;
+				padding: 10px 12px;
+				min-height: 44px;
+			}
+
+
+			.item-grid {
+				grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+				gap: 4px;
+				max-height: 200px;
+			}
+
+			.target-presets {
+				grid-template-columns: 1fr 1fr 1fr;
+				gap: 6px;
+			}
+
+			.preset-grid {
+				grid-template-columns: 1fr 1fr;
+				gap: 8px;
+			}
+
+			.rand-options {
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.filters-grid {
+				grid-template-columns: 1fr;
+			}
+
+			.options-grid {
+				grid-template-columns: 1fr;
+			}
+
+
+			.edition-btn {
+				padding: 8px 12px;
+				font-size: 12px;
+				min-height: 36px;
+			}
+
+			.version-select {
+				font-size: 12px;
+				padding: 8px 28px 8px 10px;
+				min-height: 36px;
+			}
+
+
+			.command-box {
+				font-size: 14px;
+				padding: 12px;
+				min-height: 70px;
+				max-height: 150px;
+				overflow-y: auto;
+			}
+
+			.tooltip-preview {
+				min-height: 60px;
+				padding: 8px 10px;
+			}
+
+
+			.toggle {
+				width: 48px;
+				height: 28px;
+			}
+
+			.toggle::after {
+				width: 20px;
+				height: 20px;
+				top: 2px;
+				left: 2px;
+			}
+
+			.toggle.on::after {
+				left: 24px;
+			}
+
+
+			.color-swatch {
+				width: 28px;
+				height: 28px;
+			}
+
+
+			.fmt-btn {
+				padding: 6px 12px;
+				font-size: 12px;
+				min-height: 32px;
+				min-width: 32px;
+			}
+
+
+			.ench-pool {
+				max-height: 150px;
+			}
+
+			.ench-pool-item {
+				padding: 10px 12px;
+				min-height: 40px;
+			}
+
+			.ench-lvl {
+				width: 48px;
+				font-size: 16px;
+				padding: 4px 6px;
+				min-height: 32px;
+			}
+
+			.ench-remove {
+				font-size: 20px;
+				padding: 4px 8px;
+				min-height: 32px;
+				min-width: 32px;
+			}
+
+
+			.selected-item {
+				padding: 10px 12px;
+				flex-wrap: wrap;
+			}
+
+			.selected-item-icon {
+				width: 36px;
+				height: 36px;
+			}
+
+			.selected-item-icon img {
+				width: 28px;
+				height: 28px;
+			}
+
+
+			.preview-actions {
+				flex-direction: column;
+			}
+
+			.preview-actions .mc-btn {
+				width: 100%;
+			}
+
+
+			.toast {
+				bottom: 20px;
+				padding: 12px 20px;
+				font-size: 13px;
+				max-width: 90%;
+			}
+
+
+			.item-grid,
+			.ench-pool,
+			.preview-panel {
+				scrollbar-width: thin;
+			}
+
+			::-webkit-scrollbar {
+				width: 4px;
+				height: 4px;
+			}
+		}
+
+
+		@media (max-width: 480px) {
+			.mc-banner {
+				height: 120px;
+			}
+
+			.title {
+				font-size: 9px;
+			}
+
+			.item-grid {
+				grid-template-columns: repeat(auto-fill, minmax(36px, 1fr));
+				gap: 3px;
+				max-height: 150px;
+			}
+
+			.preset-grid {
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.target-presets {
+				grid-template-columns: 1fr 1fr;
+			}
+
+			.rand-options {
+				grid-template-columns: 1fr;
+			}
+
+			.command-box {
+				font-size: 12px;
+				max-height: 100px;
+			}
+
+			.header-controls {
+				flex-direction: column;
+				align-items: stretch;
+				gap: 6px;
+			}
+
+			.edition-toggle {
+				width: 100%;
+			}
+
+			.edition-btn {
+				flex: 1;
+				text-align: center;
+			}
+
+			.version-select {
+				width: 100%;
+			}
+		}
+
+
+		@media (max-height: 500px) and (orientation: landscape) {
+			.mc-banner {
+				height: 80px;
+			}
+
+			.preview-panel {
+				max-height: 40vh;
+			}
+
+			.command-box {
+				max-height: 60px;
+				min-height: 50px;
+			}
+
+			.tooltip-preview {
+				min-height: 40px;
+			}
+
+			.item-grid {
+				max-height: 120px;
+			}
+		}
+
+
+		@media (pointer: coarse) {
+			.mc-btn {
+				min-height: 44px;
+				padding: 12px 16px;
+			}
+
+			.chip {
+				min-height: 36px;
+				padding: 8px 12px;
+			}
+
+			.preset-btn {
+				min-height: 40px;
+				padding: 10px 12px;
+			}
+
+			.item-cell {
+				min-height: 44px;
+				min-width: 44px;
+			}
+
+			.input,
+			.select {
+				min-height: 40px;
+				font-size: 16px;
+			}
+
+			.toggle {
+				width: 52px;
+				height: 30px;
+			}
+
+			.toggle::after {
+				width: 22px;
+				height: 22px;
+			}
+
+			.toggle.on::after {
+				left: 26px;
+			}
+		}
+
+		@media only screen and (max-width: 768px) {
+			body {
+				overflow-x: hidden !important;
+			}
+
+			.main {
+				display: block !important;
+			}
+
+			.controls-panel {
+				width: 100% !important;
+				padding: 8px !important;
+			}
+
+			.preview-panel {
+				width: 100% !important;
+				position: relative !important;
+				top: auto !important;
+				height: auto !important;
+				max-height: 300px !important;
+				border-left: none !important;
+				border-top: 3px solid var(--bd-dark) !important;
+				overflow-y: scroll !important;
+				padding: 10px !important;
+				margin-bottom: 10px !important;
+			}
+
+			.header {
+				flex-wrap: wrap !important;
+				padding: 8px !important;
+			}
+
+			.header-left {
+				flex: 1 1 auto !important;
+			}
+
+			.title {
+				font-size: 9px !important;
+			}
+
+			.header-controls {
+				flex-wrap: wrap !important;
+				gap: 4px !important;
+			}
+
+			.edition-btn {
+				padding: 4px 8px !important;
+				font-size: 11px !important;
+			}
+
+			.version-select {
+				font-size: 11px !important;
+				padding: 4px 24px 4px 6px !important;
+			}
+
+			.section-body {
+				padding: 8px !important;
+				gap: 8px !important;
+			}
+
+			.mc-btn {
+				min-height: 40px !important;
+				padding: 8px 12px !important;
+				font-size: 12px !important;
+			}
+
+			.preset-grid {
+				grid-template-columns: 1fr 1fr !important;
+				gap: 4px !important;
+			}
+
+			.target-presets {
+				grid-template-columns: 1fr 1fr !important;
+				gap: 4px !important;
+			}
+
+			.item-grid {
+				grid-template-columns: repeat(auto-fill, minmax(38px, 1fr)) !important;
+				gap: 3px !important;
+				max-height: 150px !important;
+			}
+
+			.input,
+			.select,
+			.textarea {
+				font-size: 16px !important;
+				min-height: 40px !important;
+				padding: 6px 8px !important;
+			}
+
+			.command-box {
+				font-size: 12px !important;
+				min-height: 50px !important;
+				max-height: 100px !important;
+				overflow-y: auto !important;
+				padding: 8px !important;
+			}
+
+			.options-grid {
+				grid-template-columns: 1fr !important;
+				gap: 6px !important;
+			}
+
+			.filters-grid {
+				grid-template-columns: 1fr !important;
+				gap: 4px !important;
+			}
+
+			.attr-mod-row {
+				grid-template-columns: 1fr 1fr !important;
+				gap: 4px !important;
+			}
+
+			.ench-pool {
+				max-height: 120px !important;
+			}
+
+			.preview-actions {
+				flex-direction: column !important;
+				gap: 4px !important;
+			}
+
+			.preview-actions .mc-btn {
+				width: 100% !important;
+			}
+
+			.selected-item {
+				flex-wrap: wrap !important;
+				gap: 6px !important;
+			}
+
+			.toggle {
+				width: 44px !important;
+				height: 26px !important;
+			}
+
+			.toggle::after {
+				width: 18px !important;
+				height: 18px !important;
+			}
+
+			.toggle.on::after {
+				left: 22px !important;
+			}
+
+			.mc-banner {
+				height: 100px !important;
+			}
+
+			.rand-options {
+				grid-template-columns: 1fr !important;
+				gap: 4px !important;
+			}
+
+			.ench-row {
+				flex-wrap: wrap !important;
+				gap: 4px !important;
+			}
+
+			.ench-lvl {
+				width: 40px !important;
+				font-size: 14px !important;
+			}
+
+			.kv-add-row {
+				flex-wrap: wrap !important;
+			}
+
+			.kv-row {
+				flex-wrap: wrap !important;
+				gap: 4px !important;
+			}
+
+			.lore-line-top {
+				flex-wrap: wrap !important;
+			}
+
+			.book-page-top {
+				flex-wrap: wrap !important;
+			}
+
+			.color-swatch {
+				width: 24px !important;
+				height: 24px !important;
+			}
+
+			.fmt-btn {
+				min-height: 30px !important;
+				min-width: 30px !important;
+				padding: 4px 8px !important;
+				font-size: 11px !important;
+			}
+
+			.toast {
+				max-width: 90% !important;
+				font-size: 12px !important;
+				padding: 8px 16px !important;
+			}
+
+			.info-note {
+				font-size: 10px !important;
+				padding: 6px 8px !important;
+			}
+
+			.preset-btn {
+				min-height: 36px !important;
+				padding: 6px 8px !important;
+				font-size: 12px !important;
+			}
+
+			.chip {
+				min-height: 30px !important;
+				padding: 4px 8px !important;
+				font-size: 10px !important;
+			}
+
+			.section-title {
+				font-size: 8px !important;
+			}
+
+			.label {
+				font-size: 10px !important;
+			}
+
+			.version-badge {
+				font-size: 12px !important;
+				padding: 2px 8px !important;
+			}
+
+			.tooltip-preview {
+				min-height: 50px !important;
+				padding: 6px 8px !important;
+			}
+
+			.tt-name {
+				font-size: 13px !important;
+			}
+
+			.tt-ench,
+			.tt-lore,
+			.tt-mod {
+				font-size: 11px !important;
+			}
+
+			.selected-item-name {
+				font-size: 12px !important;
+			}
+
+			.selected-item-id {
+				font-size: 11px !important;
+			}
+
+			.sub-fields {
+				padding: 6px !important;
+				gap: 6px !important;
+			}
+
+			.banner-preview-wrap {
+				padding: 6px !important;
+			}
+
+			.count-input {
+				width: 60px !important;
+				font-size: 14px !important;
+			}
+
+			.ench-search {
+				min-width: 80px !important;
+			}
+		}
+
+		@media only screen and (max-width: 480px) {
+			.mc-banner {
+				height: 80px !important;
+			}
+
+			.title {
+				font-size: 7px !important;
+			}
+
+			.logo {
+				width: 30px !important;
+				height: 30px !important;
+			}
+
+			.item-grid {
+				grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)) !important;
+				max-height: 120px !important;
+			}
+
+			.item-cell img {
+				width: 24px !important;
+				height: 24px !important;
+			}
+
+			.header {
+				padding: 4px 6px !important;
+				gap: 4px !important;
+			}
+
+			.controls-panel {
+				padding: 4px !important;
+				gap: 6px !important;
+			}
+
+			.section-body {
+				padding: 6px !important;
+				gap: 6px !important;
+			}
+
+			.preset-grid {
+				grid-template-columns: 1fr 1fr !important;
+				gap: 3px !important;
+			}
+
+			.target-presets {
+				grid-template-columns: 1fr 1fr !important;
+				gap: 3px !important;
+			}
+
+			.mc-btn {
+				font-size: 10px !important;
+				padding: 6px 8px !important;
+				min-height: 32px !important;
+			}
+
+			.edition-btn {
+				font-size: 9px !important;
+				padding: 3px 6px !important;
+				min-height: 28px !important;
+			}
+
+			.version-select {
+				font-size: 9px !important;
+				padding: 3px 20px 3px 4px !important;
+				min-height: 28px !important;
+			}
+
+			.preview-panel {
+				max-height: 200px !important;
+				padding: 6px !important;
+			}
+
+			.command-box {
+				font-size: 10px !important;
+				max-height: 80px !important;
+				min-height: 40px !important;
+				padding: 6px !important;
+			}
+
+			.input,
+			.select,
+			.textarea {
+				font-size: 14px !important;
+				min-height: 32px !important;
+				padding: 4px 6px !important;
+			}
+		}
+
+		.info-note {
+			background: var(--bg-deep) !important;
+			border-left: 3px solid var(--blue) !important;
+			border-top: 2px solid var(--bd-dark) !important;
+			z-index: 5 !important;
+			padding: 12px 16px !important;
+			font-size: 11px !important;
+			max-width: 1440px;
+			margin: 0 auto;
+			box-sizing: border-box;
+		}
+
+
+		@media (max-width: 768px) {
+			.controls-panel {
+				padding-bottom: 0 !important;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.preview-panel {
+				display: flex !important;
+				flex-direction: column !important;
+			}
+
+			.command-box {
+				order: 8 !important;
+			}
+
+			.preview-actions {
+				order: 9 !important;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.preview-panel {
+				max-height: none !important;
+				height: auto !important;
+				padding: 8px !important;
+				flex: 1 !important;
+			}
+
+			.tooltip-preview {
+				min-height: 120px !important;
+				padding: 12px !important;
+				font-size: 16px !important;
+			}
+
+			.tt-name {
+				font-size: 18px !important;
+			}
+
+			.tt-ench,
+			.tt-lore,
+			.tt-mod {
+				font-size: 15px !important;
+			}
+
+			.command-box {
+				font-size: 16px !important;
+				min-height: 120px !important;
+				max-height: 200px !important;
+				padding: 14px !important;
+				line-height: 1.8 !important;
+			}
+
+			.preview-title {
+				font-size: 12px !important;
+				margin-bottom: 6px !important;
+			}
+
+			.version-badge {
+				font-size: 14px !important;
+				padding: 4px 12px !important;
+			}
+
+			.preview-subtitle {
+				font-size: 11px !important;
+				margin-bottom: 4px !important;
+			}
+
+			.preview-actions .mc-btn {
+				min-height: 50px !important;
+				font-size: 16px !important;
+				padding: 14px !important;
+			}
+
+			.preview-actions {
+				gap: 8px !important;
+				margin-top: 8px !important;
+			}
+
+			.info-note {
+				font-size: 13px !important;
+				padding: 12px !important;
+				margin-top: 12px !important;
+				line-height: 1.6 !important;
+			}
+		}
+
+		@media (max-width: 768px) {
+			.tooltip-preview {
+				min-height: 150px !important;
+				max-height: 300px !important;
+				overflow-y: auto !important;
+				padding: 12px !important;
+				word-wrap: break-word !important;
+				overflow-wrap: break-word !important;
+				display: flex !important;
+				flex-direction: column !important;
+				gap: 4px !important;
+			}
+
+			.tooltip-preview span {
+				display: block !important;
+				width: 100% !important;
+				word-wrap: break-word !important;
+				overflow-wrap: break-word !important;
+				white-space: normal !important;
+				padding: 2px 0 !important;
+			}
+
+			.tt-name {
+				font-size: 16px !important;
+				word-wrap: break-word !important;
+			}
+
+			.tt-ench,
+			.tt-lore,
+			.tt-mod {
+				font-size: 13px !important;
+				word-wrap: break-word !important;
+				white-space: normal !important;
+			}
+
+			.tt-icon {
+				width: 32px !important;
+				height: 32px !important;
+				flex-shrink: 0 !important;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.tooltip-preview {
+				min-height: 200px !important;
+				max-height: 400px !important;
+				font-size: 14px !important;
+			}
+
+			.tooltip-preview span {
+				font-size: 13px !important;
+				line-height: 1.5 !important;
+				padding: 3px 0 !important;
+			}
+
+			.tt-name {
+				font-size: 18px !important;
+			}
+		}
 	</style>
 </head>
 
@@ -3338,166 +3705,167 @@
 	<div class="toast" id="toast">Copied to clipboard!</div>
 	<script type>
 		(function() {
-		if (typeof THREE === "undefined") return;
-		// --- Procedural Cybernetic Hybrid Base Texture ---
-		function createCyberHybridTexture() {
-			const canvas = document.createElement('canvas');
-			canvas.width = 32;
-			canvas.height = 32;
-			const ctx = canvas.getContext('2d');
+			if (typeof THREE === "undefined") return;
 
-			const basePalette = [
-				'#0B080D', '#120E17', '#1A1521',
-				'#0F1115', '#1B1E24', '#282D37',
-				'#1E1B18', '#2B2622', '#38322D',
-				'#050505', '#161616', '#333333'
-			];
+			function createCyberHybridTexture() {
+				const canvas = document.createElement('canvas');
+				canvas.width = 32;
+				canvas.height = 32;
+				const ctx = canvas.getContext('2d');
 
-			for (let x = 0; x < 32; x++) {
-				for (let y = 0; y < 32; y++) {
-					ctx.fillStyle = basePalette[Math.floor(Math.random() * basePalette.length)];
-					ctx.fillRect(x, y, 1, 1);
+				const basePalette = [
+					'#0B080D', '#120E17', '#1A1521',
+					'#0F1115', '#1B1E24', '#282D37',
+					'#1E1B18', '#2B2622', '#38322D',
+					'#050505', '#161616', '#333333'
+				];
+
+				for (let x = 0; x < 32; x++) {
+					for (let y = 0; y < 32; y++) {
+						ctx.fillStyle = basePalette[Math.floor(Math.random() * basePalette.length)];
+						ctx.fillRect(x, y, 1, 1);
+					}
 				}
+
+				ctx.fillStyle = '#060709';
+				ctx.fillRect(0, 6, 32, 2);
+				ctx.fillRect(0, 18, 32, 2);
+				ctx.fillRect(0, 26, 32, 1);
+
+				ctx.fillStyle = '#1D122B';
+				ctx.fillRect(4, 2, 8, 1);
+				ctx.fillRect(18, 14, 10, 1);
+				ctx.fillRect(2, 22, 12, 1);
+
+				ctx.fillStyle = '#4A423B';
+				ctx.fillRect(8, 7, 3, 1);
+				ctx.fillRect(20, 19, 4, 1);
+				ctx.fillRect(12, 27, 3, 1);
+
+				ctx.fillStyle = '#00aaaa';
+				ctx.fillRect(6, 0, 2, 12);
+				ctx.fillRect(6, 10, 10, 2);
+				ctx.fillRect(14, 10, 2, 14);
+				ctx.fillRect(22, 18, 2, 14);
+				ctx.fillRect(18, 24, 8, 2);
+
+				ctx.fillStyle = '#00ffff';
+				ctx.fillRect(6, 4, 2, 2);
+				ctx.fillRect(14, 18, 2, 2);
+				ctx.fillRect(22, 28, 2, 2);
+
+				ctx.fillStyle = '#00ffff';
+				ctx.fillRect(12, 12, 8, 8);
+				ctx.fillStyle = '#ffffff';
+				ctx.fillRect(14, 14, 4, 4);
+
+				ctx.fillStyle = '#040507';
+				ctx.strokeRect(0, 0, 32, 32);
+
+				const texture = new THREE.CanvasTexture(canvas);
+				texture.magFilter = THREE.NearestFilter;
+				texture.minFilter = THREE.NearestFilter;
+				return texture;
 			}
 
-			ctx.fillStyle = '#060709';
-			ctx.fillRect(0, 6, 32, 2);
-			ctx.fillRect(0, 18, 32, 2);
-			ctx.fillRect(0, 26, 32, 1);
 
-			ctx.fillStyle = '#1D122B';
-			ctx.fillRect(4, 2, 8, 1);
-			ctx.fillRect(18, 14, 10, 1);
-			ctx.fillRect(2, 22, 12, 1);
+			const scene = new THREE.Scene();
 
-			ctx.fillStyle = '#4A423B';
-			ctx.fillRect(8, 7, 3, 1);
-			ctx.fillRect(20, 19, 4, 1);
-			ctx.fillRect(12, 27, 3, 1);
+			const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
+			camera.position.set(3.5, 3, 4.5);
+			camera.lookAt(0, 0, 0);
 
-			ctx.fillStyle = '#00aaaa';
-			ctx.fillRect(6, 0, 2, 12);
-			ctx.fillRect(6, 10, 10, 2);
-			ctx.fillRect(14, 10, 2, 14);
-			ctx.fillRect(22, 18, 2, 14);
-			ctx.fillRect(18, 24, 8, 2);
 
-			ctx.fillStyle = '#00ffff';
-			ctx.fillRect(6, 4, 2, 2);
-			ctx.fillRect(14, 18, 2, 2);
-			ctx.fillRect(22, 28, 2, 2);
+			const logoCanvas = document.getElementById('logoCanvas');
+			const renderer = new THREE.WebGLRenderer({
+				canvas: logoCanvas,
+				antialias: true,
+				alpha: true,
+				preserveDrawingBuffer: true
+			});
+			renderer.setSize(72, 72, false);
+			renderer.setPixelRatio(window.devicePixelRatio);
+			renderer.shadowMap.enabled = true;
+			renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-			ctx.fillStyle = '#00ffff';
-			ctx.fillRect(12, 12, 8, 8);
-			ctx.fillStyle = '#ffffff';
-			ctx.fillRect(14, 14, 4, 4);
 
-			ctx.fillStyle = '#040507';
-			ctx.strokeRect(0, 0, 32, 32);
+			const ambientLight = new THREE.AmbientLight(0x222834, 1.2);
+			scene.add(ambientLight);
 
-			const texture = new THREE.CanvasTexture(canvas);
-			texture.magFilter = THREE.NearestFilter;
-			texture.minFilter = THREE.NearestFilter;
-			return texture;
-		}
+			const dirLight = new THREE.DirectionalLight(0x88ccff, 1.5);
+			dirLight.position.set(6, 8, 5);
+			dirLight.castShadow = true;
+			scene.add(dirLight);
 
-		// --- Scene Setup (offscreen, for favicon capture only) ---
-		const scene = new THREE.Scene();
+			const cyanGlow = new THREE.PointLight(0x00ffff, 3, 8);
+			cyanGlow.position.set(-2, -1, 2);
+			scene.add(cyanGlow);
 
-		const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
-		camera.position.set(3.5, 3, 4.5);
-		camera.lookAt(0, 0, 0);
 
-		// preserveDrawingBuffer is enabled so toDataURL can capture the rendered canvas for the favicon
-		const logoCanvas = document.getElementById('logoCanvas');
-		const renderer = new THREE.WebGLRenderer({
-			canvas: logoCanvas,
-			antialias: true,
-			alpha: true,
-			preserveDrawingBuffer: true
-		});
-		renderer.setSize(72, 72, false);
-		renderer.setPixelRatio(window.devicePixelRatio);
-		renderer.shadowMap.enabled = true;
-		renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+			const baseTexture = createCyberHybridTexture();
 
-		// --- Lighting ---
-		const ambientLight = new THREE.AmbientLight(0x222834, 1.2);
-		scene.add(ambientLight);
+			const cyberMaterial = new THREE.MeshStandardMaterial({
+				map: baseTexture,
+				roughness: 0.5,
+				metalness: 0.5
+			});
 
-		const dirLight = new THREE.DirectionalLight(0x88ccff, 1.5);
-		dirLight.position.set(6, 8, 5);
-		dirLight.castShadow = true;
-		scene.add(dirLight);
+			const mainGroup = new THREE.Group();
 
-		const cyanGlow = new THREE.PointLight(0x00ffff, 3, 8);
-		cyanGlow.position.set(-2, -1, 2);
-		scene.add(cyanGlow);
+			const blockGeo = new THREE.BoxGeometry(2, 2, 2);
+			const cyberBlock = new THREE.Mesh(blockGeo, cyberMaterial);
+			cyberBlock.castShadow = true;
+			cyberBlock.receiveShadow = true;
+			mainGroup.add(cyberBlock);
 
-		// --- Materials & Geometries ---
-		const baseTexture = createCyberHybridTexture();
+			const gemGeo = new THREE.OctahedronGeometry(0.5);
+			const gemMat = new THREE.MeshStandardMaterial({
+				color: 0x00ffff,
+				emissive: 0x008888,
+				roughness: 0.1,
+				metalness: 0.9
+			});
+			const gem = new THREE.Mesh(gemGeo, gemMat);
+			gem.position.set(0, 1.7, 0);
+			gem.rotation.y = Math.PI / 4;
+			gem.castShadow = true;
+			mainGroup.add(gem);
 
-		const cyberMaterial = new THREE.MeshStandardMaterial({
-			map: baseTexture,
-			roughness: 0.5,
-			metalness: 0.5
-		});
+			const ringGeo = new THREE.BoxGeometry(2.1, 0.08, 2.1);
+			const ringMat = new THREE.MeshBasicMaterial({
+				color: 0x00ffff
+			});
+			const ring = new THREE.Mesh(ringGeo, ringMat);
+			ring.position.y = -0.5;
+			mainGroup.add(ring);
 
-		const mainGroup = new THREE.Group();
+			scene.add(mainGroup);
 
-		const blockGeo = new THREE.BoxGeometry(2, 2, 2);
-		const cyberBlock = new THREE.Mesh(blockGeo, cyberMaterial);
-		cyberBlock.castShadow = true;
-		cyberBlock.receiveShadow = true;
-		mainGroup.add(cyberBlock);
+			mainGroup.rotation.y = Math.PI / 4;
+			mainGroup.rotation.x = Math.PI / 8;
 
-		const gemGeo = new THREE.OctahedronGeometry(0.5);
-		const gemMat = new THREE.MeshStandardMaterial({
-			color: 0x00ffff,
-			emissive: 0x008888,
-			roughness: 0.1,
-			metalness: 0.9
-		});
-		const gem = new THREE.Mesh(gemGeo, gemMat);
-		gem.position.set(0, 1.7, 0);
-		gem.rotation.y = Math.PI / 4;
-		gem.castShadow = true;
-		mainGroup.add(gem);
 
-		const ringGeo = new THREE.BoxGeometry(2.1, 0.08, 2.1);
-		const ringMat = new THREE.MeshBasicMaterial({
-			color: 0x00ffff
-		});
-		const ring = new THREE.Mesh(ringGeo, ringMat);
-		ring.position.y = -0.5;
-		mainGroup.add(ring);
-
-		scene.add(mainGroup);
-
-		mainGroup.rotation.y = Math.PI / 4;
-		mainGroup.rotation.x = Math.PI / 8;
-
-		// Render 3D Scene (one frame for the favicon snapshot)
-		renderer.render(scene, camera);
-
-		// Set 3D render snapshot as Favicon
-		const favicon = document.getElementById('dynamicFavicon');
-		if (favicon) {
-			favicon.href = renderer.domElement.toDataURL('image/png');
-		}
-
-		// Animate the logo in the header (slow rotation + floating gem)
-		let logoT = 0;
-		function animateLogo() {
-			requestAnimationFrame(animateLogo);
-			logoT += 0.012;
-			mainGroup.rotation.y = Math.PI / 4 + logoT;
-			mainGroup.rotation.x = Math.PI / 8 + Math.sin(logoT * 0.5) * 0.12;
-			gem.position.y = 1.7 + Math.sin(logoT * 1.5) * 0.12;
-			gem.rotation.y += 0.04;
 			renderer.render(scene, camera);
-		}
-		animateLogo();
+
+
+			const favicon = document.getElementById('dynamicFavicon');
+			if (favicon) {
+				favicon.href = renderer.domElement.toDataURL('image/png');
+			}
+
+
+			let logoT = 0;
+
+			function animateLogo() {
+				requestAnimationFrame(animateLogo);
+				logoT += 0.012;
+				mainGroup.rotation.y = Math.PI / 4 + logoT;
+				mainGroup.rotation.x = Math.PI / 8 + Math.sin(logoT * 0.5) * 0.12;
+				gem.position.y = 1.7 + Math.sin(logoT * 1.5) * 0.12;
+				gem.rotation.y += 0.04;
+				renderer.render(scene, camera);
+			}
+			animateLogo();
 		})();
 	</script>
 	<script type>
@@ -3593,6 +3961,9 @@
 			id: "armor",
 			name: "Armor"
 		}, {
+			id: "items", 
+			name: "Spawn eggs"
+		}, {
 			id: "tools",
 			name: "Tools"
 		}, {
@@ -3611,7 +3982,7 @@
 			id: "misc",
 			name: "Misc"
 		}];
-		/* ===================== DATA: ITEMS (100+) ===================== */
+
 		var ITEMS = [{
 			d: "minecraft:diamond_sword",
 			n: "Diamond Sword",
@@ -4627,7 +4998,7 @@
 			c: "misc",
 			s: 64,
 			dur: 0,
-			img:"https://minecraft.wiki/images/Invicon_Locked_Map.png?71345"
+			img: "https://minecraft.wiki/images/Invicon_Locked_Map.png?71345"
 		}, {
 			d: "minecraft:name_tag",
 			n: "Name Tag",
@@ -4891,21 +5262,21 @@
 			c: "blocks",
 			s: 64,
 			dur: 0,
-			img:"https://minecraft.wiki/images/BlockSprite_block-of-raw-iron.png?52b59"
+			img: "https://minecraft.wiki/images/BlockSprite_block-of-raw-iron.png?52b59"
 		}, {
 			d: "minecraft:raw_copper_block",
 			n: "Block of Raw Copper",
 			c: "blocks",
 			s: 64,
 			dur: 0,
-			img:"https://minecraft.wiki/images/BlockSprite_block-of-raw-copper.png?31bde"
+			img: "https://minecraft.wiki/images/BlockSprite_block-of-raw-copper.png?31bde"
 		}, {
 			d: "minecraft:raw_gold_block",
 			n: "Block of Raw Gold",
 			c: "blocks",
 			s: 64,
 			dur: 0,
-			img:"https://minecraft.wiki/images/BlockSprite_block-of-raw-gold.png?7b832"
+			img: "https://minecraft.wiki/images/BlockSprite_block-of-raw-gold.png?7b832"
 		}, {
 			d: "minecraft:white_shulker_box",
 			n: "White Shulker Box",
@@ -5584,6 +5955,12 @@
 			s: 1,
 			dur: 0
 		}, {
+    		d: "minecraft:music_disc_bounce",
+    		n: "Music Disc bounce",
+    		c: "misc",
+    		s: 1,
+    		dur: 0
+		},{
 			d: "minecraft:music_disc_cat",
 			n: "Music Disc cat",
 			c: "misc",
@@ -6540,7 +6917,111 @@
 			c: "blocks",
 			s: 64,
 			dur: 0
-		}, {
+		},{
+    d: "minecraft:orange_carpet",
+    n: "Orange Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:magenta_carpet",
+    n: "Magenta Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:light_blue_carpet",
+    n: "Light Blue Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:yellow_carpet",
+    n: "Yellow Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:lime_carpet",
+    n: "Lime Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:pink_carpet",
+    n: "Pink Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:gray_carpet",
+    n: "Gray Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:light_gray_carpet",
+    n: "Light Gray Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:cyan_carpet",
+    n: "Cyan Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:purple_carpet",
+    n: "Purple Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:blue_carpet",
+    n: "Blue Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:brown_carpet",
+    n: "Brown Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:green_carpet",
+    n: "Green Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:red_carpet",
+    n: "Red Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:black_carpet",
+    n: "Black Carpet",
+    c: "blocks",
+    s: 64,
+    dur: 0
+}, {
 			d: "minecraft:red_bed",
 			n: "Red Bed",
 			c: "blocks",
@@ -6632,13 +7113,117 @@
 			dur: 0,
 			img: "https://minecraft.wiki/images/BlockSprite_jack-o%27lantern.png?ef98d"
 		}, {
-			d: "minecraft:candle",
-			n: "Candle",
+			d: "minecraft:white_candle",
+			n: "White Candle",
 			c: "blocks",
 			s: 64,
 			dur: 0,
 			img: "https://minecraft.wiki/images/BlockSprite_candle.png"
-		}, {
+		},{
+    d: "minecraft:orange_candle",
+    n: "Orange Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:magenta_candle",
+    n: "Magenta Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:light_blue_candle",
+    n: "Light Blue Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:yellow_candle",
+    n: "Yellow Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:lime_candle",
+    n: "Lime Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:pink_candle",
+    n: "Pink Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:gray_candle",
+    n: "Gray Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:light_gray_candle",
+    n: "Light Gray Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:cyan_candle",
+    n: "Cyan Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:purple_candle",
+    n: "Purple Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:blue_candle",
+    n: "Blue Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:brown_candle",
+    n: "Brown Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:green_candle",
+    n: "Green Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:red_candle",
+    n: "Red Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:black_candle",
+    n: "Black Candle",
+    c: "blocks",
+    s: 64,
+    dur: 0
+}, {
 			d: "minecraft:painting",
 			n: "Painting",
 			c: "misc",
@@ -6926,7 +7511,7 @@
 		}, {
 			d: "minecraft:egg",
 			n: "Egg",
-			c: "misc",
+			c: "food",
 			s: 16,
 			dur: 0
 		}, {
@@ -7673,7 +8258,878 @@
 			c: "blocks",
 			s: 64,
 			dur: 0
-		}, {
+		},{
+			d: "minecraft:cinnabar",
+			n: "Cinnabar",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		},{
+			d: "minecraft:polished_cinnabar",
+			n: "Polished Cinnabar",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		},{
+			d: "minecraft:cinnabar_bricks",
+			n: "Cinnabar Bricks",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		},{
+			d: "minecraft:chiseled_cinnabar",
+			n: "Chiseled Cinnabar",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		},{
+			d: "minecraft:sulfur",
+			n: "Sulfur",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		},{
+			d: "minecraft:polished_sulfur",
+			n: "Polished Sulfur",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		},{
+			d: "minecraft:sulfur_bricks",
+			n: "Sulfur Bricks",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		},{
+			d: "minecraft:chiseled_sulfur",
+			n: "Chiseled Sulfur",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		},{
+    d: "minecraft:cinnabar_stairs",
+    n: "Cinnabar Stairs",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:cinnabar_slab",
+    n: "Cinnabar Slab",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:cinnabar_wall",
+    n: "Cinnabar Wall",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:polished_cinnabar_stairs",
+    n: "Polished Cinnabar Stairs",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:polished_cinnabar_slab",
+    n: "Polished Cinnabar Slab",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:polished_cinnabar_wall",
+    n: "Polished Cinnabar Wall",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:cinnabar_brick_stairs",
+    n: "Cinnabar Brick Stairs",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:cinnabar_brick_slab",
+    n: "Cinnabar Brick Slab",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:cinnabar_brick_wall",
+    n: "Cinnabar Brick Wall",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:sulfur_stairs",
+    n: "Sulfur Stairs",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:sulfur_slab",
+    n: "Sulfur Slab",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:sulfur_wall",
+    n: "Sulfur Wall",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:polished_sulfur_stairs",
+    n: "Polished Sulfur Stairs",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:polished_sulfur_slab",
+    n: "Polished Sulfur Slab",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:polished_sulfur_wall",
+    n: "Polished Sulfur Wall",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:sulfur_brick_stairs",
+    n: "Sulfur Brick Stairs",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:sulfur_brick_slab",
+    n: "Sulfur Brick Slab",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:sulfur_brick_wall",
+    n: "Sulfur Brick Wall",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:potent_sulfur",
+    n: "Potent Sulfur",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:sulfur_spike",
+    n: "Sulfur Spike",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:bucket_of_sulfur_cube",
+    n: "Bucket of Sulfur Cube",
+    c: "tools",
+    s: 1,
+    dur: 0
+},{
+    d: "minecraft:sulfur_cube_spawn_egg",
+    n: "Sulfur Cube Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:allay_spawn_egg",
+    n: "Allay Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:armadillo_spawn_egg",
+    n: "Armadillo Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:axolotl_spawn_egg",
+    n: "Axolotl Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:bat_spawn_egg",
+    n: "Bat Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:bee_spawn_egg",
+    n: "Bee Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:blaze_spawn_egg",
+    n: "Blaze Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:bogged_spawn_egg",
+    n: "Bogged Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:breeze_spawn_egg",
+    n: "Breeze Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:camel_spawn_egg",
+    n: "Camel Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:cat_spawn_egg",
+    n: "Cat Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:cave_spider_spawn_egg",
+    n: "Cave Spider Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:chicken_spawn_egg",
+    n: "Chicken Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:cod_spawn_egg",
+    n: "Cod Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:cow_spawn_egg",
+    n: "Cow Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:creaking_spawn_egg",
+    n: "Creaking Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:creeper_spawn_egg",
+    n: "Creeper Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:dolphin_spawn_egg",
+    n: "Dolphin Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:donkey_spawn_egg",
+    n: "Donkey Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:drowned_spawn_egg",
+    n: "Drowned Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:elder_guardian_spawn_egg",
+    n: "Elder Guardian Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:enderman_spawn_egg",
+    n: "Enderman Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:endermite_spawn_egg",
+    n: "Endermite Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:evoker_spawn_egg",
+    n: "Evoker Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:fox_spawn_egg",
+    n: "Fox Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:frog_spawn_egg",
+    n: "Frog Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:ghast_spawn_egg",
+    n: "Ghast Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:glow_squid_spawn_egg",
+    n: "Glow Squid Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:goat_spawn_egg",
+    n: "Goat Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:guardian_spawn_egg",
+    n: "Guardian Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:happy_ghast_spawn_egg",
+    n: "Happy Ghast Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:hoglin_spawn_egg",
+    n: "Hoglin Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:horse_spawn_egg",
+    n: "Horse Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:husk_spawn_egg",
+    n: "Husk Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:iron_golem_spawn_egg",
+    n: "Iron Golem Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:llama_spawn_egg",
+    n: "Llama Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:magma_cube_spawn_egg",
+    n: "Magma Cube Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:mooshroom_spawn_egg",
+    n: "Mooshroom Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:mule_spawn_egg",
+    n: "Mule Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:ocelot_spawn_egg",
+    n: "Ocelot Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:panda_spawn_egg",
+    n: "Panda Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:parrot_spawn_egg",
+    n: "Parrot Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:phantom_spawn_egg",
+    n: "Phantom Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:pig_spawn_egg",
+    n: "Pig Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:piglin_spawn_egg",
+    n: "Piglin Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:piglin_brute_spawn_egg",
+    n: "Piglin Brute Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:pillager_spawn_egg",
+    n: "Pillager Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:polar_bear_spawn_egg",
+    n: "Polar Bear Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:pufferfish_spawn_egg",
+    n: "Pufferfish Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:rabbit_spawn_egg",
+    n: "Rabbit Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:ravager_spawn_egg",
+    n: "Ravager Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:salmon_spawn_egg",
+    n: "Salmon Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:sheep_spawn_egg",
+    n: "Sheep Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:shulker_spawn_egg",
+    n: "Shulker Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:silverfish_spawn_egg",
+    n: "Silverfish Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:skeleton_spawn_egg",
+    n: "Skeleton Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:firefly_bush",
+    n: "Firefly Bush",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:bush",
+    n: "Bush",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:cactus_flower",
+    n: "Cactus Flower",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:short_dry_grass",
+    n: "Short Dry Grass",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:blue_egg",
+    n: "Blue Egg",
+    c: "food",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:brown_egg",
+    n: "Brown Egg",
+    c: "food",
+    s: 16,
+    dur: 0
+},
+{
+    d: "minecraft:skeleton_horse_spawn_egg",
+    n: "Skeleton Horse Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:slime_spawn_egg",
+    n: "Slime Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:sniffer_spawn_egg",
+    n: "Sniffer Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:snow_golem_spawn_egg",
+    n: "Snow Golem Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:spider_spawn_egg",
+    n: "Spider Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:squid_spawn_egg",
+    n: "Squid Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:stray_spawn_egg",
+    n: "Stray Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:strider_spawn_egg",
+    n: "Strider Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:tadpole_spawn_egg",
+    n: "Tadpole Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:trader_llama_spawn_egg",
+    n: "Trader Llama Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:tropical_fish_spawn_egg",
+    n: "Tropical Fish Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:turtle_spawn_egg",
+    n: "Turtle Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:vex_spawn_egg",
+    n: "Vex Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:villager_spawn_egg",
+    n: "Villager Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:vindicator_spawn_egg",
+    n: "Vindicator Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:wandering_trader_spawn_egg",
+    n: "Wandering Trader Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:warden_spawn_egg",
+    n: "Warden Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:witch_spawn_egg",
+    n: "Witch Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:wither_skeleton_spawn_egg",
+    n: "Wither Skeleton Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:wolf_spawn_egg",
+    n: "Wolf Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:zoglin_spawn_egg",
+    n: "Zoglin Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:zombie_spawn_egg",
+    n: "Zombie Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:zombie_horse_spawn_egg",
+    n: "Zombie Horse Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:zombie_villager_spawn_egg",
+    n: "Zombie Villager Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},
+{
+    d: "minecraft:zombified_piglin_spawn_egg",
+    n: "Zombified Piglin Spawn Egg",
+    c: "items",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:birch_hanging_sign",
+    n: "Birch Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:spruce_hanging_sign",
+    n: "Spruce Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:oak_hanging_sign",
+    n: "Oak Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:mangrove_hanging_sign",
+    n: "Mangrove Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:cherry_hanging_sign",
+    n: "Cherry Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:bamboo_hanging_sign",
+    n: "Bamboo Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:crimson_hanging_sign",
+    n: "Crimson Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:warped_hanging_sign",
+    n: "Warped Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:leaf_litter",
+    n: "Leaf Litter",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:wildflowers",
+    n: "Wildflowers",
+    c: "blocks",
+    s: 64,
+    dur: 0
+},{
+    d: "minecraft:acacia_hanging_sign",
+    n: "Acacia Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:cherry_hanging_sign",
+    n: "Cherry Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:dark_oak_hanging_sign",
+    n: "Dark Oak Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:jungle_hanging_sign",
+    n: "Jungle Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+    d: "minecraft:mangrove_hanging_sign",
+    n: "Mangrove Hanging Sign",
+    c: "blocks",
+    s: 16,
+    dur: 0
+},{
+			d: "minecraft:potent_sulfur",
+			n: "Polished Sulfur",
+			c: "blocks",
+			s: 64,
+			dur: 0
+		},{
 			d: "minecraft:cherry_planks",
 			n: "Cherry Planks",
 			c: "blocks",
@@ -8166,7 +9622,7 @@
 			dur: 0,
 			img: "https://minecraft.wiki/images/Black_Banner_JE2_BE2.gif?794b0&format=original"
 		}];
-		/* ===================== DATA: ENCHANTMENTS ===================== */
+
 		var ENCHANTMENTS = [{
 			id: "protection",
 			n: "Protection",
@@ -9077,7 +10533,7 @@
 			if (ITEM_IMAGES[it.d] && !it.img) it.img = ITEM_IMAGES[it.d];
 		});
 
-		// ===== Spawner (static image) =====
+
 		ITEMS.forEach(function(it) {
 			if (it.d === "minecraft:spawner") {
 				it.img = "https://minecraft.wiki/images/BlockSprite_monster-spawner.png?81e6b";
@@ -9095,7 +10551,7 @@
 			var filtered = ITEMS.filter(function(it) {
 				if (activeCat !== "all" && it.c !== activeCat) return false;
 				if (search && it.n.toLowerCase().indexOf(search) < 0 && it.d.indexOf(search) < 0) return false;
-				// Skip duplicates - use _key or d+img as unique identifier
+
 				var key = it._key || it.d + (it.img || '');
 				if (displayed.has(key)) return false;
 				displayed.add(key);
@@ -9311,21 +10767,21 @@
 			}
 		}
 		document.querySelectorAll(".edition-btn").forEach(function(b) {
-		b.onclick = function() {
-			if (S.edition === b.dataset.edition) return;
-			S.edition = b.dataset.edition;
-			/* Clear stale imported command (edition-specific) */
-			$("importInput").value = "";
-			/* Reset command output then regenerate with a flash */
-			$("commandBox").innerHTML = '<span class="ph">Switching to ' + (S.edition === "bedrock" ? "Bedrock" : "Java") + '...</span>';
-			updateEditionUI();
-			updateAll();
-			var cb = $("commandBox");
-			cb.classList.remove("flash");
-			void cb.offsetWidth;
-			cb.classList.add("flash");
-		};
-	});
+			b.onclick = function() {
+				if (S.edition === b.dataset.edition) return;
+				S.edition = b.dataset.edition;
+
+				$("importInput").value = "";
+
+				$("commandBox").innerHTML = '<span class="ph">Switching to ' + (S.edition === "bedrock" ? "Bedrock" : "Java") + '...</span>';
+				updateEditionUI();
+				updateAll();
+				var cb = $("commandBox");
+				cb.classList.remove("flash");
+				void cb.offsetWidth;
+				cb.classList.add("flash");
+			};
+		});
 		$("versionSelect").addEventListener("change", function() {
 			S.version = this.value;
 			if (S.edition === "java") {
@@ -9888,7 +11344,7 @@
 			updateAll();
 		};
 
-		/* ===================== BANNER RENDERER (Canvas port of mc-banner-renderer) ===================== */
+
 		var BANNER_RGB = {
 			white: [249, 255, 254],
 			orange: [249, 128, 29],
@@ -10101,7 +11557,7 @@
 			updateAll();
 		};
 
-		/* ===================== BOOK CONTENTS ===================== */
+
 		function renderBookPages() {
 			var c = $("bookPages");
 			c.innerHTML = "";
@@ -10220,7 +11676,7 @@
 
 				c.appendChild(row);
 			});
-			/* header labels */
+
 			var hdr = ce("div", "");
 			hdr.style.cssText = "display:grid;grid-template-columns:1fr 1.4fr 1fr 1fr 1fr auto;gap:6px;font-size:10px;color:var(--txt-dim);text-transform:uppercase;letter-spacing:.5px;";
 			["Name", "Type", "X", "Z", "Rotation", ""].forEach(function(l) {
@@ -10409,7 +11865,7 @@
 			renderStoredEnchList();
 			updateAll();
 		};
-		/* ===================== COMMAND BUILDING ===================== */
+
 		function targetStr() {
 			var t = S.target.type;
 			var entries = [];
@@ -10434,7 +11890,7 @@
 			return "[" + JSON.stringify(obj) + "]";
 		}
 
-		/* ===================== BEDROCK EDITION ===================== */
+
 		var BEDROCK_COLOR_CODES = {
 			black: "0",
 			dark_blue: "1",
@@ -10453,7 +11909,7 @@
 			yellow: "e",
 			white: "f"
 		};
-		/* Orange/pink/purple (Java-only names) map to nearest Bedrock codes */
+
 		var BEDROCK_COLOR_FALLBACK = {
 			orange: "6",
 			pink: "d",
@@ -10467,7 +11923,7 @@
 			return "";
 		}
 
-		/* Convert a Java text-style state to a Bedrock §-coded string */
+
 		function textToBedrock(t) {
 			var out = "\u00a7r";
 			if (t.obfuscated) out += "\u00a7k";
@@ -10485,7 +11941,7 @@
 			return String(id).replace(/^minecraft:/, "");
 		}
 
-		/* Ensure a block id carries the minecraft: prefix (Bedrock can_break/can_place_on blocks) */
+
 		function ensureMcPrefix(id) {
 			id = String(id).trim();
 			return id.indexOf("minecraft:") === 0 ? id : "minecraft:" + id;
@@ -10493,7 +11949,7 @@
 
 		function buildBedrockCommand() {
 			var cmd = "/give " + targetStr() + " " + bedrockItemId(S.item.d);
-			/* Build the components JSON object */
+
 			var comps = {};
 			var display = {};
 			if (S.name.text) {
@@ -10949,7 +12405,7 @@
 			$("commandBox").innerHTML = highlight(cmd);
 			renderPreview();
 		}
-		/* ===================== IMPORT ===================== */
+
 		function splitTopLevel(str, sep) {
 			var parts = [],
 				cur = "",
@@ -11046,7 +12502,7 @@
 				if (end < 0) throw new Error("Unclosed bracket");
 				compStr = s.slice(br + 1, end);
 				rest = s.slice(end + 1).trim();
-				/* Check for block states bracket followed by components bracket */
+
 				var blockStateStr = "";
 				if (rest.charAt(0) === "[") {
 					blockStateStr = compStr;
@@ -12251,563 +13707,620 @@
 		renderItems();
 		updateAll();
 
-// ===== MOBILE OPTIMIZED THREE.JS WITH FIXED LEAVES =====
-(function() {
-    const canvas = document.getElementById("terrainCanvas");
-    if (!canvas || typeof THREE === "undefined") return;
 
-    // DETECT MOBILE
-    const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    const isSmallPhone = window.innerWidth < 480;
-    const isLowEnd = isMobile || window.innerWidth < 768;
+		(function() {
+			const canvas = document.getElementById("terrainCanvas");
+			if (!canvas || typeof THREE === "undefined") return;
 
-    // SCENE
-    const scene = new THREE.Scene();
 
-    // RENDERER - LOWER QUALITY ON MOBILE
-    const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        antialias: !isLowEnd,
-        alpha: false
-    });
-    if (isLowEnd) {
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-        renderer.shadowMap.enabled = false;
-    } else {
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    }
+			const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+			const isSmallPhone = window.innerWidth < 480;
+			const isLowEnd = isMobile || window.innerWidth < 768;
 
-    // CAMERA
-    // CAMERA - ZOOMED IN ON MOBILE
-const CAMERA_DISTANCE = isLowEnd ? 28 : 80;
-const CAMERA_HEIGHT = isLowEnd ? 18 : 48;
-const camera = new THREE.PerspectiveCamera(isLowEnd ? 40 : 23, 1, 0.1, isLowEnd ? 800 : 1500);
-camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
+
+			const scene = new THREE.Scene();
+
+
+			const renderer = new THREE.WebGLRenderer({
+				canvas: canvas,
+				antialias: !isLowEnd,
+				alpha: false
+			});
+			if (isLowEnd) {
+				renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+				renderer.shadowMap.enabled = false;
+			} else {
+				renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+				renderer.shadowMap.enabled = true;
+				renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+			}
 
 
 
-    // TEXTURE GENERATOR - WITH SIZE OPTION
-function createPixelTexture(drawFn, size) {
-    size = size || 16;
-    const c = document.createElement("canvas");
-    c.width = c.height = size;
-    const ctx = c.getContext("2d");
-    drawFn(ctx, size);
-    const texture = new THREE.CanvasTexture(c);
-    texture.magFilter = THREE.NearestFilter;
-    texture.minFilter = THREE.NearestFilter;
-    return texture;
-}
+			const CAMERA_DISTANCE = isLowEnd ? 28 : 80;
+			const CAMERA_HEIGHT = isLowEnd ? 18 : 48;
+			const camera = new THREE.PerspectiveCamera(isLowEnd ? 40 : 23, 1, 0.1, isLowEnd ? 800 : 1500);
+			camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
 
-// For low-end devices, use smaller textures (size 8)
-const texSize = isLowEnd ? 2 : 16;
 
-    const dirtTex = createPixelTexture((ctx, s) => {
-        ctx.fillStyle = "#866043";
-        ctx.fillRect(0, 0, s, s);
-        for (let i = 0; i < s * s * 0.4; i++) {
-            ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
-            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-        }
-    });
 
-    const grassTopTex = createPixelTexture((ctx, s) => {
-        ctx.fillStyle = "#5cbf3f";
-        ctx.fillRect(0, 0, s, s);
-        for (let i = 0; i < s * s * 0.4; i++) {
-            ctx.fillStyle = Math.random() > 0.5 ? "#489e2e" : "#72d651";
-            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-        }
-    });
 
-    // LEAF TEXTURE - FIXED (no transparency)
-    const LeafTex = createPixelTexture((ctx, s) => {
-        // Base green - solid
-        ctx.fillStyle = "#4caf50";
-        ctx.fillRect(0, 0, s, s);
-        
-        // Add varied green patches
-        const colors = [
-            "#2e7d32", "#388e3c", "#43a047", "#4caf50", "#66bb6a",
-            "#81c784", "#a5d6a7", "#1b5e20", "#6b8c23", "#8bc34a"
-        ];
-        
-        for (let i = 0; i < s * s * 0.7; i++) {
-            const x = Math.floor(Math.random() * s);
-            const y = Math.floor(Math.random() * s);
-            ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-            ctx.fillRect(x, y, 1, 1);
-        }
-        
-        // Yellow-green highlights
-        for (let i = 0; i < s * s * 0.2; i++) {
-            const x = Math.floor(Math.random() * s);
-            const y = Math.floor(Math.random() * s);
-            ctx.fillStyle = Math.random() > 0.5 ? "#cddc39" : "#c0ca33";
-            ctx.fillRect(x, y, 1, 1);
-        }
-        
-        // Brown spots
-        for (let i = 0; i < s * s * 0.05; i++) {
-            const x = Math.floor(Math.random() * s);
-            const y = Math.floor(Math.random() * s);
-            ctx.fillStyle = Math.random() > 0.5 ? "#8d6e63" : "#6d4c41";
-            ctx.fillRect(x, y, 1, 1);
-        }
-    });
+			function createPixelTexture(drawFn, size) {
+				size = size || 16;
+				const c = document.createElement("canvas");
+				c.width = c.height = size;
+				const ctx = c.getContext("2d");
+				drawFn(ctx, size);
+				const texture = new THREE.CanvasTexture(c);
+				texture.magFilter = THREE.NearestFilter;
+				texture.minFilter = THREE.NearestFilter;
+				return texture;
+			}
 
-    const grassSideTex = createPixelTexture((ctx, s) => {
-        ctx.fillStyle = "#866043";
-        ctx.fillRect(0, 0, s, s);
-        for (let i = 0; i < s * s * 0.3; i++) {
-            ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
-            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-        }
-        ctx.fillStyle = "#5cbf3f";
-        ctx.fillRect(0, 0, s, 3);
-        for (let x = 0; x < s; x++) {
-            ctx.fillRect(x, 0, 1, 3 + Math.floor(Math.random() * 3));
-        }
-    });
 
-    const stoneTex = createPixelTexture((ctx, s) => {
-        ctx.fillStyle = "#737373";
-        ctx.fillRect(0, 0, s, s);
-        for (let i = 0; i < s * s * 0.45; i++) {
-            ctx.fillStyle = Math.random() > 0.5 ? "#525252" : "#8f8f8f";
-            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-        }
-    });
+			const texSize = isLowEnd ? 2 : 16;
 
-    const sandTex = createPixelTexture((ctx, s) => {
-        ctx.fillStyle = "#dcd299";
-        ctx.fillRect(0, 0, s, s);
-        for (let i = 0; i < s * s * 0.35; i++) {
-            ctx.fillStyle = Math.random() > 0.5 ? "#c2b67a" : "#ebd8aa";
-            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-        }
-    });
+			const dirtTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#866043";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.4; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
 
-    const snowTex = createPixelTexture((ctx, s) => {
-        ctx.fillStyle = "#f0f5fb";
-        ctx.fillRect(0, 0, s, s);
-        for (let i = 0; i < s * s * 0.25; i++) {
-            ctx.fillStyle = Math.random() > 0.5 ? "#d3e0f0" : "#ffffff";
-            ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
-        }
-    });
+			const grassTopTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#5cbf3f";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.4; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#489e2e" : "#72d651";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
 
-    // MATERIALS
-    const MaterialClass = isLowEnd ? THREE.MeshBasicMaterial : THREE.MeshStandardMaterial;
-    const materialConfig = isLowEnd ? {} : { roughness: 0.8 };
 
-    const grassMatList = [
-        new MaterialClass({ map: grassSideTex, ...materialConfig }),
-        new MaterialClass({ map: grassSideTex, ...materialConfig }),
-        new MaterialClass({ map: grassTopTex, ...materialConfig }),
-        new MaterialClass({ map: dirtTex, ...materialConfig }),
-        new MaterialClass({ map: grassSideTex, ...materialConfig }),
-        new MaterialClass({ map: grassSideTex, ...materialConfig })
-    ];
-    
-    const dirtMat = new MaterialClass({ map: dirtTex, ...materialConfig });
-    const stoneMat = new MaterialClass({ map: stoneTex, ...materialConfig });
-    const sandMat = new MaterialClass({ map: sandTex, ...materialConfig });
-    const snowMat = new MaterialClass({ map: snowTex, ...materialConfig });
-    
-    // LEAF MATERIAL - FIXED (transparent: false)
-    const leafMat = new MaterialClass({ 
-        map: LeafTex, 
-        transparent: false,
-        ...materialConfig 
-    });
+			const LeafTex = createPixelTexture((ctx, s) => {
 
-    // LIGHTS
-    const ambientLight = new THREE.AmbientLight(0xffffff, isLowEnd ? 0.6 : 0.4);
-    scene.add(ambientLight);
+				ctx.fillStyle = "#4caf50";
+				ctx.fillRect(0, 0, s, s);
 
-    const sunLight = new THREE.DirectionalLight(0xfffaed, isLowEnd ? 1.0 : 1.3);
-    if (!isLowEnd) {
-        sunLight.castShadow = true;
-        sunLight.shadow.mapSize.width = isLowEnd ? 1024 : 4096;
-        sunLight.shadow.mapSize.height = isLowEnd ? 1024 : 4096;
-        sunLight.shadow.camera.far = 300;
-        const sSize = 90;
-        sunLight.shadow.camera.left = -sSize;
-        sunLight.shadow.camera.right = sSize;
-        sunLight.shadow.camera.top = sSize;
-        sunLight.shadow.camera.bottom = -sSize;
-    }
-    scene.add(sunLight);
 
-    // SKY
-    const skyMat = new THREE.ShaderMaterial({
-        side: THREE.BackSide,
-        uniforms: {
-            top: { value: new THREE.Color(0x3878cf) },
-            bot: { value: new THREE.Color(0x92c4f2) }
-        },
-        vertexShader: "varying vec3 vP; void main() { vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
-        fragmentShader: "varying vec3 vP; uniform vec3 top; uniform vec3 bot; void main() { float h = normalize(vP).y * 0.5 + 0.5; gl_FragColor = vec4(mix(bot, top, h), 1.0); }"
-    });
-    scene.add(new THREE.Mesh(new THREE.SphereGeometry(isLowEnd ? 800 : 1200, isLowEnd ? 8 : 16, isLowEnd ? 8 : 16), skyMat));
+				const colors = [
+					"#2e7d32", "#388e3c", "#43a047", "#4caf50", "#66bb6a",
+					"#81c784", "#a5d6a7", "#1b5e20", "#6b8c23", "#8bc34a"
+				];
 
-    // CELESTIAL
-    const celestialGroup = new THREE.Group();
-    scene.add(celestialGroup);
-    const sunMesh = new THREE.Mesh(new THREE.BoxGeometry(14, 14, 0.2), new THREE.MeshBasicMaterial({ color: 0xffffeb }));
-    sunMesh.position.set(0, 160, 0);
-    sunMesh.rotation.x = Math.PI / 2;
-    celestialGroup.add(sunMesh);
-    const moonMesh = new THREE.Mesh(new THREE.BoxGeometry(12, 12, 0.2), new THREE.MeshBasicMaterial({ color: 0xe0e8f5 }));
-    moonMesh.position.set(0, -160, 0);
-    moonMesh.rotation.x = Math.PI / 2;
-    celestialGroup.add(moonMesh);
+				for (let i = 0; i < s * s * 0.7; i++) {
+					const x = Math.floor(Math.random() * s);
+					const y = Math.floor(Math.random() * s);
+					ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+					ctx.fillRect(x, y, 1, 1);
+				}
 
-    // INSTANCED MESH HELPER
-    function makeInstanced(positions, material) {
-        if (!positions.length) return null;
-        const inst = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), material, positions.length);
-        if (!isLowEnd) {
-            inst.castShadow = true;
-            inst.receiveShadow = true;
-        }
-        const m = new THREE.Matrix4();
-        positions.forEach((pos, i) => {
-            m.makeTranslation(pos.x, pos.y, pos.z);
-            inst.setMatrixAt(i, m);
-        });
-        inst.instanceMatrix.needsUpdate = true;
-        scene.add(inst);
-        return inst;
-    }
 
-    // TERRAIN
-    // TERRAIN - MUCH SMALLER ON MOBILE
-const SIZE = isLowEnd ? 30 : 100;
-const HALF = SIZE / 2;
-    const waterLevel = 6;
-    const snowLevel = 16;
+				for (let i = 0; i < s * s * 0.2; i++) {
+					const x = Math.floor(Math.random() * s);
+					const y = Math.floor(Math.random() * s);
+					ctx.fillStyle = Math.random() > 0.5 ? "#cddc39" : "#c0ca33";
+					ctx.fillRect(x, y, 1, 1);
+				}
 
-    const n1 = new Date().getTime() * 0.001;
-    const n2 = n1 + 100;
-    const n3 = n2 + 100;
 
-    function heightAt(x, z) {
-        const dX = x + HALF;
-        const dZ = z + HALF;
-        const islandFactor = Math.cos((dX / SIZE) * Math.PI - Math.PI / 2) * Math.cos((dZ / SIZE) * Math.PI - Math.PI / 2);
-        const river = 11.0 * Math.exp(-Math.pow((z - 15 * Math.sin(x * 0.08)) * 0.16, 2));
-        const h = Math.round((
-            10.0 * Math.sin(dX * 0.12 + n1) * Math.cos(dZ * 0.10 + n2) +
-            6.0 * Math.sin(dX * 0.06 + n3) +
-            5.0 * Math.cos(dZ * 0.08 - n1) +
-            3.0 * Math.sin(dX * 0.03) * Math.cos(dZ * 0.04) +
-            12 - river
-        ) * Math.pow(islandFactor, 1.5));
-        return Math.max(0, h);
-    }
+				for (let i = 0; i < s * s * 0.05; i++) {
+					const x = Math.floor(Math.random() * s);
+					const y = Math.floor(Math.random() * s);
+					ctx.fillStyle = Math.random() > 0.5 ? "#8d6e63" : "#6d4c41";
+					ctx.fillRect(x, y, 1, 1);
+				}
+			});
 
-    const grassPos = [];
-    const dirtPos = [];
-    const stonePos = [];
-    const sandPos = [];
-    const snowPos = [];
-    const treeSpots = [];
+			const grassSideTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#866043";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.3; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#5c3e28" : "#9c7253";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+				ctx.fillStyle = "#5cbf3f";
+				ctx.fillRect(0, 0, s, 3);
+				for (let x = 0; x < s; x++) {
+					ctx.fillRect(x, 0, 1, 3 + Math.floor(Math.random() * 3));
+				}
+			});
 
-    for (let x = -HALF; x < HALF; x++) {
-        for (let z = -HALF; z < HALF; z++) {
-            const topH = heightAt(x, z);
-            for (let y = topH; y >= 0; y--) {
-                const pos = { x, y, z };
-                if (y === topH) {
-                    if (topH <= waterLevel) {
-                        sandPos.push(pos);
-                    } else if (topH >= snowLevel) {
-                        snowPos.push(pos);
-                    } else if (topH > 18) {
-                        stonePos.push(pos);
-                    } else {
-                        grassPos.push(pos);
-                        if (topH > waterLevel + 1 && Math.random() < (isLowEnd ? 0.015 : 0.02)) {
-                            treeSpots.push({ x, z, h: topH });
-                        }
-                    }
-                } else if (y > topH - 4 && y > waterLevel) {
-                    dirtPos.push(pos);
-                } else {
-                    stonePos.push(pos);
-                }
-            }
-        }
-    }
+			const stoneTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#737373";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.45; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#525252" : "#8f8f8f";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
 
-    makeInstanced(grassPos, grassMatList);
-    makeInstanced(dirtPos, dirtMat);
-    makeInstanced(stonePos, stoneMat);
-    makeInstanced(sandPos, sandMat);
-    makeInstanced(snowPos, snowMat);
+			const sandTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#dcd299";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.35; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#c2b67a" : "#ebd8aa";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
 
-    // WATER
-    const waterSegments = isLowEnd ? 40 : 120;
-    const waterGeo = new THREE.PlaneGeometry(isLowEnd ? 800 : 1200, isLowEnd ? 800 : 1200, waterSegments, waterSegments);
-    waterGeo.rotateX(-Math.PI / 2);
-    const waterMat = new MaterialClass({
-        color: 0x1d66c4,
-        transparent: true,
-        opacity: 0.8,
-        flatShading: true,
-        ...(isLowEnd ? {} : { roughness: 0.1, metalness: 0.8 })
-    });
-    const waterMesh = new THREE.Mesh(waterGeo, waterMat);
-    waterMesh.position.set(0, waterLevel + 0.1, 0);
-    if (!isLowEnd) waterMesh.receiveShadow = true;
-    scene.add(waterMesh);
-    const waterPositions = waterGeo.attributes.position;
-    const initialWaterY = new Float32Array(waterPositions.count);
-    for (let i = 0; i < waterPositions.count; i++) {
-        initialWaterY[i] = waterPositions.getY(i);
-    }
+			const snowTex = createPixelTexture((ctx, s) => {
+				ctx.fillStyle = "#f0f5fb";
+				ctx.fillRect(0, 0, s, s);
+				for (let i = 0; i < s * s * 0.25; i++) {
+					ctx.fillStyle = Math.random() > 0.5 ? "#d3e0f0" : "#ffffff";
+					ctx.fillRect(Math.floor(Math.random() * s), Math.floor(Math.random() * s), 1, 1);
+				}
+			});
 
-    // TREES - MORE LEAVES
-    const trunkPos = [];
-    const leafPos = [];
-    const treeLimit = isLowEnd ? Math.floor(treeSpots.length * 0.5) : treeSpots.length;
 
-    for (let i = 0; i < treeLimit && i < treeSpots.length; i++) {
-        const s = treeSpots[i];
-        
-        const trunkHeight = isLowEnd ? 4 : 6;
-        for (let t = 1; t <= trunkHeight; t++) {
-            trunkPos.push({ x: s.x, y: s.h + t, z: s.z });
-        }
-        
-        const leafRadius = isLowEnd ? 2 : 3;
-        const leafHeight = isLowEnd ? 3 : 4;
-        const startY = s.h + trunkHeight;
-        
-        for (let lx = -leafRadius; lx <= leafRadius; lx++) {
-            for (let lz = -leafRadius; lz <= leafRadius; lz++) {
-                if (Math.abs(lx) === leafRadius && Math.abs(lz) === leafRadius) {
-                    if (Math.random() < 0.7) continue;
-                }
-                for (let ly = 0; ly < leafHeight; ly++) {
-                    const taper = 1 - (ly / leafHeight) * 0.4;
-                    const maxDist = Math.floor(leafRadius * taper);
-                    if (Math.abs(lx) > maxDist || Math.abs(lz) > maxDist) continue;
-                    if (lx === 0 && lz === 0 && ly < 2) continue;
-                    if (Math.random() < 0.85) {
-                        leafPos.push({ 
-                            x: s.x + lx + (Math.random() - 0.5) * 0.3, 
-                            y: startY + ly + (Math.random() - 0.5) * 0.2, 
-                            z: s.z + lz + (Math.random() - 0.5) * 0.3 
-                        });
-                    }
-                }
-            }
-        }
-        
-        if (!isLowEnd) {
-            for (let d = 1; d <= 2; d++) {
-                const spread = leafRadius - d * 0.5;
-                for (let lx = -spread; lx <= spread; lx++) {
-                    for (let lz = -spread; lz <= spread; lz++) {
-                        if (Math.abs(lx) === Math.floor(spread) && Math.abs(lz) === Math.floor(spread)) continue;
-                        if (Math.random() < 0.3) {
-                            leafPos.push({ 
-                                x: s.x + lx + (Math.random() - 0.5) * 0.2, 
-                                y: startY - d + (Math.random() - 0.5) * 0.1, 
-                                z: s.z + lz + (Math.random() - 0.5) * 0.2 
-                            });
-                        }
-                    }
-                }
-            }
-        }
-    }
+			const MaterialClass = isLowEnd ? THREE.MeshBasicMaterial : THREE.MeshStandardMaterial;
+			const materialConfig = isLowEnd ? {} : {
+				roughness: 0.8
+			};
 
-    makeInstanced(trunkPos, dirtMat);
-    makeInstanced(leafPos, leafMat);
+			const grassMatList = [
+				new MaterialClass({
+					map: grassSideTex,
+					...materialConfig
+				}),
+				new MaterialClass({
+					map: grassSideTex,
+					...materialConfig
+				}),
+				new MaterialClass({
+					map: grassTopTex,
+					...materialConfig
+				}),
+				new MaterialClass({
+					map: dirtTex,
+					...materialConfig
+				}),
+				new MaterialClass({
+					map: grassSideTex,
+					...materialConfig
+				}),
+				new MaterialClass({
+					map: grassSideTex,
+					...materialConfig
+				})
+			];
 
-    // TEXT
-    const textGroup = new THREE.Group();
-    scene.add(textGroup);
+			const dirtMat = new MaterialClass({
+				map: dirtTex,
+				...materialConfig
+			});
+			const stoneMat = new MaterialClass({
+				map: stoneTex,
+				...materialConfig
+			});
+			const sandMat = new MaterialClass({
+				map: sandTex,
+				...materialConfig
+			});
+			const snowMat = new MaterialClass({
+				map: snowTex,
+				...materialConfig
+			});
 
-    function addPixelTextBlock(char, tx, ty, tz) {
-        const font = {
-            'g': [0x7c, 0x02, 0x7e, 0x02, 0x7e, 0x02, 0x7c, 0x00],
-            'i': [0x10, 0x18, 0x1c, 0x10, 0x10, 0x10, 0x7c, 0x00],
-            'v': [0x22, 0x22, 0x22, 0x22, 0x22, 0x14, 0x08, 0x00],
-            'e': [0x3e, 0x20, 0x3e, 0x22, 0x22, 0x20, 0x3e, 0x00],
-            'n': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x00],
-            'r': [0x3e, 0x22, 0x3c, 0x24, 0x22, 0x22, 0x22, 0x00],
-            'a': [0x1c, 0x22, 0x22, 0x3e, 0x22, 0x22, 0x22, 0x00],
-            't': [0x3c, 0x10, 0x10, 0x3c, 0x10, 0x10, 0x10, 0x00],
-            'o': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3c, 0x00],
-            'l': [0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x7c, 0x00],
-            'd': [0x3e, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3e, 0x00],
-            's': [0x3e, 0x20, 0x3c, 0x02, 0x02, 0x22, 0x3c, 0x00],
-            'y': [0x22, 0x22, 0x14, 0x08, 0x08, 0x08, 0x08, 0x00]
-        };
-        const blockMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const geo = new THREE.BoxGeometry(0.3, 0.3, 0.05);
-        if (!font[char]) return;
-        for (let iy = 0; iy < 8; iy++) {
-            const line = font[char][iy];
-            for (let ix = 0; ix < 8; ix++) {
-                if ((line >> (7 - ix)) & 1) {
-                    const m = new THREE.Mesh(geo, blockMat);
-                    m.position.set(tx + ix * 0.3, ty - iy * 0.3, tz);
-                    textGroup.add(m);
-                }
-            }
-        }
-    }
 
-    const textString = "GIVE GENERATOR";
-    let curX = -textString.length * 1.5 + (isLowEnd ? 15 : 20);
-    const textY = isLowEnd ? 32 : 36;
-    const textZ = isLowEnd ? 8 : 12;
-    for (let i = 0; i < textString.length; i++) {
-        addPixelTextBlock(textString[i], curX, textY, textZ);
-        curX += 3.2;
-        if (textString[i] === " ") curX += 1.5;
-    }
+			const leafMat = new MaterialClass({
+				map: LeafTex,
+				transparent: false,
+				...materialConfig
+			});
 
-    // CLOUDS
-    const cloudGroup = new THREE.Group();
-    if (!isSmallPhone) {
-        const cloudMat = new THREE.MeshBasicMaterial({
-            color: 0xffffff,
-            transparent: true,
-            opacity: 0.85
-        });
 
-        function addCloud(cx, cy, cz) {
-            const parts = isLowEnd ? 4 + Math.floor(Math.random() * 3) : 8 + Math.floor(Math.random() * 6);
-            for (let i = 0; i < parts; i++) {
-                const c = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), cloudMat);
-                c.position.set(cx + i * 2.5, cy + (Math.random() - 0.5) * 1.8, cz + (Math.random() - 0.5) * 4.0);
-                c.scale.set(4.0, 1.4, 2.8);
-                cloudGroup.add(c);
-            }
-        }
+			const ambientLight = new THREE.AmbientLight(0xffffff, isLowEnd ? 0.6 : 0.4);
+			scene.add(ambientLight);
 
-        if (isLowEnd) {
-            addCloud(-30, 40, -20);
-            addCloud(15, 44, 15);
-            addCloud(30, 38, -25);
-        } else {
-            addCloud(-40, 42, -28);
-            addCloud(20, 48, 18);
-            addCloud(12, 38, -36);
-            addCloud(-25, 52, 14);
-            addCloud(45, 46, -20);
-        }
-        scene.add(cloudGroup);
-    }
+			const sunLight = new THREE.DirectionalLight(0xfffaed, isLowEnd ? 1.0 : 1.3);
+			if (!isLowEnd) {
+				sunLight.castShadow = true;
+				sunLight.shadow.mapSize.width = isLowEnd ? 1024 : 4096;
+				sunLight.shadow.mapSize.height = isLowEnd ? 1024 : 4096;
+				sunLight.shadow.camera.far = 300;
+				const sSize = 90;
+				sunLight.shadow.camera.left = -sSize;
+				sunLight.shadow.camera.right = sSize;
+				sunLight.shadow.camera.top = sSize;
+				sunLight.shadow.camera.bottom = -sSize;
+			}
+			scene.add(sunLight);
 
-    // RESIZE
-    function resize() {
-        const w = canvas.clientWidth;
-        const h = canvas.clientHeight;
-        renderer.setSize(w, h, false);
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-    }
-    window.addEventListener("resize", resize);
-    resize();
 
-    // DAY/NIGHT COLORS
-    const daySkyTop = new THREE.Color(0x3878cf);
-    const daySkyBot = new THREE.Color(0x92c4f2);
-    const sunsetSkyTop = new THREE.Color(0x283b6b);
-    const sunsetSkyBot = new THREE.Color(0xf08053);
-    const nightSkyTop = new THREE.Color(0x050a14);
-    const nightSkyBot = new THREE.Color(0x0d1b36);
-    const fogColor = new THREE.Color();
+			const skyMat = new THREE.ShaderMaterial({
+				side: THREE.BackSide,
+				uniforms: {
+					top: {
+						value: new THREE.Color(0x3878cf)
+					},
+					bot: {
+						value: new THREE.Color(0x92c4f2)
+					}
+				},
+				vertexShader: "varying vec3 vP; void main() { vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
+				fragmentShader: "varying vec3 vP; uniform vec3 top; uniform vec3 bot; void main() { float h = normalize(vP).y * 0.5 + 0.5; gl_FragColor = vec4(mix(bot, top, h), 1.0); }"
+			});
+			scene.add(new THREE.Mesh(new THREE.SphereGeometry(isLowEnd ? 800 : 1200, isLowEnd ? 8 : 16, isLowEnd ? 8 : 16), skyMat));
 
-    // ANIMATION
-    let angle = 0;
-    const clock = new THREE.Clock();
-    const targetFPS = isLowEnd ? 30 : 60;
-    let lastFrameTime = 0;
 
-    function animate() {
-        requestAnimationFrame(animate);
+			const celestialGroup = new THREE.Group();
+			scene.add(celestialGroup);
+			const sunMesh = new THREE.Mesh(new THREE.BoxGeometry(14, 14, 0.2), new THREE.MeshBasicMaterial({
+				color: 0xffffeb
+			}));
+			sunMesh.position.set(0, 160, 0);
+			sunMesh.rotation.x = Math.PI / 2;
+			celestialGroup.add(sunMesh);
+			const moonMesh = new THREE.Mesh(new THREE.BoxGeometry(12, 12, 0.2), new THREE.MeshBasicMaterial({
+				color: 0xe0e8f5
+			}));
+			moonMesh.position.set(0, -160, 0);
+			moonMesh.rotation.x = Math.PI / 2;
+			celestialGroup.add(moonMesh);
 
-        const now = performance.now();
-        const delta = now - lastFrameTime;
 
-        if (delta < 1000 / targetFPS) return;
-        lastFrameTime = now;
+			function makeInstanced(positions, material) {
+				if (!positions.length) return null;
+				const inst = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), material, positions.length);
+				if (!isLowEnd) {
+					inst.castShadow = true;
+					inst.receiveShadow = true;
+				}
+				const m = new THREE.Matrix4();
+				positions.forEach((pos, i) => {
+					m.makeTranslation(pos.x, pos.y, pos.z);
+					inst.setMatrixAt(i, m);
+				});
+				inst.instanceMatrix.needsUpdate = true;
+				scene.add(inst);
+				return inst;
+			}
 
-        const t = clock.getElapsedTime();
 
-        // Camera orbit
-        angle += isLowEnd ? 0.0003 : 0.0004;
-        camera.position.x = Math.sin(angle) * CAMERA_DISTANCE;
-        camera.position.z = Math.cos(angle) * CAMERA_DISTANCE;
-        camera.position.y = CAMERA_HEIGHT;
-        camera.lookAt(0, 10, 0);
 
-        // Celestial
-        const daySpeed = 0.035;
-        celestialGroup.rotation.z = t * daySpeed;
-        const sunWorldPos = new THREE.Vector3();
-        sunMesh.getWorldPosition(sunWorldPos);
-        sunLight.position.copy(sunWorldPos);
+			const SIZE = isLowEnd ? 30 : 100;
+			const HALF = SIZE / 2;
+			const waterLevel = 6;
+			const snowLevel = 16;
 
-        // Sky
-        const sunHeightRatio = Math.sin(t * daySpeed);
-        if (sunHeightRatio > 0.2) {
-            skyMat.uniforms.top.value.lerpColors(sunsetSkyTop, daySkyTop, (sunHeightRatio - 0.2) / 0.8);
-            skyMat.uniforms.bot.value.lerpColors(sunsetSkyBot, daySkyBot, (sunHeightRatio - 0.2) / 0.8);
-            ambientLight.intensity = THREE.MathUtils.lerp(0.4, 0.65, sunHeightRatio);
-            sunLight.intensity = THREE.MathUtils.lerp(0.2, 1.4, sunHeightRatio);
-        } else if (sunHeightRatio > -0.2) {
-            const factor = (sunHeightRatio + 0.2) / 0.4;
-            skyMat.uniforms.top.value.lerpColors(nightSkyTop, sunsetSkyTop, factor);
-            skyMat.uniforms.bot.value.lerpColors(nightSkyBot, sunsetSkyBot, factor);
-            ambientLight.intensity = THREE.MathUtils.lerp(0.15, 0.4, factor);
-            sunLight.intensity = THREE.MathUtils.lerp(0.0, 0.3, factor);
-        } else {
-            skyMat.uniforms.top.value.copy(nightSkyTop);
-            skyMat.uniforms.bot.value.copy(nightSkyBot);
-            ambientLight.intensity = 0.12;
-            sunLight.intensity = 0.0;
-        }
-        fogColor.copy(skyMat.uniforms.bot.value);
-        scene.fog = new THREE.FogExp2(fogColor, isLowEnd ? 0.003 : 0.002);
+			const n1 = new Date().getTime() * 0.001;
+			const n2 = n1 + 100;
+			const n3 = n2 + 100;
 
-        // Water waves
-        for (let i = 0; i < waterPositions.count; i++) {
-            const u = waterPositions.getX(i);
-            const v = waterPositions.getZ(i);
-            let wave;
-            if (isLowEnd) {
-                wave = Math.sin(t * 2.0 + u * 0.15 + v * 0.12) * 0.2;
-            } else {
-                wave = Math.sin(t * 2.0 + u * 0.15 + v * 0.12) * 0.16 + Math.cos(t * 1.4 + v * 0.2) * 0.1;
-            }
-            waterPositions.setY(i, initialWaterY[i] + wave);
-        }
-        waterPositions.needsUpdate = true;
-        waterGeo.computeVertexNormals();
+			function heightAt(x, z) {
+				const dX = x + HALF;
+				const dZ = z + HALF;
+				const islandFactor = Math.cos((dX / SIZE) * Math.PI - Math.PI / 2) * Math.cos((dZ / SIZE) * Math.PI - Math.PI / 2);
+				const river = 11.0 * Math.exp(-Math.pow((z - 15 * Math.sin(x * 0.08)) * 0.16, 2));
+				const h = Math.round((
+					10.0 * Math.sin(dX * 0.12 + n1) * Math.cos(dZ * 0.10 + n2) +
+					6.0 * Math.sin(dX * 0.06 + n3) +
+					5.0 * Math.cos(dZ * 0.08 - n1) +
+					3.0 * Math.sin(dX * 0.03) * Math.cos(dZ * 0.04) +
+					12 - river
+				) * Math.pow(islandFactor, 1.5));
+				return Math.max(0, h);
+			}
 
-        // Clouds
-        if (!isSmallPhone) {
-            cloudGroup.position.x += 0.015;
-            if (cloudGroup.position.x > HALF + 10) cloudGroup.position.x = -(HALF + 10);
-        }
+			const grassPos = [];
+			const dirtPos = [];
+			const stonePos = [];
+			const sandPos = [];
+			const snowPos = [];
+			const treeSpots = [];
 
-        renderer.render(scene, camera);
-    }
+			for (let x = -HALF; x < HALF; x++) {
+				for (let z = -HALF; z < HALF; z++) {
+					const topH = heightAt(x, z);
+					for (let y = topH; y >= 0; y--) {
+						const pos = {
+							x,
+							y,
+							z
+						};
+						if (y === topH) {
+							if (topH <= waterLevel) {
+								sandPos.push(pos);
+							} else if (topH >= snowLevel) {
+								snowPos.push(pos);
+							} else if (topH > 18) {
+								stonePos.push(pos);
+							} else {
+								grassPos.push(pos);
+								if (topH > waterLevel + 1 && Math.random() < (isLowEnd ? 0.015 : 0.02)) {
+									treeSpots.push({
+										x,
+										z,
+										h: topH
+									});
+								}
+							}
+						} else if (y > topH - 4 && y > waterLevel) {
+							dirtPos.push(pos);
+						} else {
+							stonePos.push(pos);
+						}
+					}
+				}
+			}
 
-    animate();
-})();
+			makeInstanced(grassPos, grassMatList);
+			makeInstanced(dirtPos, dirtMat);
+			makeInstanced(stonePos, stoneMat);
+			makeInstanced(sandPos, sandMat);
+			makeInstanced(snowPos, snowMat);
+
+
+			const waterSegments = isLowEnd ? 40 : 120;
+			const waterGeo = new THREE.PlaneGeometry(isLowEnd ? 800 : 1200, isLowEnd ? 800 : 1200, waterSegments, waterSegments);
+			waterGeo.rotateX(-Math.PI / 2);
+			const waterMat = new MaterialClass({
+				color: 0x1d66c4,
+				transparent: true,
+				opacity: 0.8,
+				flatShading: true,
+				...(isLowEnd ? {} : {
+					roughness: 0.1,
+					metalness: 0.8
+				})
+			});
+			const waterMesh = new THREE.Mesh(waterGeo, waterMat);
+			waterMesh.position.set(0, waterLevel + 0.1, 0);
+			if (!isLowEnd) waterMesh.receiveShadow = true;
+			scene.add(waterMesh);
+			const waterPositions = waterGeo.attributes.position;
+			const initialWaterY = new Float32Array(waterPositions.count);
+			for (let i = 0; i < waterPositions.count; i++) {
+				initialWaterY[i] = waterPositions.getY(i);
+			}
+
+
+			const trunkPos = [];
+			const leafPos = [];
+			const treeLimit = isLowEnd ? Math.floor(treeSpots.length * 0.5) : treeSpots.length;
+
+			for (let i = 0; i < treeLimit && i < treeSpots.length; i++) {
+				const s = treeSpots[i];
+
+				const trunkHeight = isLowEnd ? 4 : 6;
+				for (let t = 1; t <= trunkHeight; t++) {
+					trunkPos.push({
+						x: s.x,
+						y: s.h + t,
+						z: s.z
+					});
+				}
+
+				const leafRadius = isLowEnd ? 2 : 3;
+				const leafHeight = isLowEnd ? 3 : 4;
+				const startY = s.h + trunkHeight;
+
+				for (let lx = -leafRadius; lx <= leafRadius; lx++) {
+					for (let lz = -leafRadius; lz <= leafRadius; lz++) {
+						if (Math.abs(lx) === leafRadius && Math.abs(lz) === leafRadius) {
+							if (Math.random() < 0.7) continue;
+						}
+						for (let ly = 0; ly < leafHeight; ly++) {
+							const taper = 1 - (ly / leafHeight) * 0.4;
+							const maxDist = Math.floor(leafRadius * taper);
+							if (Math.abs(lx) > maxDist || Math.abs(lz) > maxDist) continue;
+							if (lx === 0 && lz === 0 && ly < 2) continue;
+							if (Math.random() < 0.85) {
+								leafPos.push({
+									x: s.x + lx + (Math.random() - 0.5) * 0.3,
+									y: startY + ly + (Math.random() - 0.5) * 0.2,
+									z: s.z + lz + (Math.random() - 0.5) * 0.3
+								});
+							}
+						}
+					}
+				}
+
+				if (!isLowEnd) {
+					for (let d = 1; d <= 2; d++) {
+						const spread = leafRadius - d * 0.5;
+						for (let lx = -spread; lx <= spread; lx++) {
+							for (let lz = -spread; lz <= spread; lz++) {
+								if (Math.abs(lx) === Math.floor(spread) && Math.abs(lz) === Math.floor(spread)) continue;
+								if (Math.random() < 0.3) {
+									leafPos.push({
+										x: s.x + lx + (Math.random() - 0.5) * 0.2,
+										y: startY - d + (Math.random() - 0.5) * 0.1,
+										z: s.z + lz + (Math.random() - 0.5) * 0.2
+									});
+								}
+							}
+						}
+					}
+				}
+			}
+
+			makeInstanced(trunkPos, dirtMat);
+			makeInstanced(leafPos, leafMat);
+
+
+			const textGroup = new THREE.Group();
+			scene.add(textGroup);
+
+			function addPixelTextBlock(char, tx, ty, tz) {
+				const font = {
+					'g': [0x7c, 0x02, 0x7e, 0x02, 0x7e, 0x02, 0x7c, 0x00],
+					'i': [0x10, 0x18, 0x1c, 0x10, 0x10, 0x10, 0x7c, 0x00],
+					'v': [0x22, 0x22, 0x22, 0x22, 0x22, 0x14, 0x08, 0x00],
+					'e': [0x3e, 0x20, 0x3e, 0x22, 0x22, 0x20, 0x3e, 0x00],
+					'n': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x22, 0x00],
+					'r': [0x3e, 0x22, 0x3c, 0x24, 0x22, 0x22, 0x22, 0x00],
+					'a': [0x1c, 0x22, 0x22, 0x3e, 0x22, 0x22, 0x22, 0x00],
+					't': [0x3c, 0x10, 0x10, 0x3c, 0x10, 0x10, 0x10, 0x00],
+					'o': [0x3c, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3c, 0x00],
+					'l': [0x10, 0x10, 0x10, 0x10, 0x10, 0x10, 0x7c, 0x00],
+					'd': [0x3e, 0x22, 0x22, 0x22, 0x22, 0x22, 0x3e, 0x00],
+					's': [0x3e, 0x20, 0x3c, 0x02, 0x02, 0x22, 0x3c, 0x00],
+					'y': [0x22, 0x22, 0x14, 0x08, 0x08, 0x08, 0x08, 0x00]
+				};
+				const blockMat = new THREE.MeshBasicMaterial({
+					color: 0xffffff
+				});
+				const geo = new THREE.BoxGeometry(0.3, 0.3, 0.05);
+				if (!font[char]) return;
+				for (let iy = 0; iy < 8; iy++) {
+					const line = font[char][iy];
+					for (let ix = 0; ix < 8; ix++) {
+						if ((line >> (7 - ix)) & 1) {
+							const m = new THREE.Mesh(geo, blockMat);
+							m.position.set(tx + ix * 0.3, ty - iy * 0.3, tz);
+							textGroup.add(m);
+						}
+					}
+				}
+			}
+
+			const textString = "GIVE GENERATOR";
+			let curX = -textString.length * 1.5 + (isLowEnd ? 15 : 20);
+			const textY = isLowEnd ? 32 : 36;
+			const textZ = isLowEnd ? 8 : 12;
+			for (let i = 0; i < textString.length; i++) {
+				addPixelTextBlock(textString[i], curX, textY, textZ);
+				curX += 3.2;
+				if (textString[i] === " ") curX += 1.5;
+			}
+
+
+			const cloudGroup = new THREE.Group();
+			if (!isSmallPhone) {
+				const cloudMat = new THREE.MeshBasicMaterial({
+					color: 0xffffff,
+					transparent: true,
+					opacity: 0.85
+				});
+
+				function addCloud(cx, cy, cz) {
+					const parts = isLowEnd ? 4 + Math.floor(Math.random() * 3) : 8 + Math.floor(Math.random() * 6);
+					for (let i = 0; i < parts; i++) {
+						const c = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), cloudMat);
+						c.position.set(cx + i * 2.5, cy + (Math.random() - 0.5) * 1.8, cz + (Math.random() - 0.5) * 4.0);
+						c.scale.set(4.0, 1.4, 2.8);
+						cloudGroup.add(c);
+					}
+				}
+
+				if (isLowEnd) {
+					addCloud(-30, 40, -20);
+					addCloud(15, 44, 15);
+					addCloud(30, 38, -25);
+				} else {
+					addCloud(-40, 42, -28);
+					addCloud(20, 48, 18);
+					addCloud(12, 38, -36);
+					addCloud(-25, 52, 14);
+					addCloud(45, 46, -20);
+				}
+				scene.add(cloudGroup);
+			}
+
+
+			function resize() {
+				const w = canvas.clientWidth;
+				const h = canvas.clientHeight;
+				renderer.setSize(w, h, false);
+				camera.aspect = w / h;
+				camera.updateProjectionMatrix();
+			}
+			window.addEventListener("resize", resize);
+			resize();
+
+
+			const daySkyTop = new THREE.Color(0x3878cf);
+			const daySkyBot = new THREE.Color(0x92c4f2);
+			const sunsetSkyTop = new THREE.Color(0x283b6b);
+			const sunsetSkyBot = new THREE.Color(0xf08053);
+			const nightSkyTop = new THREE.Color(0x050a14);
+			const nightSkyBot = new THREE.Color(0x0d1b36);
+			const fogColor = new THREE.Color();
+
+
+			let angle = 0;
+			const clock = new THREE.Clock();
+			const targetFPS = isLowEnd ? 30 : 60;
+			let lastFrameTime = 0;
+
+			function animate() {
+				requestAnimationFrame(animate);
+
+				const now = performance.now();
+				const delta = now - lastFrameTime;
+
+				if (delta < 1000 / targetFPS) return;
+				lastFrameTime = now;
+
+				const t = clock.getElapsedTime();
+
+
+				angle += isLowEnd ? 0.0003 : 0.0004;
+				camera.position.x = Math.sin(angle) * CAMERA_DISTANCE;
+				camera.position.z = Math.cos(angle) * CAMERA_DISTANCE;
+				camera.position.y = CAMERA_HEIGHT;
+				camera.lookAt(0, 10, 0);
+
+
+				const daySpeed = 0.035;
+				celestialGroup.rotation.z = t * daySpeed;
+				const sunWorldPos = new THREE.Vector3();
+				sunMesh.getWorldPosition(sunWorldPos);
+				sunLight.position.copy(sunWorldPos);
+
+
+				const sunHeightRatio = Math.sin(t * daySpeed);
+				if (sunHeightRatio > 0.2) {
+					skyMat.uniforms.top.value.lerpColors(sunsetSkyTop, daySkyTop, (sunHeightRatio - 0.2) / 0.8);
+					skyMat.uniforms.bot.value.lerpColors(sunsetSkyBot, daySkyBot, (sunHeightRatio - 0.2) / 0.8);
+					ambientLight.intensity = THREE.MathUtils.lerp(0.4, 0.65, sunHeightRatio);
+					sunLight.intensity = THREE.MathUtils.lerp(0.2, 1.4, sunHeightRatio);
+				} else if (sunHeightRatio > -0.2) {
+					const factor = (sunHeightRatio + 0.2) / 0.4;
+					skyMat.uniforms.top.value.lerpColors(nightSkyTop, sunsetSkyTop, factor);
+					skyMat.uniforms.bot.value.lerpColors(nightSkyBot, sunsetSkyBot, factor);
+					ambientLight.intensity = THREE.MathUtils.lerp(0.15, 0.4, factor);
+					sunLight.intensity = THREE.MathUtils.lerp(0.0, 0.3, factor);
+				} else {
+					skyMat.uniforms.top.value.copy(nightSkyTop);
+					skyMat.uniforms.bot.value.copy(nightSkyBot);
+					ambientLight.intensity = 0.12;
+					sunLight.intensity = 0.0;
+				}
+				fogColor.copy(skyMat.uniforms.bot.value);
+				scene.fog = new THREE.FogExp2(fogColor, isLowEnd ? 0.003 : 0.002);
+
+
+				for (let i = 0; i < waterPositions.count; i++) {
+					const u = waterPositions.getX(i);
+					const v = waterPositions.getZ(i);
+					let wave;
+					if (isLowEnd) {
+						wave = Math.sin(t * 2.0 + u * 0.15 + v * 0.12) * 0.2;
+					} else {
+						wave = Math.sin(t * 2.0 + u * 0.15 + v * 0.12) * 0.16 + Math.cos(t * 1.4 + v * 0.2) * 0.1;
+					}
+					waterPositions.setY(i, initialWaterY[i] + wave);
+				}
+				waterPositions.needsUpdate = true;
+				waterGeo.computeVertexNormals();
+
+
+				if (!isSmallPhone) {
+					cloudGroup.position.x += 0.015;
+					if (cloudGroup.position.x > HALF + 10) cloudGroup.position.x = -(HALF + 10);
+				}
+
+				renderer.render(scene, camera);
+			}
+
+			animate();
+		})();
 	</script>
 </body>
 
